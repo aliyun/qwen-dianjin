@@ -119,17 +119,10 @@ If you find our work helpful, feel free to give us a cite.
 }
 
 @article{fin-prm,
-<<<<<<< HEAD
       title={Fin-PRM: A Domain-Specialized Process Reward Model for Financial Reasoning in Large Language Models}, 
       author={Yuanchen Zhou and Shuo Jiang and Jie Zhu and Junhui Li and Lifan Guo and Feng Chen and Chi Zhang},
       journal={https://arxiv.org/abs/2508.15202},
       year={2025}
-=======
-  title = "Fin-PRM: A Domain-Specialized Process Reward Model for Financial Reasoning in Large Language Models",
-  author="Yuanchen Zhou, Shuo Jiang, Jie Zhu, Junhui Li, Lifan Guo, Feng Chen",
-  journal="arXiv preprint arXiv:2508.15202",
-  year="2025"
->>>>>>> f824b7ceee82b992e14380d74f58f69c792d71d2
 }
 
 @article{dianjin-ocr-r1,
@@ -139,15 +132,9 @@ If you find our work helpful, feel free to give us a cite.
   year={2025}
 }
 
-<<<<<<< HEAD
 @article{csconv,
     title={Evaluating, Synthesizing, and Enhancing for Customer Support Conversation}, 
     author={Jie Zhu and Huaixia Dou and Junhui Li and Lifan Guo and Feng Chen and Chi Zhang and Fang Kong},
-=======
-@article{csc,
-    title = "Evaluating, Synthesizing, and Enhancing for Customer Support Conversation", 
-    author = "Jie Zhu, Huaixia Dou, Junhui Li, Lifan Guo, Feng Chen, Chi Zhang, Fang Kong",
->>>>>>> f824b7ceee82b992e14380d74f58f69c792d71d2
     journal = {https://arxiv.org/abs/2508.04423},
     year={2025}
 }
