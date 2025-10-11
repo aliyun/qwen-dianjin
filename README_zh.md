@@ -131,9 +131,15 @@ If you find our work helpful, feel free to give us a cite.
   year={2025}
 }
 
+<<<<<<< HEAD
 @article{csconv,
     title={Evaluating, Synthesizing, and Enhancing for Customer Support Conversation}, 
     author={Jie Zhu and Huaixia Dou and Junhui Li and Lifan Guo and Feng Chen and Chi Zhang and Fang Kong},
+=======
+@article{csc,
+    title = "Evaluating, Synthesizing, and Enhancing for Customer Support Conversation", 
+    author = "Jie Zhu, Huaixia Dou, Junhui Li, Lifan Guo, Feng Chen, Chi Zhang, Fang Kong",
+>>>>>>> f824b7ceee82b992e14380d74f58f69c792d71d2
     journal = {https://arxiv.org/abs/2508.04423},
     year={2025}
 }
