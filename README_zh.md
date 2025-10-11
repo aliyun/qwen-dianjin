@@ -12,6 +12,8 @@
 
 
 ## 🚀 最新动态
+- **2025.10.11** "[FinMCP-Bench: Benchmarking LLM Agents for Real-World Financial Tool Use under the Model Context Protocol](./DianJin-TIR/technical%20report_FinMCP_Bench.pdf)" 由盈米基金联合合作伙伴发布，是首个基于MCP的、面向真实金融工具使用的LLM Agent基准数据集与评测体系。
+- **2025.10.11** "[CARE: Cognitive-reasoning Augmented Reinforcement for Emotional Support Conversation](https://arxiv.org/abs/2510.05122)" 已发布！
 - **2025.08.25** 🔥🔥🔥 "[Fin-PRM: A Domain-Specialized Process Reward Model for Financial Reasoning in Large Language Models](https://arxiv.org/abs/2508.15202)" 已发布!
 - **2025.08.18** 🔥🔥🔥《[DianJin-OCR-R1: Enhancing OCR Capabilities via a Reasoning-and-Tool Interleaved Vision-Language Model](https://www.arxiv.org/abs/2508.13238)》已发布并开源！
 - **2025.08.08** 🔥🔥🔥《[Evaluating, Synthesizing, and Enhancing for Customer Support Conversation](https://arxiv.org/abs/2508.04423)》已发布并开源！
@@ -108,11 +110,18 @@
 If you find our work helpful, feel free to give us a cite.
 
 ```
+@article{care-esc,
+      title={CARE: Cognitive-reasoning Augmented Reinforcement for Emotional Support Conversation}, 
+      author={Jie Zhu and Yuanchen Zhou and Shuo Jiang and Junhui Li and Lifan Guo and Feng Chen and Chi Zhang and Fang Kong},
+      journal={https://arxiv.org/abs/2510.05122},
+      year={2025}
+}
+
 @article{fin-prm,
-  title = "Fin-PRM: A Domain-Specialized Process Reward Model for Financial Reasoning in Large Language Models",
-  author="Yuanchen Zhou, Shuo Jiang, Jie Zhu, Junhui Li, Lifan Guo, Feng Chen, Chi Zhang",
-  journal="arXiv preprint arXiv:2508.15202",
-  year="2025"
+      title={Fin-PRM: A Domain-Specialized Process Reward Model for Financial Reasoning in Large Language Models}, 
+      author={Yuanchen Zhou and Shuo Jiang and Jie Zhu and Junhui Li and Lifan Guo and Feng Chen and Chi Zhang},
+      journal={https://arxiv.org/abs/2508.15202},
+      year={2025}
 }
 
 @article{dianjin-ocr-r1,
@@ -122,18 +131,25 @@ If you find our work helpful, feel free to give us a cite.
   year={2025}
 }
 
+<<<<<<< HEAD
+@article{csconv,
+    title={Evaluating, Synthesizing, and Enhancing for Customer Support Conversation}, 
+    author={Jie Zhu and Huaixia Dou and Junhui Li and Lifan Guo and Feng Chen and Chi Zhang and Fang Kong},
+=======
 @article{csc,
     title = "Evaluating, Synthesizing, and Enhancing for Customer Support Conversation", 
     author = "Jie Zhu, Huaixia Dou, Junhui Li, Lifan Guo, Feng Chen, Chi Zhang, Fang Kong",
+>>>>>>> f824b7ceee82b992e14380d74f58f69c792d71d2
     journal = {https://arxiv.org/abs/2508.04423},
-    year = "2025"
+    year={2025}
 }
 
 @inproceedings{m3finmeeting,
-    title = "M^{3}FinMeeting: A Multilingual, Multi-Sector, and Multi-Task Financial Meeting Understanding Evaluation Dataset",
+    title = "M$^3$FinMeeting: A Multilingual, Multi-Sector, and Multi-Task Financial Meeting Understanding Evaluation Dataset",
     author = "Jie Zhu, Junhui Li, Yalong Wen, Xiandong Li, Lifan Guo, Feng Chen",
     booktitle = "Findings of ACL",
-    year = "2025"
+    year = "2025",
+    pages = "244--266"
 }
 
 @article{dianjin-r1,
