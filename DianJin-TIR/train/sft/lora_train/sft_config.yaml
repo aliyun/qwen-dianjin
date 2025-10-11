@@ -1,0 +1,9 @@
+MCP_SCHEMA_PATH: ""                                                 # your MCP tools schema
+model_path: "your model path"                                       # model & tokenizer path
+# tokenize
+raw_train_json_path: '../train_data_demo.json'                      # str or list[str], file(s) require tokenizing 
+train_data_save_folder: "./tmp_train_data/"                         # train data save folder
+
+# train
+train_max_tokens: 28672                                             # Max Tokens for `prompt` + `resp`
+model_save_folder: "./saves_lora/"                                  # lora module save path 

@@ -1,0 +1,151 @@
+Metadata-Version: 2.4
+Name: llamafactory
+Version: 0.9.3.dev0
+Summary: Unified Efficient Fine-Tuning of 100+ LLMs
+Home-page: https://github.com/hiyouga/LLaMA-Factory
+Author: hiyouga
+Author-email: hiyouga@buaa.edu.cn
+License: Apache 2.0 License
+Keywords: AI,LLM,GPT,ChatGPT,Llama,Transformer,DeepSeek,Pytorch
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Education
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Requires-Python: >=3.9.0
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: transformers!=4.46.*,!=4.47.*,!=4.48.0,!=4.52.0,<=4.52.4,>=4.45.0; sys_platform != "darwin"
+Requires-Dist: transformers!=4.46.*,!=4.47.*,!=4.48.0,!=4.52.0,<=4.51.3,>=4.45.0; sys_platform == "darwin"
+Requires-Dist: datasets<=3.6.0,>=2.16.0
+Requires-Dist: accelerate<=1.7.0,>=0.34.0
+Requires-Dist: peft<=0.15.2,>=0.14.0
+Requires-Dist: trl<=0.9.6,>=0.8.6
+Requires-Dist: tokenizers<=0.21.1,>=0.19.0
+Requires-Dist: gradio<=5.31.0,>=4.38.0
+Requires-Dist: scipy
+Requires-Dist: einops
+Requires-Dist: sentencepiece
+Requires-Dist: tiktoken
+Requires-Dist: protobuf
+Requires-Dist: uvicorn
+Requires-Dist: fastapi
+Requires-Dist: sse-starlette
+Requires-Dist: matplotlib>=3.7.0
+Requires-Dist: fire
+Requires-Dist: omegaconf
+Requires-Dist: packaging
+Requires-Dist: pyyaml
+Requires-Dist: numpy<2.0.0
+Requires-Dist: pydantic<=2.10.6
+Requires-Dist: pandas>=2.0.0
+Requires-Dist: av
+Requires-Dist: librosa
+Requires-Dist: tyro<0.9.0
+Provides-Extra: torch
+Requires-Dist: torch>=2.0.0; extra == "torch"
+Requires-Dist: torchvision>=0.15.0; extra == "torch"
+Provides-Extra: torch-npu
+Requires-Dist: torch==2.4.0; extra == "torch-npu"
+Requires-Dist: torch-npu==2.4.0.post2; extra == "torch-npu"
+Requires-Dist: decorator; extra == "torch-npu"
+Provides-Extra: metrics
+Requires-Dist: nltk; extra == "metrics"
+Requires-Dist: jieba; extra == "metrics"
+Requires-Dist: rouge-chinese; extra == "metrics"
+Provides-Extra: deepspeed
+Requires-Dist: deepspeed<=0.16.9,>=0.10.0; extra == "deepspeed"
+Provides-Extra: liger-kernel
+Requires-Dist: liger-kernel>=0.5.5; extra == "liger-kernel"
+Provides-Extra: bitsandbytes
+Requires-Dist: bitsandbytes>=0.39.0; extra == "bitsandbytes"
+Provides-Extra: hqq
+Requires-Dist: hqq; extra == "hqq"
+Provides-Extra: eetq
+Requires-Dist: eetq; extra == "eetq"
+Provides-Extra: gptq
+Requires-Dist: optimum>=1.24.0; extra == "gptq"
+Requires-Dist: gptqmodel>=2.0.0; extra == "gptq"
+Provides-Extra: aqlm
+Requires-Dist: aqlm[gpu]>=1.1.0; extra == "aqlm"
+Provides-Extra: vllm
+Requires-Dist: vllm<=0.8.6,>=0.4.3; extra == "vllm"
+Provides-Extra: sglang
+Requires-Dist: sglang[srt]>=0.4.5; extra == "sglang"
+Requires-Dist: transformers==4.51.1; extra == "sglang"
+Provides-Extra: galore
+Requires-Dist: galore-torch; extra == "galore"
+Provides-Extra: apollo
+Requires-Dist: apollo-torch; extra == "apollo"
+Provides-Extra: badam
+Requires-Dist: badam>=1.2.1; extra == "badam"
+Provides-Extra: adam-mini
+Requires-Dist: adam-mini; extra == "adam-mini"
+Provides-Extra: minicpm-v
+Requires-Dist: soundfile; extra == "minicpm-v"
+Requires-Dist: torchvision; extra == "minicpm-v"
+Requires-Dist: torchaudio; extra == "minicpm-v"
+Requires-Dist: vector_quantize_pytorch; extra == "minicpm-v"
+Requires-Dist: vocos; extra == "minicpm-v"
+Requires-Dist: msgpack; extra == "minicpm-v"
+Requires-Dist: referencing; extra == "minicpm-v"
+Requires-Dist: jsonschema_specifications; extra == "minicpm-v"
+Provides-Extra: modelscope
+Requires-Dist: modelscope; extra == "modelscope"
+Provides-Extra: openmind
+Requires-Dist: openmind; extra == "openmind"
+Provides-Extra: swanlab
+Requires-Dist: swanlab; extra == "swanlab"
+Provides-Extra: dev
+Requires-Dist: pre-commit; extra == "dev"
+Requires-Dist: ruff; extra == "dev"
+Requires-Dist: pytest; extra == "dev"
+Requires-Dist: build; extra == "dev"
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: keywords
+Dynamic: license
+Dynamic: license-file
+Dynamic: provides-extra
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+We modify LLaMA-Factory(https://github.com/hiyouga/LLaMA-Factory) to support flexible toolcall in our OCR task.
+
+
+<!--
+## 引用
+
+如果您觉得此项目有帮助，请考虑以下列格式引用
+
+```bibtex
+@inproceedings{zheng2024llamafactory,
+  title={LlamaFactory: Unified Efficient Fine-Tuning of 100+ Language Models},
+  author={Yaowei Zheng and Richong Zhang and Junhao Zhang and Yanhan Ye and Zheyan Luo and Zhangchi Feng and Yongqiang Ma},
+  booktitle={Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (Volume 3: System Demonstrations)},
+  address={Bangkok, Thailand},
+  publisher={Association for Computational Linguistics},
+  year={2024},
+  url={http://arxiv.org/abs/2403.13372}
+}
+```
+
+## 致谢
+
+本项目受益于 [PEFT](https://github.com/huggingface/peft)、[TRL](https://github.com/huggingface/trl)、[QLoRA](https://github.com/artidoro/qlora) 和 [FastChat](https://github.com/lm-sys/FastChat)，感谢以上诸位作者的付出。
+
+## Star History
+
+![Star History Chart](https://api.star-history.com/svg?repos=hiyouga/LLaMA-Factory&type=Date) -->

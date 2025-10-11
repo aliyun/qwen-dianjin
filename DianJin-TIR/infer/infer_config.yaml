@@ -1,0 +1,29 @@
+MCP_SERVER_URL: ""                            # your MCP server url     
+MCP_SCHEMA_PATH: ""                           # your MCP tools schema
+
+# both
+query_data_path: './demo_infer.json'          # tool-call data (query | history msgs) to be evaluated. (SAME FORMAT WITH BENCHMARK)
+answer_save_path: './demo_eval.json'          # inference result save path                             (SAME FORMAT WITH BENCHMARK + `messages_pred`)
+mcp_timeout: 30                               # mcp timeout
+mcp_max_retries: 30                           # mcp max retries (connection | mcp error)
+
+max_tool_num: 20                              # max tools each turn
+enable_thinking: true                         # whether to enable thinking
+max_new_tokens: 4096                          # max new tokens == `max_tokens` in OpenAI API
+
+
+# only used for api model   `inference_api.py`  (Recommended. You can also use `vllm` / `sglang` to deploy your own models)
+ASSISTANT_API_BASE: ""                        # api-base / base-url
+ASSISTANT_API_KEY: ""                         # api-key
+model: "qwen3-235b-a22b-thinking-2507"        # assistant model
+model_provider: "openai"                      # default model provider
+max_concurrency: 5                            # num_workers
+
+# only used for huggingface  `inference_hf.py`
+model_hf: ''                                  # hf model save path (or repo id)
+## split reasoning, toolcall and answer part
+hf_think_start: '<think>'                     # reasonig start
+hf_think_end: '</think>'                      # reasoning end
+hf_tool_start: '<tool_call>'                  # toolcall start
+hf_tool_end: '</tool_call>'                   # toolcall end
+

@@ -1,0 +1,28 @@
+{{ content | trim }}
+为协助你进行识别，你可以调用以下函数获取其他OCR工具的识别结果：
+```get_extra_ocr_result()```
+
+# 注意 #:
+1. 首先，在 <recognition> 和 </recognition> 之间提供你的初步 OCR 表格识别结果（以 HTML 格式输出）；
+2. 你应使用提供的辅助函数来获取其他 OCR 工具结果以提升识别效果。请在初步识别之后，严格按照以下格式调用函数：<function>\nget_extra_ocr_result()\n</function> . 函数响应内容将随后被放在 <tool>\nfunction response\n</tool> 中。
+3. 请重新仔细查看图片，比较初步识别的结果和其它工具结果，分析表格结构(如单元格是否和图中一致、合并单元格“colspan”和“rowspan”是否正确等)和表格内容(如单元格中的内容是否识别错误或有遗漏)。如果有合并单元格，请以“colspan="x"/rowspan="x"”表示。在此阶段，请将你的分析和思考过程放在 <rethink> 和 </rethink> 之间。
+4. 最后，在 <answer> 和 </answer> 之间提供最终的识别答案。
+
+## 输出格式：
+<recognition>
+HTML
+</recognition>
+<function>
+get_extra_ocr_result()
+</function>
+<tool>
+...
+</tool>
+<rethink>
+1. 工具1/2 中第x行，第y列单元格识别为 <td colspan=\"2\">...</td>，对比我自己识别的结果，发现我的结果没有考虑 `colspan`,重新查看图片后，[我发现此处应为 colspan=\"2\" | 我发现我的结果是正确的 ] ...
+2. 工具1/2 中的<thead>下的结构与我不一致，回顾表格图片，这部分应为 ... ; 
+3. 工具1/2 中识别表格的文本内容为 ... ，仔细查看原图后，实际内容是 ...
+</rethink>
+<answer>
+HTML
+</answer>

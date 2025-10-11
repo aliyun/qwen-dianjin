@@ -1,0 +1,51 @@
+Metadata-Version: 2.4
+Name: verl
+Version: 0.3.2.dev0
+Summary: An Efficient, Scalable, Multi-Modality RL Training Framework based on veRL
+Home-page: https://github.com/volcengine/verl
+Author: verl
+Author-email: zhangchi.usc1992@bytedance.com, gmsheng@connect.hku.hk, hiyouga@buaa.edu.cn
+License: Apache 2.0 License
+Requires-Python: >=3.9.0
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: accelerate
+Requires-Dist: codetiming
+Requires-Dist: datasets
+Requires-Dist: flash-attn>=2.4.3
+Requires-Dist: liger-kernel
+Requires-Dist: mathruler
+Requires-Dist: numpy
+Requires-Dist: omegaconf
+Requires-Dist: pandas
+Requires-Dist: peft
+Requires-Dist: pillow
+Requires-Dist: pyarrow>=15.0.0
+Requires-Dist: pylatexenc
+Requires-Dist: qwen-vl-utils
+Requires-Dist: ray[default]
+Requires-Dist: tensordict
+Requires-Dist: torchdata
+Requires-Dist: transformers<4.53.0,>=4.51.0
+Requires-Dist: vllm>=0.8.0
+Requires-Dist: wandb
+Requires-Dist: Levenshtein==0.25.1
+Requires-Dist: apted==1.0.3
+Requires-Dist: lxml==4.9.1
+Requires-Dist: tqdm==4.67.1
+Provides-Extra: dev
+Requires-Dist: pre-commit; extra == "dev"
+Requires-Dist: ruff; extra == "dev"
+Dynamic: author
+Dynamic: author-email
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: license
+Dynamic: license-file
+Dynamic: provides-extra
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+We modify EasyR1(https://github.com/hiyouga/EasyR1) to support flexible toolcall in our OCR task.

@@ -1,0 +1,19 @@
+{
+  "sealtitle_train": {
+    "file_name": "DianJin_ocr_demo_data/SealTitle_demo.jsonl", 
+    "columns": {
+      "prompt": "question",
+      "response": "cot_answer",
+      "images": "image"
+    }
+  },
+    "sealtitle_toolcall_train": {
+    "file_name": "DianJin_ocr_demo_data/SealTitle_demo.jsonl", 
+    "columns": {
+      "prompt": "question",
+      "response": "direct_answer",
+      "images": "image"
+    }
+  }
+}
+

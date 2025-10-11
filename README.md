@@ -11,8 +11,11 @@
 </div>
 
 ## 🚀 News 
-- **2025.08.25** 🔥🔥🔥 "[Fin-PRM: A Domain-Specialized Process Reward Model for Financial Reasoning in Large Language Models](https://arxiv.org/abs/2508.15202)" is now published and open source!
-- **2025.08.08** 🔥🔥🔥 "[Evaluating, Synthesizing, and Enhancing for Customer Support Conversation](https://arxiv.org/abs/2508.04423)" is now published and open source!
+- **2025.10.11** "[FinMCP-Bench: Benchmarking LLM Agents for Real-World Financial Tool Use under the Model Context Protocol](./DianJin-TIR/technical%20report_FinMCP_Bench.pdf)" jointly released by Yingmi Fund and partners, is the first benchmark dataset and evaluation framework for real-world financial tool use by LLM agents, built on the MCP.
+- **2025.10.11** "[CARE: Cognitive-reasoning Augmented Reinforcement for Emotional Support Conversation](https://arxiv.org/abs/2510.05122) is now published!"
+- **2025.08.25** "[Fin-PRM: A Domain-Specialized Process Reward Model for Financial Reasoning in Large Language Models](https://arxiv.org/abs/2508.15202)" is now published and open source!
+- **2025.08.18** "[DianJin-OCR-R1: Enhancing OCR Capabilities via a Reasoning-and-Tool Interleaved Vision-Language Model](https://www.arxiv.org/abs/2508.13238)" is now published and open source!
+- **2025.08.08** "[Evaluating, Synthesizing, and Enhancing for Customer Support Conversation](https://arxiv.org/abs/2508.04423)" is now published and open source!
 - **2025.05.22** "[M<sup>3</sup>FinMeeting: A Multilingual, Multi-Sector, and Multi-Task Financial Meeting Understanding Evaluation Dataset](https://arxiv.org/abs/2506.02510)" has been officially accepted by ACL-2025! 
 - **2025.04.23** [DianJin-R1](DianJin-R1/README.md) series open source release! This release includes the DianJin-R1-Data dataset, as well as two powerful models: DianJin-R1-7B and DianJin-R1-13B. Please check out our technical report "[DianJin-R1: Evaluating and Enhancing Financial Reasoning in Large Language Models](https://arxiv.org/abs/2504.15716)" for more details and explore the capabilities of these new models.
 - **2025.01.06** The [CFLUE](https://github.com/aliyun/cflue) dataset has been fully open-sourced and is now available for download!  🚀🚀🚀
@@ -32,6 +35,12 @@ The **data** and **models** that have been released so far are as follows:
         <td><a href="https://modelscope.cn/organization/tongyi_dianjin">Fin-PRM</a></td>
         <td><a href="https://huggingface.co/DianJin">Fin-PRM</a></td>
         <td><a href="https://arxiv.org/abs/2508.15202">Paper</a></td>
+    </tr>
+    <tr>
+        <th>DianJin-OCR-R1</th>
+        <td><a href="https://modelscope.cn/organization/tongyi_dianjin">DianJin-OCR-R1</a></td>
+        <td><a href="https://huggingface.co/DianJin">DianJin-OCR-R1</a></td>
+        <td><a href="https://www.arxiv.org/abs/2508.13238">Paper</a></td>
     </tr>
     <tr>
         <th>CSC</th>
@@ -102,25 +111,40 @@ Equip developers with a suite of financial APIs and tools, making it easy to int
 If you find our work helpful, feel free to give us a cite.
 
 ```
-@article{fin-prm,
-  title = "Fin-PRM: A Domain-Specialized Process Reward Model for Financial Reasoning in Large Language Models",
-  author="Yuanchen Zhou, Shuo Jiang, Jie Zhu, Junhui Li, Lifan Guo, Feng Chen, Chi Zhang",
-  journal="arXiv preprint arXiv:2508.15202",
-  year="2025"
+@article{care-esc,
+      title={CARE: Cognitive-reasoning Augmented Reinforcement for Emotional Support Conversation}, 
+      author={Jie Zhu and Yuanchen Zhou and Shuo Jiang and Junhui Li and Lifan Guo and Feng Chen and Chi Zhang and Fang Kong},
+      journal={https://arxiv.org/abs/2510.05122},
+      year={2025}
 }
 
-@article{csc,
-    title = "Evaluating, Synthesizing, and Enhancing for Customer Support Conversation", 
-    author = "Jie Zhu, Huaixia Dou, Junhui Li, Lifan Guo, Feng Chen, Chi Zhang, Fang Kong",
+@article{fin-prm,
+      title={Fin-PRM: A Domain-Specialized Process Reward Model for Financial Reasoning in Large Language Models}, 
+      author={Yuanchen Zhou and Shuo Jiang and Jie Zhu and Junhui Li and Lifan Guo and Feng Chen and Chi Zhang},
+      journal={https://arxiv.org/abs/2508.15202},
+      year={2025}
+}
+
+@article{dianjin-ocr-r1,
+  title={DianJin-OCR-R1: Enhancing OCR Capabilities via a Reasoning-and-Tool Interleaved Vision-Language Model},
+  author={Qian Chen, Xianyin Zhang, Lifan Guo, Feng Chen, Chi Zhang},
+  journal={arXiv preprint arXiv:2508.13238},
+  year={2025}
+}
+
+@article{csconv,
+    title={Evaluating, Synthesizing, and Enhancing for Customer Support Conversation}, 
+    author={Jie Zhu and Huaixia Dou and Junhui Li and Lifan Guo and Feng Chen and Chi Zhang and Fang Kong},
     journal = {https://arxiv.org/abs/2508.04423},
-    year = "2025"
+    year={2025}
 }
 
 @inproceedings{m3finmeeting,
-    title = "M^{3}FinMeeting: A Multilingual, Multi-Sector, and Multi-Task Financial Meeting Understanding Evaluation Dataset",
+    title = "M$^3$FinMeeting: A Multilingual, Multi-Sector, and Multi-Task Financial Meeting Understanding Evaluation Dataset",
     author = "Jie Zhu, Junhui Li, Yalong Wen, Xiandong Li, Lifan Guo, Feng Chen",
     booktitle = "Findings of ACL",
-    year = "2025"
+    year = "2025",
+    pages = "244--266"
 }
 
 @article{dianjin-r1,

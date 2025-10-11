@@ -1,0 +1,9 @@
+{{ content | trim }} 
+为协助你进行识别，你可以调用以下函数获取其他OCR工具的识别结果：
+```get_extra_ocr_result()```
+
+# 注意 #:
+1. 首先，在 <recognition> 和 </recognition> 之间提供你的初步 OCR 识别结果（完全基于自身能力）；
+2. 你应使用提供的辅助函数来获取其他 OCR 工具结果以提升识别效果。请在初步识别之后，严格按照以下格式调用函数：<function>\nget_extra_ocr_result()\n</function> . 函数响应内容将随后被放在 <tool>\nfunction response\n</tool> 中。
+3. 参考其他OCR工具的函数响应结果，重新检查图像内容。你需要综合分析自己的初步 OCR 识别结果与其他 OCR 工具的结果，尤其需要关注自己与其他工具的不同之处。（你和其他 OCR 工具均可能出错，务必仔细核对图像）。在此阶段，你的分析和思考过程应放在 <rethink> 和 </rethink> 之间。
+4. 最后，在 <answer> 和 </answer> 之间提供最终的识别答案。
