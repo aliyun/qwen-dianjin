@@ -133,11 +133,11 @@ If you find our work helpful, feel free to give us a cite.
   year={2025}
 }
 
-@article{csconv,
+@inproceedings{csconv,
     title={Evaluating, Synthesizing, and Enhancing for Customer Support Conversation}, 
     author={Jie Zhu and Huaixia Dou and Junhui Li and Lifan Guo and Feng Chen and Chi Zhang and Fang Kong},
-    journal = {https://arxiv.org/abs/2508.04423},
-    year={2025}
+    booktitle = "AAAI",
+    year = "2026"
 }
 
 @inproceedings{m3finmeeting,
