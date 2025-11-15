@@ -11,7 +11,7 @@
 </div>
 
 ## 🚀 News 
-- **2025.11.15** "[Evaluating, Synthesizing, and Enhancing for Customer Support Conversation](https://arxiv.org/abs/2508.04423)" has been officially accepted by ACL-2026! 
+- **2025.11.15** "[Evaluating, Synthesizing, and Enhancing for Customer Support Conversation](https://arxiv.org/abs/2508.04423)" has been officially accepted by AAAI-2026! 
 - **2025.10.11** "[FinMCP-Bench: Benchmarking LLM Agents for Real-World Financial Tool Use under the Model Context Protocol](./DianJin-TIR/technical%20report_FinMCP_Bench.pdf)" jointly released by Yingmi Fund and partners, is the first benchmark dataset and evaluation framework for real-world financial tool use by LLM agents, built on the MCP.
 - **2025.10.11** "[CARE: Cognitive-reasoning Augmented Reinforcement for Emotional Support Conversation](https://arxiv.org/abs/2510.05122) is now published!"
 - **2025.08.25** "[Fin-PRM: A Domain-Specialized Process Reward Model for Financial Reasoning in Large Language Models](https://arxiv.org/abs/2508.15202)" is now published and open source!
