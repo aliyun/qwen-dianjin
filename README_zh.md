@@ -12,11 +12,12 @@
 
 
 ## 🚀 最新动态
+- **2025.11.15** 🔥🔥🔥《[Evaluating, Synthesizing, and Enhancing for Customer Support Conversation](https://arxiv.org/abs/2508.04423)》已被 AAAI-2026 录用！
 - **2025.10.11** "[FinMCP-Bench: Benchmarking LLM Agents for Real-World Financial Tool Use under the Model Context Protocol](./DianJin-TIR/technical%20report_FinMCP_Bench.pdf)" 由盈米基金联合合作伙伴发布，是首个基于MCP的、面向真实金融工具使用的LLM Agent基准数据集与评测体系。
 - **2025.10.11** "[CARE: Cognitive-reasoning Augmented Reinforcement for Emotional Support Conversation](https://arxiv.org/abs/2510.05122)" 已发布！
-- **2025.08.25** 🔥🔥🔥 "[Fin-PRM: A Domain-Specialized Process Reward Model for Financial Reasoning in Large Language Models](https://arxiv.org/abs/2508.15202)" 已发布!
-- **2025.08.18** 🔥🔥🔥《[DianJin-OCR-R1: Enhancing OCR Capabilities via a Reasoning-and-Tool Interleaved Vision-Language Model](https://www.arxiv.org/abs/2508.13238)》已发布并开源！
-- **2025.08.08** 🔥🔥🔥《[Evaluating, Synthesizing, and Enhancing for Customer Support Conversation](https://arxiv.org/abs/2508.04423)》已发布并开源！
+- **2025.08.25**  "[Fin-PRM: A Domain-Specialized Process Reward Model for Financial Reasoning in Large Language Models](https://arxiv.org/abs/2508.15202)" 已发布!
+- **2025.08.18** 《[DianJin-OCR-R1: Enhancing OCR Capabilities via a Reasoning-and-Tool Interleaved Vision-Language Model](https://www.arxiv.org/abs/2508.13238)》已发布并开源！
+- **2025.08.08** 《[Evaluating, Synthesizing, and Enhancing for Customer Support Conversation](https://arxiv.org/abs/2508.04423)》已发布并开源！
 - **2025.05.22** 《[M<sup>3</sup>FinMeeting: A Multilingual, Multi-Sector, and Multi-Task Financial Meeting Understanding Evaluation Dataset](https://arxiv.org/abs/2506.02510)》已被 ACL-2025 正式录用！
 - **2025.04.23** [DianJin-R1](DianJin-R1/README.md) 系列开源发布！此次发布包括 DianJin-R1-Data 数据集，以及两款强大的模型：DianJin-R1-7B 和 DianJin-R1-13B。查看我们的技术报告《[DianJin-R1: Evaluating and Enhancing Financial Reasoning in Large Language Models](https://arxiv.org/abs/2504.15716)》，深入了解详情，并探索这些新模型的能力。
 - **2025.01.06** [CFLUE](https://github.com/aliyun/cflue)数据集已经全部开源，现已开放下载！🚀🚀🚀
@@ -47,7 +48,7 @@
         <th>CSC</th>
         <td><a href="https://www.modelscope.cn/datasets/tongyi_dianjin/DianJin-CSC-Data">CSC</a></td>
         <td><a href="https://huggingface.co/datasets/DianJin/DianJin-CSC-Data">CSC</a></td>
-        <td><a href="https://arxiv.org/abs/2508.04423">Paper</a></td>
+        <td><a href="https://arxiv.org/abs/2508.04423">AAAI-2026</a></td>
     </tr>
     <tr>
         <th>M<sup>3</sup>FinMeeting</th>
@@ -131,11 +132,11 @@ If you find our work helpful, feel free to give us a cite.
   year={2025}
 }
 
-@article{csconv,
+@inproceedings{csconv,
     title={Evaluating, Synthesizing, and Enhancing for Customer Support Conversation}, 
     author={Jie Zhu and Huaixia Dou and Junhui Li and Lifan Guo and Feng Chen and Chi Zhang and Fang Kong},
-    journal = {https://arxiv.org/abs/2508.04423},
-    year={2025}
+    booktitle = "AAAI",
+    year = "2026"
 }
 
 @inproceedings{m3finmeeting,
