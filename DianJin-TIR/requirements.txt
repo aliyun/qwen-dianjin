@@ -112,7 +112,7 @@ typing-inspection==0.4.1
 typing_extensions==4.15.0
 tzdata==2025.2
 ujson==5.11.0
-urllib3==2.5.0
+urllib3==2.6.3
 uvicorn==0.37.0
 wcwidth==0.2.14
 wheel==0.45.1
