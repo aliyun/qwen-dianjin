@@ -69,7 +69,7 @@ peft==0.17.0
 platformdirs==4.4.0
 prettytable==3.16.0
 propcache==0.3.2
-protobuf==6.32.1
+protobuf==6.33.5
 psutil==7.1.0
 py-cpuinfo==9.0.0
 pyarrow==21.0.0
