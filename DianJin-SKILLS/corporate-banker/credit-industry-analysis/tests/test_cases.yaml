@@ -1,0 +1,196 @@
+# credit-industry-analysis Skill 测试用例集
+# 符合 METHODOLOGY.md 第7节测试与评估框架要求
+
+test_cases:
+  # ==================== 正例：正常场景 ====================
+  
+  - name: "标准分析 - 制造业上市公司行业准入评估"
+    type: positive
+    input:
+      industry_name: "光伏组件制造"
+      gb_code: "C3825（太阳能光伏电池及组件制造）"
+      geo_scope: "中国"
+      analysis_purpose: "贷前行业准入评估"
+    expected:
+      contains:
+        - "行业概况"
+        - "产业链分析"
+        - "竞争格局"
+        - "PEST"
+        - "供需分析"
+        - "发展趋势"
+        - "波特五力"
+        - "市场规模"
+        - "CR3"
+        - "CR5"
+        - "HHI"
+        - "产能利用率"
+        - "情景分析"
+      must_not_contain:
+        - "投资建议"
+        - "保证收益"
+        - "年化收益率"
+      disclaimer_present: true
+      audit_log_generated: true
+
+  - name: "续贷分析 - 传统制造业行业授信政策调整"
+    type: positive
+    input:
+      industry_name: "钢铁行业"
+      gb_code: "C3120（炼钢）"
+      geo_scope: "中国"
+      analysis_purpose: "授信政策年度调整"
+    expected:
+      contains:
+        - "产能利用率"
+        - "在建产能"
+        - "供需缺口"
+        - "去产能政策"
+        - "行业评级"
+      must_not_contain:
+        - "投资建议"
+        - "保证收益"
+      red_lines_may_trigger:
+        - "I2：严重产能过剩"
+
+  - name: "新兴行业分析 - 新能源汽车产业链研究"
+    type: positive
+    input:
+      industry_name: "新能源汽车"
+      gb_code: "C3610（汽车整车制造）"
+      geo_scope: "中国"
+      analysis_purpose: "新兴行业准入研究"
+    expected:
+      contains:
+        - "渗透率"
+        - "技术路线"
+        - "补贴政策"
+        - "竞争格局"
+        - "增长驱动因素"
+        - "风险矩阵"
+      must_not_contain:
+        - "投资建议"
+        - "保证收益"
+      red_lines_may_trigger:
+        - "I6：补贴退坡风险"
+
+  - name: "周期性行业分析 - 化工行业景气判断"
+    type: positive
+    input:
+      industry_name: "基础化工"
+      gb_code: "C2610（基础化学原料制造）"
+      geo_scope: "中国"
+      analysis_purpose: "特定客户行业背景分析"
+    expected:
+      contains:
+        - "库存周期"
+        - "价格弹性"
+        - "供需平衡表"
+        - "景气周期位置"
+        - "周期波动幅度"
+      must_not_contain:
+        - "投资建议"
+        - "保证收益"
+
+  - name: "风险排查 - 房地产行业系统性风险识别"
+    type: positive
+    input:
+      industry_name: "房地产开发"
+      gb_code: "K7010（房地产开发经营）"
+      geo_scope: "中国"
+      analysis_purpose: "行业风险排查"
+    expected:
+      contains:
+        - "政策环境"
+        - "监管趋势"
+        - "融资环境"
+        - "去化周期"
+        - "风险矩阵"
+      must_not_contain:
+        - "投资建议"
+        - "保证收益"
+      red_lines_may_trigger:
+        - "I5：监管政策收紧"
+
+  # ==================== 反例：超范围场景 ====================
+  
+  - name: "超范围请求 - 个人信贷行业咨询"
+    type: rejection
+    input:
+      query: "帮我分析一下个人住房贷款行业的风险"
+    expected:
+      rejected: true
+      contains:
+        - "不在本 Skill 的服务范围"
+        - "个人信贷"
+
+  - name: "超范围请求 - 企业财务数据分析"
+    type: rejection
+    input:
+      query: "帮我分析一下XX公司的财务报表"
+    expected:
+      rejected: true
+      contains:
+        - "请使用 financial-report-analysis Skill"
+        - "企业财务数据分析"
+
+  - name: "超范围请求 - 股权穿透分析"
+    type: rejection
+    input:
+      query: "帮我查一下XX公司的股权穿透图"
+    expected:
+      rejected: true
+      contains:
+        - "请使用 equity-penetration-analysis Skill"
+        - "股权穿透分析"
+
+  # ==================== 边界案例 ====================
+  
+  - name: "边界案例 - 行业边界过泛"
+    type: edge_case
+    input:
+      industry_name: "制造业"
+      gb_code: "未提供"
+      geo_scope: "中国"
+      analysis_purpose: "贷前行业准入评估"
+    expected:
+      contains:
+        - "行业边界"
+        - "GB/T 4754-2017"
+        - "细分行业"
+      degraded_mode: true
+      contains_warning: true
+
+  - name: "边界案例 - 数据不完整（仅1年政策数据）"
+    type: edge_case
+    input:
+      industry_name: "某新兴行业"
+      gb_code: "C3990（其他未列明制造业）"
+      geo_scope: "中国"
+      analysis_purpose: "贷前行业准入评估"
+      data_limitation: "政策文件仅有1年"
+    expected:
+      contains:
+        - "政策历史数据不足"
+        - "仅做当期政策分析"
+      degraded_mode: true
+      contains_warning: true
+
+  - name: "边界案例 - 触发多条红线"
+    type: edge_case
+    input:
+      industry_name: "淘汰类行业"
+      gb_code: "C2511（原油加工及石油制品制造）"
+      geo_scope: "中国"
+      analysis_purpose: "贷前行业准入评估"
+      red_line_trigger: "I1 + I2"
+    expected:
+      contains:
+        - "淘汰类"
+        - "暂停授信"
+        - "严重产能过剩"
+        - "红线警示"
+      red_lines_triggered:
+        - "I1：淘汰类行业"
+        - "I2：严重产能过剩"
+      must_contain_at_beginning: true

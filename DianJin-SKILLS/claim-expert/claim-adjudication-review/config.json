@@ -1,0 +1,12 @@
+{
+  "skill_name": "insurance-claim-adjudication-review",
+  "version": "1.0.0",
+  "risk_level": "high",
+  "parameters": {
+    "adjudication_decisions": ["准赔", "减赔", "拒赔", "挂起"],
+    "fraud_risk_levels": ["低", "中", "高"],
+    "review_dimensions": ["材料齐全性", "立案合理性", "医审核定准确性", "理算计算正确性", "作业规范性"],
+    "large_claim_threshold": 50000,
+    "high_fraud_score_threshold": 60
+  }
+}

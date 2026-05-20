@@ -1,0 +1,27 @@
+{
+  "skill_name": "insurance-underwriting-conclusion-interpretation",
+  "version": "1.0.0",
+  "risk_level": "high",
+  "parameters": {
+    "notice_types": ["standard_approval", "rated_approval", "excluded_approval", "postponed", "declined"],
+    "compliance_checks": [
+      "no_discriminatory_language",
+      "decline_has_rule_basis",
+      "rated_excluded_clearly_stated",
+      "appeal_channel_included",
+      "signature_block_complete"
+    ],
+    "appeal_deadline_days": 30,
+    "notice_validity_days": 30,
+    "prohibited_expressions": [
+      "一定能赔", "全额赔付", "保证承保",
+      "因为你的种族", "因为你的宗教"
+    ],
+    "required_sections": {
+      "rated_approval": ["加费比例", "加费原因", "保费计算方式", "承诺有效期"],
+      "excluded_approval": ["除外责任具体描述", "除外期限"],
+      "postponed": ["延期原因", "需补充材料清单", "有效期"],
+      "declined": ["拒保原因说明", "法规依据", "复核申请渠道"]
+    }
+  }
+}

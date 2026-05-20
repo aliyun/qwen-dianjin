@@ -1,0 +1,16 @@
+{
+  "skill_name": "insurance-agent-policy-explanation",
+  "version": "1.0.0",
+  "risk_level": "low",
+  "parameters": {
+    "product_types": ["重疾险", "医疗险", "寿险", "年金险", "意外险"],
+    "focus_areas": ["保障范围", "免责条款", "理赔流程", "产品对比"],
+    "experience_levels": ["新手", "有一定了解", "资深"],
+    "explanation_depths": ["概览", "详细", "逐条精读"],
+    "standard_periods": {
+      "hesitation_period_days": 15,
+      "critical_illness_waiting_days": [90, 180],
+      "medical_guarantee_renewal_years": [20, 6]
+    }
+  }
+}

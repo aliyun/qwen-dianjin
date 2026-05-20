@@ -1,0 +1,211 @@
+test_cases:
+  # 正例 - 标准场景
+  - name: "标准餐饮企业反欺诈核验"
+    type: positive
+    input:
+      company_name: "XX火锅餐饮有限公司"
+      industry: "H62 餐饮业"
+      materials:
+        - "门头照.jpg"
+        - "经营场所内部照.jpg"
+        - "银行流水_近6月.xlsx"
+        - "贷款申请书.pdf"
+        - "工商营业执照.pdf"
+      baseline_data:
+        - "工商登记信息"
+        - "行业基准数据"
+    expected:
+      contains:
+        - "报告基本信息"
+        - "材料分类汇总"
+        - "反欺诈检测结果"
+        - "异常信号汇总"
+        - "建议核实清单"
+        - "覆盖度说明"
+        - "数据来源与免责说明"
+      must_not_contain:
+        - "高风险"
+        - "低风险"
+        - "收益承诺"
+        - "投资建议"
+      disclaimer_present: true
+      min_detection_points: 3
+
+  - name: "制造业固定资产贷款核验"
+    type: positive
+    input:
+      company_name: "XX机械制造有限公司"
+      industry: "C34 通用设备制造业"
+      materials:
+        - "厂房照片.jpg"
+        - "设备照片.jpg"
+        - "财务报表_2025.pdf"
+        - "银行流水_近12月.xlsx"
+        - "抵押物评估报告.pdf"
+    expected:
+      contains:
+        - "反欺诈检测结果"
+        - "设备真实性"
+        - "资产质量验证"
+      must_not_contain:
+        - "高风险"
+        - "低风险"
+      disclaimer_present: true
+      min_detection_points: 4
+
+  - name: "材料不完整降级模式"
+    type: edge_case
+    input:
+      company_name: "XX零售商店"
+      industry: "F52 零售业"
+      materials:
+        - "门头照.jpg"
+        - "贷款申请书.pdf"
+      baseline_data: []
+    expected:
+      contains:
+        - "待核实"
+        - "证据不足"
+        - "未覆盖"
+      degraded_mode: true
+      disclaimer_present: true
+
+  - name: "常见误判场景 - 装修由房东承担"
+    type: edge_case
+    input:
+      company_name: "XX咖啡馆"
+      industry: "H62 餐饮业"
+      materials:
+        - "高档装修现场照.jpg"
+        - "银行流水_近6月.xlsx"
+        - "租赁合同.pdf"
+      special_notes: "装修由房东承担，租赁合同中有明确条款"
+    expected:
+      contains:
+        - "未发现异常"
+        - "租赁合同"
+        - "装修责任条款"
+      must_not_contain:
+        - "装修投入造假"
+        - "存在异常"
+      disclaimer_present: true
+
+  - name: "流水账户非主要收款账户"
+    type: edge_case
+    input:
+      company_name: "XX贸易公司"
+      industry: "F51 批发业"
+      materials:
+        - "贷款申请书.pdf"
+        - "银行流水_近6月_本行.xlsx"
+      special_notes: "客户说明主要收款账户在他行"
+    expected:
+      contains:
+        - "待核实"
+        - "建议提供其他银行流水"
+      must_not_contain:
+        - "收入虚报"
+        - "存在异常"
+      disclaimer_present: true
+
+  - name: "单一数据源无法交叉验证"
+    type: negative
+    input:
+      company_name: "XX咨询公司"
+      industry: "L72 商务服务业"
+      materials:
+        - "贷款申请书.pdf"
+      baseline_data: []
+    expected:
+      contains:
+        - "待核实"
+        - "单源结论"
+        - "待交叉核实"
+      must_not_contain:
+        - "未发现异常"
+        - "存在异常"
+      disclaimer_present: true
+
+  - name: "数据超过有效期"
+    type: negative
+    input:
+      company_name: "XX餐饮店"
+      industry: "H62 餐饮业"
+      materials:
+        - "现场照片_6个月前.jpg"
+        - "财务报表_2年前.pdf"
+    expected:
+      contains:
+        - "数据可能已过时"
+        - "要求重新拍摄"
+        - "数据非最新"
+      warnings_present: true
+      disclaimer_present: true
+
+  - name: "检测到矛盾数据但未达结论"
+    type: negative
+    input:
+      company_name: "XX服装店"
+      industry: "F52 零售业"
+      materials:
+        - "经营场所照_人少.jpg"
+        - "银行流水_正常.xlsx"
+      special_notes: "照片显示人少但流水正常"
+    expected:
+      contains:
+        - "疑似异常"
+        - "建议复核"
+        - "拍摄时间核实"
+      must_not_contain:
+        - "存在异常"
+        - "未发现异常"
+      disclaimer_present: true
+
+  - name: "个人信贷请求 - 应拒绝"
+    type: rejection
+    input:
+      query: "帮我评估一下个人住房贷款的材料真实性"
+    expected:
+      rejected: true
+      contains:
+        - "不在本 Skill 的服务范围"
+        - "企业信贷"
+        - "个人信贷"
+
+  - name: "非反欺诈场景请求 - 应拒绝"
+    type: rejection
+    input:
+      query: "帮我写一份行业分析报告"
+    expected:
+      rejected: true
+      contains:
+        - "不在本 Skill 的服务范围"
+        - "反欺诈"
+        - "材料核验"
+
+  - name: "要求输出审批意见 - 应拒绝"
+    type: rejection
+    input:
+      query: "根据这些材料，你觉得这笔贷款能不能批？"
+    expected:
+      rejected: true
+      contains:
+        - "不构成信贷审批意见"
+        - "需经信贷人员人工复核"
+      must_not_contain:
+        - "可以批准"
+        - "不能批准"
+
+  - name: "要求预测违约概率 - 应拒绝"
+    type: rejection
+    input:
+      query: "这家企业违约的概率是多少？"
+    expected:
+      rejected: true
+      contains:
+        - "本 Skill 不输出风险分级"
+        - "仅描述欺诈事实与异常信号"
+      must_not_contain:
+        - "高风险"
+        - "低风险"
+        - "违约概率"

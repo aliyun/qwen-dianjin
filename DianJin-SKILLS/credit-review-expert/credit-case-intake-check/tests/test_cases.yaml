@@ -1,0 +1,295 @@
+# test_cases.yaml - 授信申请案件进件合规检查Skill测试用例集
+# 覆盖4种测试类型: positive / edge_case / negative / rejection
+
+version: "2.0.0"
+skill_name: "credit-case-intake-check"
+test_cases:
+  # ========== Positive 正例 ==========
+  - id: "positive_01"
+    type: "positive"
+    description: "标准新客户首笔授信进件检查"
+    input:
+      customer_name: "XX机械制造有限公司"
+      case_id: "CASE-2026-001"
+      product_name: "流动资金贷款"
+      amount: 50000000
+      materials:
+        - "授信申请书"
+        - "营业执照"
+        - "法定代表人身份证"
+        - "财务报表(2024年经审计年报)"
+        - "征信授权书"
+    expected:
+      intake_result: "不可进件"
+      blocking_items_count: 1
+      blocking_items:
+        - "公司章程"
+      disclaimer_present: true
+
+  - id: "positive_02"
+    type: "positive"
+    description: "存量客户追加授信进件检查-材料齐全"
+    input:
+      customer_name: "XX科技股份有限公司"
+      case_id: "CASE-2026-002"
+      product_name: "固定资产贷款"
+      amount: 100000000
+      materials:
+        - "授信申请书"
+        - "营业执照(有效期内)"
+        - "法定代表人身份证(有效期内)"
+        - "财务报表(2025年Q3季报)"
+        - "征信授权书(新签署)"
+        - "公司章程"
+        - "项目批复"
+      historical_case: "CASE-2025-088"
+    expected:
+      intake_result: "材料齐全"
+      blocking_items_count: 0
+      disclaimer_present: true
+
+  - id: "positive_03"
+    type: "positive"
+    description: "新客户进件检查-可进件限期补齐"
+    input:
+      customer_name: "XX贸易有限公司"
+      case_id: "CASE-2026-003"
+      product_name: "流动资金贷款"
+      amount: 30000000
+      materials:
+        - "授信申请书"
+        - "营业执照"
+        - "法定代表人身份证"
+        - "财务报表"
+        - "征信授权书"
+        - "公司章程"
+    expected:
+      intake_result: "可进件(限期补齐)"
+      blocking_items_count: 0
+      suggested_items_count: ">0"
+      disclaimer_present: true
+
+  - id: "positive_04"
+    type: "positive"
+    description: "制造业企业进件检查-必备材料齐全"
+    input:
+      customer_name: "XX汽车制造有限公司"
+      case_id: "CASE-2026-004"
+      product_name: "流动资金贷款"
+      amount: 80000000
+      materials:
+        - "授信申请书"
+        - "营业执照"
+        - "法定代表人身份证"
+        - "财务报表(2023-2024年经审计年报+2025年Q3季报)"
+        - "征信授权书"
+        - "公司章程"
+    expected:
+      intake_result: "可进件(限期补齐)"
+      contains:
+        - "客户基本信息校验"
+        - "申请材料完整性"
+        - "金额与用途校验"
+      disclaimer_present: true
+
+  - id: "positive_05"
+    type: "positive"
+    description: "科技企业进件检查-高新技术企业"
+    input:
+      customer_name: "XX软件科技有限公司"
+      case_id: "CASE-2026-005"
+      product_name: "流动资金贷款"
+      amount: 20000000
+      materials:
+        - "授信申请书"
+        - "营业执照"
+        - "法定代表人身份证"
+        - "财务报表"
+        - "征信授权书"
+        - "公司章程"
+        - "高新技术企业证书"
+    expected:
+      intake_result: "可进件(限期补齐)"
+      contains:
+        - "高新技术企业证书"
+      disclaimer_present: true
+
+  # ========== Edge Case 边界案例 ==========
+  - id: "edge_case_01"
+    type: "edge_case"
+    description: "客户仅有1年财务报表"
+    input:
+      customer_name: "XX初创科技有限公司"
+      case_id: "CASE-2026-006"
+      product_name: "流动资金贷款"
+      amount: 10000000
+      materials:
+        - "授信申请书"
+        - "营业执照"
+        - "法定代表人身份证"
+        - "财务报表(2024年,仅1年)"
+        - "征信授权书"
+        - "公司章程"
+    expected:
+      intake_result: "可进件(限期补齐)"
+      suggested_items:
+        - "财务报表仅提供1年,须补充近2-3年经审计年报"
+      disclaimer_present: true
+
+  - id: "edge_case_02"
+    type: "edge_case"
+    description: "营业执照即将过期(剩余30天)"
+    input:
+      customer_name: "XX贸易有限公司"
+      case_id: "CASE-2026-007"
+      product_name: "流动资金贷款"
+      amount: 50000000
+      materials:
+        - "授信申请书"
+        - "营业执照(有效期至2026-06-04)"
+        - "法定代表人身份证"
+        - "财务报表"
+        - "征信授权书"
+        - "公司章程"
+    expected:
+      intake_result: "可进件(限期补齐)"
+      contains:
+        - "营业执照有效期标注"
+      disclaimer_present: true
+
+  - id: "edge_case_03"
+    type: "edge_case"
+    description: "征信授权书授权范围不足"
+    input:
+      customer_name: "XX制造有限公司"
+      case_id: "CASE-2026-008"
+      product_name: "流动资金贷款"
+      amount: 60000000
+      materials:
+        - "授信申请书"
+        - "营业执照"
+        - "法定代表人身份证"
+        - "财务报表"
+        - "征信授权书(授权范围:仅查询信用卡记录)"
+        - "公司章程"
+    expected:
+      intake_result: "不可进件"
+      blocking_items:
+        - "征信授权书授权范围不足"
+      disclaimer_present: true
+
+  # ========== Negative 反例 ==========
+  - id: "negative_01"
+    type: "negative"
+    description: "客户名称为空"
+    input:
+      customer_name: ""
+      case_id: "CASE-2026-009"
+      product_name: "流动资金贷款"
+      amount: 50000000
+      materials: []
+    expected:
+      error: "必填字段缺失"
+      missing_fields:
+        - "客户名称"
+
+  - id: "negative_02"
+    type: "negative"
+    description: "申请材料全部缺失"
+    input:
+      customer_name: "XX制造有限公司"
+      case_id: "CASE-2026-010"
+      product_name: "流动资金贷款"
+      amount: 50000000
+      materials: []
+    expected:
+      intake_result: "不可进件"
+      blocking_items_count: 6
+      disclaimer_present: true
+
+  - id: "negative_03"
+    type: "negative"
+    description: "申请金额超出产品政策范围"
+    input:
+      customer_name: "XX制造有限公司"
+      case_id: "CASE-2026-011"
+      product_name: "流动资金贷款"
+      amount: 500000000
+      materials:
+        - "授信申请书"
+        - "营业执照"
+        - "法定代表人身份证"
+        - "财务报表"
+        - "征信授权书"
+        - "公司章程"
+    expected:
+      intake_result: "不可进件"
+      contains:
+        - "金额超出产品政策范围"
+      disclaimer_present: true
+
+  # ========== Rejection 拒绝案例 ==========
+  - id: "rejection_01"
+    type: "rejection"
+    description: "I1触发-营业执照已过期"
+    input:
+      customer_name: "XX制造有限公司"
+      case_id: "CASE-2026-012"
+      product_name: "流动资金贷款"
+      amount: 50000000
+      materials:
+        - "授信申请书"
+        - "营业执照(已过期)"
+        - "法定代表人身份证"
+        - "财务报表"
+        - "征信授权书"
+        - "公司章程"
+    expected:
+      intake_result: "禁止进件"
+      veto_triggered: true
+      veto_code: "I1"
+      disclaimer_present: true
+
+  - id: "rejection_02"
+    type: "rejection"
+    description: "I3触发-资金用途指向禁止领域"
+    input:
+      customer_name: "XX投资有限公司"
+      case_id: "CASE-2026-013"
+      product_name: "流动资金贷款"
+      amount: 100000000
+      purpose: "投资股市"
+      materials:
+        - "授信申请书"
+        - "营业执照"
+        - "法定代表人身份证"
+        - "财务报表"
+        - "征信授权书"
+        - "公司章程"
+    expected:
+      intake_result: "禁止进件"
+      veto_triggered: true
+      veto_code: "I3"
+      disclaimer_present: true
+
+  - id: "rejection_03"
+    type: "rejection"
+    description: "I5触发-企业被列入严重违法失信名单"
+    input:
+      customer_name: "XX失信制造有限公司"
+      case_id: "CASE-2026-014"
+      product_name: "流动资金贷款"
+      amount: 50000000
+      materials:
+        - "授信申请书"
+        - "营业执照"
+        - "法定代表人身份证"
+        - "财务报表"
+        - "征信授权书"
+        - "公司章程"
+      credit_status: "严重违法失信名单"
+    expected:
+      intake_result: "禁止进件"
+      veto_triggered: true
+      veto_code: "I5"
+      disclaimer_present: true

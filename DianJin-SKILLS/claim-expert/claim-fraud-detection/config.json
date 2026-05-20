@@ -1,0 +1,20 @@
+{
+  "skill_name": "insurance-claim-fraud-detection",
+  "version": "1.0.0",
+  "risk_level": "high",
+  "parameters": {
+    "fraud_score_ranges": {
+      "low": {"min": 0, "max": 30, "action": "正常流程受理"},
+      "medium": {"min": 31, "max": 60, "action": "加强审核，补充调查"},
+      "high": {"min": 61, "max": 80, "action": "人工专项核查"},
+      "critical": {"min": 81, "max": 100, "action": "暂停赔付，启动调查程序"}
+    },
+    "behavioral_patterns": {
+      "short_term_claim_days": 30,
+      "high_frequency_threshold": "短期多次超正常水平",
+      "amount_edge_rule": "触及免赔额上限或分级赔付节点",
+      "cross_province_rule": "跨省就医无合理解释"
+    },
+    "consistency_checks": ["日期一致性", "人员一致性", "金额一致性", "医院一致性", "诊断一致性", "印章/签字"]
+  }
+}

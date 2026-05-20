@@ -1,0 +1,17 @@
+{
+  "skill_name": "insurance-agent-social-media",
+  "version": "1.0.0",
+  "risk_level": "medium",
+  "parameters": {
+    "image_size": {"width": 1024, "height": 1280, "ratio": "4:5"},
+    "title_length": {"min": 10, "max": 20},
+    "body_length": {"min": 300, "max": 800},
+    "max_lines_per_paragraph": 3,
+    "hashtag_count": {"min": 3, "max": 5},
+    "daily_post_limit": {"min": 3, "max": 5},
+    "post_count_range": {"min": 1, "max": 5},
+    "topics": ["社保", "养老", "重疾", "理赔", "健康", "综合"],
+    "styles": ["干货科普", "热点关联", "真实案例", "混合"],
+    "prohibited_words": ["保证回报", "稳赚不赔", "一定能赔", "全额赔付"]
+  }
+}

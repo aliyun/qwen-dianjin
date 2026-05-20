@@ -1,0 +1,12 @@
+{
+  "skill_name": "insurance-underwriting-follow-up-outreach",
+  "version": "1.0.0",
+  "risk_level": "medium",
+  "parameters": {
+    "contact_channels": ["电话", "短信", "微信"],
+    "visit_reasons": ["新单送达", "核保结论", "常规回访", "续期提醒"],
+    "intent_labels": ["确认", "咨询", "投诉", "退保", "加保", "无响应"],
+    "script_styles": ["专业", "亲切", "简洁"],
+    "max_daily_contacts": 2
+  }
+}

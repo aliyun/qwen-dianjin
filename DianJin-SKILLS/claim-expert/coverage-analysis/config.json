@@ -1,0 +1,22 @@
+{
+  "skill_name": "insurance-claim-coverage-analysis",
+  "version": "1.0.0",
+  "risk_level": "high",
+  "parameters": {
+    "risk_levels": ["低", "中", "高", "待定"],
+    "clause_risk_mapping": {
+      "既往症免责": "高",
+      "等待期免责": "高",
+      "酒驾/醉驾免责": "高",
+      "故意行为免责": "高",
+      "未如实告知免责": "高",
+      "自费药品免责": "中",
+      "非定点医院免责": "中",
+      "职业类别不符": "中",
+      "高风险运动免责": "中",
+      "免赔额条款": "低"
+    },
+    "check_depths": ["快速筛查", "全面审核"],
+    "accident_types": ["疾病", "意外", "其他"]
+  }
+}

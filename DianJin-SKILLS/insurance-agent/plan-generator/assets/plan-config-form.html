@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>计划书配置</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; background: #f8f9fa; color: #1a1a2e; padding: 20px; }
+  .card { background: #fff; border-radius: 12px; padding: 24px; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  h2 { font-size: 16px; margin-bottom: 16px; color: #1a1a2e; }
+  label { display: block; font-size: 13px; color: #555; margin-bottom: 6px; font-weight: 500; }
+  .radio-group { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+  .radio-option { flex: 1; min-width: 120px; }
+  .radio-option input { display: none; }
+  .radio-option span { display: block; padding: 12px 16px; border: 2px solid #e0e0e0; border-radius: 8px; text-align: center; cursor: pointer; font-size: 13px; transition: all 0.2s; }
+  .radio-option input:checked + span { border-color: #4361ee; background: #eef0ff; color: #4361ee; font-weight: 600; }
+  .radio-option span:hover { border-color: #4361ee; }
+  .checkbox-group { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+  .checkbox-group label { display: flex; align-items: center; padding: 6px 14px; border: 1px solid #ddd; border-radius: 20px; font-size: 13px; cursor: pointer; transition: all 0.2s; }
+  .checkbox-group label:hover { border-color: #4361ee; }
+  .checkbox-group input { margin-right: 6px; }
+  .checkbox-group label:has(input:checked) { border-color: #4361ee; background: #f0f4ff; }
+  .field { margin-bottom: 14px; }
+  .field label .req { color: #e74c3c; margin-left: 2px; }
+  .field input { width: 100%; padding: 9px 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; transition: border-color 0.2s; }
+  .field input:focus { outline: none; border-color: #4361ee; }
+  .row { display: flex; gap: 12px; }
+  .row .field { flex: 1; }
+  .desc { font-size: 12px; color: #888; margin-top: 4px; }
+  .btn-submit { width: 100%; padding: 14px; background: #4361ee; color: #fff; border: none; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; transition: background 0.2s; margin-top: 8px; }
+  .btn-submit:hover { background: #3a56d4; }
+</style>
+</head>
+<body>
+
+  <div class="card">
+    <h2>数据来源</h2>
+    <div class="radio-group">
+      <label class="radio-option">
+        <input type="radio" name="input_mode" value="import_skills" checked>
+        <span>从技能导入</span>
+      </label>
+      <label class="radio-option">
+        <input type="radio" name="input_mode" value="manual">
+        <span>手动录入</span>
+      </label>
+      <label class="radio-option">
+        <input type="radio" name="input_mode" value="file">
+        <span>文件导入</span>
+      </label>
+    </div>
+    <div class="desc">从技能导入: 使用客户画像和产品推荐技能的输出数据</div>
+  </div>
+
+  <div class="card">
+    <h2>方案类型</h2>
+    <div class="radio-group">
+      <label class="radio-option">
+        <input type="radio" name="plans_count" value="1">
+        <span>单方案</span>
+      </label>
+      <label class="radio-option">
+        <input type="radio" name="plans_count" value="2" checked>
+        <span>双方案(A+B)</span>
+      </label>
+    </div>
+    <div class="desc">双方案模式会生成基础版和全面版两套方案对比</div>
+  </div>
+
+  <div class="card">
+    <h2>包含章节</h2>
+    <div class="checkbox-group">
+      <label><input type="checkbox" value="cover" checked><span>封面</span></label>
+      <label><input type="checkbox" value="needs" checked><span>需求分析</span></label>
+      <label><input type="checkbox" value="gap" checked><span>缺口分析</span></label>
+      <label><input type="checkbox" value="products" checked><span>产品方案</span></label>
+      <label><input type="checkbox" value="benefits" checked><span>利益演示</span></label>
+      <label><input type="checkbox" value="budget" checked><span>保费预算</span></label>
+      <label><input type="checkbox" value="compliance" checked><span>合规声明</span></label>
+      <label><input type="checkbox" value="agent" checked><span>代理人信息</span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>代理人信息</h2>
+    <div class="row">
+      <div class="field"><label>姓名<span class="req">*</span></label><input type="text" id="agentName" placeholder="代理人姓名"></div>
+      <div class="field"><label>所属公司<span class="req">*</span></label><input type="text" id="agentCompany" placeholder="保险公司名称"></div>
+    </div>
+    <div class="row">
+      <div class="field"><label>执业证号</label><input type="text" id="agentLicense" placeholder="如 02001234"></div>
+      <div class="field"><label>职位</label><input type="text" id="agentTitle" placeholder="如 资深理财顾问"></div>
+    </div>
+    <div class="row">
+      <div class="field"><label>联系电话<span class="req">*</span></label><input type="text" id="agentPhone" placeholder="手机号码"></div>
+      <div class="field"><label>微信号</label><input type="text" id="agentWechat" placeholder="微信号"></div>
+    </div>
+    <div class="field"><label>邮箱</label><input type="email" id="agentEmail" placeholder="email@example.com"></div>
+  </div>
+
+  <button class="btn-submit" onclick="submit()">开始制作计划书</button>
+
+  <script>
+    function submit() {
+      const name = document.getElementById('agentName').value.trim();
+      const company = document.getElementById('agentCompany').value.trim();
+      const phone = document.getElementById('agentPhone').value.trim();
+      if (!name || !company || !phone) {
+        alert('请填写代理人姓名、公司和联系电话');
+        return;
+      }
+
+      const sections = [];
+      document.querySelectorAll('.checkbox-group input:checked').forEach(cb => sections.push(cb.value));
+
+      const data = {
+        input_mode: document.querySelector('input[name="input_mode"]:checked').value,
+        plans_count: parseInt(document.querySelector('input[name="plans_count"]:checked').value),
+        include_sections: sections,
+        agent: {
+          name: name,
+          company: company,
+          license_number: document.getElementById('agentLicense').value.trim() || undefined,
+          title: document.getElementById('agentTitle').value.trim() || undefined,
+          phone: phone,
+          wechat: document.getElementById('agentWechat').value.trim() || undefined,
+          email: document.getElementById('agentEmail').value.trim() || undefined,
+        }
+      };
+
+      // 清理 undefined
+      Object.keys(data.agent).forEach(k => { if (data.agent[k] === undefined) delete data.agent[k]; });
+
+      window.parent.postMessage({ type: 'widget-result', data }, '*');
+    }
+  </script>
+</body>
+</html>

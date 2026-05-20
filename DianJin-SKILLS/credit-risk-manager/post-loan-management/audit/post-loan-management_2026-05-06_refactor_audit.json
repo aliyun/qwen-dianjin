@@ -1,0 +1,122 @@
+{
+  "skill_name": "skill-refactor",
+  "skill_version": "1.0.0",
+  "execution_time": "2026-05-06T14:00:00+08:00",
+  "target_skill": "post-loan-management",
+  "operator": "AI 架构师",
+  "steps": [
+    {
+      "step": "现状评估",
+      "executor": "ai",
+      "data_source": {"type": "user_upload"},
+      "result": "pass"
+    },
+    {
+      "step": "管线类型判定",
+      "executor": "ai",
+      "data_source": {"type": "context"},
+      "result": "pass",
+      "detail": "混合型（制度合规型为主 + 数据驱动型为辅）"
+    },
+    {
+      "step": "交互模式判定",
+      "executor": "ai",
+      "data_source": {"type": "context"},
+      "result": "pass",
+      "detail": "模式 B（步骤门控型）"
+    },
+    {
+      "step": "重构 Frontmatter",
+      "executor": "ai",
+      "data_source": {"type": "context"},
+      "result": "pass"
+    },
+    {
+      "step": "补充 Target Role / Terminology",
+      "executor": "ai",
+      "data_source": {"type": "context"},
+      "result": "pass"
+    },
+    {
+      "step": "构建 Data Sources",
+      "executor": "ai",
+      "data_source": {"type": "context"},
+      "result": "pass"
+    },
+    {
+      "step": "重构 Workflow",
+      "executor": "ai",
+      "data_source": {"type": "context"},
+      "result": "pass"
+    },
+    {
+      "step": "规范 Output Format",
+      "executor": "ai",
+      "data_source": {"type": "context"},
+      "result": "pass"
+    },
+    {
+      "step": "强化 Constraints",
+      "executor": "ai",
+      "data_source": {"type": "context"},
+      "result": "pass"
+    },
+    {
+      "step": "建立 Audit Trail",
+      "executor": "ai",
+      "data_source": {"type": "context"},
+      "result": "pass"
+    },
+    {
+      "step": "编写 Gotchas / Examples / Out of Scope",
+      "executor": "ai",
+      "data_source": {"type": "context"},
+      "result": "pass"
+    },
+    {
+      "step": "构建 L3 目录",
+      "executor": "ai",
+      "data_source": {"type": "context"},
+      "result": "pass"
+    },
+    {
+      "step": "生成 PROVENANCE.md",
+      "executor": "ai",
+      "data_source": {"type": "context"},
+      "result": "pass"
+    },
+    {
+      "step": "最终校验",
+      "executor": "ai",
+      "data_source": {"type": "context"},
+      "result": "pass"
+    }
+  ],
+  "compliance_check": {
+    "skill_lines_under_500": true,
+    "skill_lines_actual": 405,
+    "frontmatter_complete": true,
+    "constraints_count": 8,
+    "test_cases_count": 9,
+    "test_cases_types": {
+      "positive": 3,
+      "edge_case": 2,
+      "negative": 2,
+      "rejection": 2
+    },
+    "gotchas_count": 4,
+    "examples_count": 2,
+    "provenance_complete": true,
+    "provenance_naming_follows_pipeline_type": true,
+    "provenance_pipeline_type": "混合型",
+    "provenance_dirs_match_provenance_md": true,
+    "provenance_md_min_100_lines": true,
+    "provenance_subdirs_have_readme": true,
+    "references_count": 9,
+    "references_all_have_valid_until": true,
+    "scripts_count": 4,
+    "interaction_mode": "B",
+    "gate_paths_complete": true
+  },
+  "warnings": []
+}

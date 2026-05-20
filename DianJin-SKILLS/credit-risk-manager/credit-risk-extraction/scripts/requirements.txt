@@ -1,0 +1,2 @@
+# Python dependencies for credit-risk-extraction validation scripts
+# No external dependencies required - using standard library only

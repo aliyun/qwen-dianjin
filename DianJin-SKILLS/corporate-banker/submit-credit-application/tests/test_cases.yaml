@@ -1,0 +1,220 @@
+# test_cases.yaml - 授信申请提交Skill测试用例集
+# 覆盖4种测试类型: positive / edge_case / negative / rejection
+
+version: "2.0.0"
+skill_name: "submit-credit-application"
+test_cases:
+  # ========== Positive 正例 ==========
+  - id: "positive_01"
+    type: "positive"
+    description: "标准续贷提交 - 材料齐全"
+    input:
+      customer_name: "XX制造企业"
+      application_type: "续贷"
+      credit_amount: 50000000
+      existing_credit_expiry: "2026-06-15"
+    expected:
+      assessment_result: "可以提交"
+      application_type: "renewal"
+      conflict_detected: false
+      disclaimer_present: true
+      contains:
+        - "前置状态核查"
+        - "材料盘点清单"
+        - "完备性评估结果"
+        - "综合评估结论"
+        - "案件类型确认"
+        - "用户确认记录"
+
+  - id: "positive_02"
+    type: "positive"
+    description: "首次授信提交 - 材料齐全"
+    input:
+      customer_name: "YY贸易公司"
+      application_type: "首次授信"
+      credit_amount: 10000000
+    expected:
+      assessment_result: "可以提交"
+      application_type: "first_credit"
+      conflict_detected: false
+      disclaimer_present: true
+
+  - id: "positive_03"
+    type: "positive"
+    description: "追加授信提交 - 建议补充后提交"
+    input:
+      customer_name: "ZZ科技公司"
+      application_type: "追加授信"
+      credit_amount: 30000000
+      missing_materials: ["银行流水"]
+    expected:
+      assessment_result: "建议补充后提交"
+      application_type: "additional"
+      missing_essentials: []
+      disclaimer_present: true
+
+  - id: "positive_04"
+    type: "positive"
+    description: "材料齐全 - 明确确认提交"
+    input:
+      customer_name: "AA集团公司"
+      application_type: "续贷"
+      user_confirmation: "提交"
+    expected:
+      confirmed: true
+      case_id_present: true
+      disclaimer_present: true
+
+  - id: "positive_05"
+    type: "positive"
+    description: "模糊确认拒绝 - 用户说'好的'"
+    input:
+      customer_name: "BB制造企业"
+      application_type: "续贷"
+      user_confirmation: "好的"
+    expected:
+      confirmed: false
+      must_not_contain:
+        - "CASE-"
+      contains:
+        - "是否确认提交"
+
+  # ========== Edge Case 边界案例 ==========
+  - id: "edge_case_01"
+    type: "edge_case"
+    description: "案件状态查询超时"
+    input:
+      customer_name: "CC贸易公司"
+      application_type: "续贷"
+      system_status: "案件状态查询超时"
+    expected:
+      warning_present: true
+      contains:
+        - "案件冲突未核查"
+      must_not_contain:
+        - "CASE-"
+
+  - id: "edge_case_02"
+    type: "edge_case"
+    description: "授信台账不可用"
+    input:
+      customer_name: "DD科技公司"
+      application_type: "续贷"
+      system_status: "授信台账不可用"
+    expected:
+      warning_present: true
+      contains:
+        - "授信到期状态未知"
+
+  - id: "edge_case_03"
+    type: "edge_case"
+    description: "尽调报告内容不达标"
+    input:
+      customer_name: "EE制造企业"
+      application_type: "新增授信"
+      due_diligence_report: "仅1页,缺少经营分析和财务分析"
+    expected:
+      assessment_result: "暂缓提交"
+      contains:
+        - "尽调报告"
+        - "内容质量不达标"
+
+  # ========== Negative 反例 ==========
+  - id: "negative_01"
+    type: "negative"
+    description: "客户名称为空"
+    input:
+      customer_name: ""
+      application_type: "续贷"
+    expected:
+      error: true
+      contains:
+        - "客户名称不能为空"
+
+  - id: "negative_02"
+    type: "negative"
+    description: "必备材料缺失 - 触发红线R1"
+    input:
+      customer_name: "FF贸易公司"
+      application_type: "新增授信"
+      missing_materials: ["尽调报告", "营业执照"]
+    expected:
+      red_line_triggered: ["R1"]
+      assessment_result: "暂缓提交"
+      missing_essentials:
+        - "尽调报告"
+        - "营业执照"
+      must_not_contain:
+        - "CASE-"
+
+  - id: "negative_03"
+    type: "negative"
+    description: "存在活跃案件 - 触发红线R2"
+    input:
+      customer_name: "GG科技公司"
+      application_type: "续贷"
+      active_case: true
+      active_case_id: "CASE-2026-001000"
+    expected:
+      red_line_triggered: ["R2"]
+      conflict_detected: true
+      contains:
+        - "存在活跃审批案件"
+        - "CASE-2026-001000"
+      must_not_contain:
+        - "CASE-2026-" # 不得创建新案件
+
+  # ========== Rejection 拒绝案例 ==========
+  - id: "rejection_01"
+    type: "rejection"
+    description: "要求预测审批结果"
+    input:
+      customer_name: "HH制造企业"
+      application_type: "续贷"
+      user_request: "这个能批下来吗?"
+    expected:
+      rejection: true
+      contains:
+        - "本Skill不提供审批结果预测"
+        - "聚焦材料完备性评估"
+
+  - id: "rejection_02"
+    type: "rejection"
+    description: "要求静默提交(跳过确认)"
+    input:
+      customer_name: "II贸易公司"
+      application_type: "续贷"
+      user_request: "直接提交,不要问我"
+    expected:
+      red_line_triggered: ["R3"]
+      rejection: true
+      contains:
+        - "必须获得您的明确确认"
+      must_not_contain:
+        - "CASE-"
+
+  - id: "rejection_03"
+    type: "rejection"
+    description: "要求跳过材料检查"
+    input:
+      customer_name: "JJ科技公司"
+      application_type: "新增授信"
+      user_request: "不用检查材料了,直接提交"
+    expected:
+      rejection: true
+      contains:
+        - "必须进行材料完备性检查"
+        - "不得跳过步骤"
+
+  - id: "rejection_04"
+    type: "rejection"
+    description: "个人信贷申请(超出范围)"
+    input:
+      customer_name: "张三"
+      application_type: "个人消费贷款"
+      credit_amount: 500000
+    expected:
+      rejection: true
+      contains:
+        - "本Skill仅处理对公业务"
+        - "不适用于个人信贷"

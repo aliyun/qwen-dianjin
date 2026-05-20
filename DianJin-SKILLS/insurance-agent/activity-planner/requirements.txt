@@ -1,0 +1,4 @@
+# Requirements for insurance-agent-activity-planner
+# Install with: pip install -r requirements.txt
+agentscope>=0.1.0
+dashscope>=1.14.0

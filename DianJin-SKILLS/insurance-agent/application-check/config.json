@@ -1,0 +1,11 @@
+{
+  "skill_name": "insurance-agent-application-check",
+  "version": "1.0.0",
+  "risk_level": "medium",
+  "parameters": {
+    "insurance_types": ["健康险", "寿险", "意外险", "年金险", "车险"],
+    "id_number_length": 18,
+    "beneficiary_share_must_equal_100": true,
+    "high_risk_signals": ["重大手术史", "保额异常大", "受益人非直系亲属"]
+  }
+}

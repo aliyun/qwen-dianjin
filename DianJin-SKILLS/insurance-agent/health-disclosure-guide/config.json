@@ -1,0 +1,14 @@
+{
+  "skill_name": "insurance-agent-health-disclosure-guide",
+  "version": "1.0.0",
+  "risk_level": "high",
+  "parameters": {
+    "disclosure_principle": "如实告知",
+    "critical_warnings": [
+      "不得诱导隐瞒既往病史",
+      "不得暗示'没住过院就填否'",
+      "必须告知隐瞒后果（可能影响理赔）"
+    ],
+    "common_questions": ["住院史", "手术史", "慢性病", "体检异常", "家族遗传"]
+  }
+}

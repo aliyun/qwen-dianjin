@@ -1,0 +1,15 @@
+{
+  "skill_name": "insurance-agent-activity-planner",
+  "version": "1.0.0",
+  "risk_level": "low",
+  "parameters": {
+    "funnel_ratios": {
+      "contact_to_appointment": {"min": 0.30, "max": 0.50},
+      "appointment_to_meeting": {"min": 0.60, "max": 0.80},
+      "meeting_to_close": {"min": 0.20, "max": 0.30}
+    },
+    "weekly_pacing": {
+      "week1": 0.20, "week2": 0.25, "week3": 0.35, "week4": 0.20
+    }
+  }
+}

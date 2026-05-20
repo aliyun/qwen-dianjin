@@ -1,0 +1,21 @@
+{
+  "skill_name": "insurance-agent-customer-profiling",
+  "version": "1.0.0",
+  "risk_level": "low",
+  "parameters": {
+    "collection_rounds": 5,
+    "required_fields_by_round": {
+      "round1": ["姓名", "性别", "年龄"],
+      "round2": ["职业", "职业风险类别", "家庭年收入"],
+      "round3": ["婚姻状况", "家庭成员"],
+      "round4": ["已购险种", "保额", "年缴保费"],
+      "round5": ["沟通方式", "保险态度"]
+    },
+    "gap_formulas": {
+      "life_insurance": "家庭年收入×10 - 已有寿险保额",
+      "critical_illness": "年收入×5 + 30万 - 已有重疾保额",
+      "accident": "年收入×10 - 已有意外险保额"
+    },
+    "gap_levels": ["高", "中", "低"]
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "skill_name": "insurance-agent-product-wiki",
+  "version": "1.0.0",
+  "risk_level": "low",
+  "parameters": {
+    "work_modes": ["产品入库", "学习问答", "模拟演练", "话术推荐"],
+    "output_styles": ["专业型", "亲和型", "数据型", "故事型"],
+    "dialogue_stages": ["开场", "需求挖掘", "产品介绍", "异议处理", "促成"],
+    "supported_input_formats": ["PDF", "Word", "PPT", "图片", "文本"],
+    "red_line_checks": 9
+  }
+}

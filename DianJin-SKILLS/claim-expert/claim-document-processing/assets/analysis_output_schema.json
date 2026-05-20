@@ -1,0 +1,312 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "InsuranceClaimAnalysisResult",
+  "description": "保险理赔材料前置解析输出结构（analyze_materials.py 产出）",
+  "type": "object",
+  "required": ["case_summary", "documents", "completeness_check", "cross_validation", "risk_warnings"],
+  "properties": {
+    "case_summary": {
+      "type": "object",
+      "description": "案件整体摘要信息",
+      "required": ["patient_name", "claim_type"],
+      "properties": {
+        "patient_name": {
+          "type": "string",
+          "description": "患者/被保人姓名"
+        },
+        "id_number": {
+          "type": "string",
+          "description": "身份证号（脱敏：前3后4）"
+        },
+        "claim_type": {
+          "type": "string",
+          "description": "案件类型",
+          "enum": ["人身伤害", "医疗费用", "交通事故", "工伤", "重疾", "意外伤害", "其他"]
+        },
+        "hospital": {
+          "type": "string",
+          "description": "主要就诊医疗机构"
+        },
+        "total_amount": {
+          "type": "number",
+          "description": "材料中识别的总金额（元）"
+        },
+        "admission_date": {
+          "type": "string",
+          "format": "date",
+          "description": "入院日期"
+        },
+        "discharge_date": {
+          "type": "string",
+          "format": "date",
+          "description": "出院日期"
+        },
+        "diagnosis": {
+          "type": "string",
+          "description": "主要诊断"
+        }
+      }
+    },
+    "documents": {
+      "type": "array",
+      "description": "逐文件分析结果列表（与输入文件顺序对应）",
+      "items": {
+        "type": "object",
+        "required": ["index", "document_type", "category_code", "sub_type"],
+        "properties": {
+          "index": {
+            "type": "integer",
+            "description": "文件序号（从0开始，与输入顺序严格对应）",
+            "minimum": 0
+          },
+          "filename": {
+            "type": "string",
+            "description": "模型推测的文件名（仅供参考，归档时使用file_list索引映射）"
+          },
+          "document_type": {
+            "type": "string",
+            "description": "文档类型（自然语言描述）"
+          },
+          "category_code": {
+            "type": "string",
+            "description": "分类编码",
+            "enum": ["01", "02", "03", "04", "05", "06"]
+          },
+          "sub_type": {
+            "type": "string",
+            "description": "细分子类型",
+            "examples": ["住院发票", "门诊发票", "电子发票", "司法鉴定意见书", "伤残鉴定书", "鉴定费发票", "入院记录", "出院记录", "疾病证明书", "诊断报告", "住院费用清单", "用药清单", "医保结算单"]
+          },
+          "key_info": {
+            "type": "object",
+            "description": "从该文件中提取的关键信息",
+            "properties": {
+              "amount": {
+                "type": "string",
+                "description": "金额（如发票总额）"
+              },
+              "date": {
+                "type": "string",
+                "description": "关键日期（开票日期/入院日期等）"
+              },
+              "patient_name": {
+                "type": "string",
+                "description": "该文件中出现的患者姓名"
+              },
+              "hospital": {
+                "type": "string",
+                "description": "医疗机构名称"
+              },
+              "invoice_number": {
+                "type": "string",
+                "description": "发票号码（如适用）"
+              },
+              "diagnosis": {
+                "type": "string",
+                "description": "诊断信息（如适用）"
+              }
+            }
+          },
+          "confidence": {
+            "type": "number",
+            "description": "分类置信度（0.0-1.0）",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "ocr_quality": {
+            "type": "string",
+            "description": "OCR识别质量",
+            "enum": ["high", "medium", "low", "unreadable"]
+          }
+        }
+      }
+    },
+    "completeness_check": {
+      "type": "object",
+      "description": "材料完整性检查结果",
+      "required": ["is_complete"],
+      "properties": {
+        "is_complete": {
+          "type": "boolean",
+          "description": "材料链是否完整"
+        },
+        "missing_materials": {
+          "type": "array",
+          "description": "缺失的材料类型列表",
+          "items": {
+            "type": "string"
+          }
+        },
+        "present_categories": {
+          "type": "array",
+          "description": "已存在的材料类别",
+          "items": {
+            "type": "string"
+          }
+        },
+        "page_completeness": {
+          "type": "array",
+          "description": "多页文档的页面完整性检查",
+          "items": {
+            "type": "object",
+            "properties": {
+              "document": {
+                "type": "string"
+              },
+              "expected_pages": {
+                "type": "integer"
+              },
+              "found_pages": {
+                "type": "integer"
+              },
+              "is_complete": {
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      }
+    },
+    "cross_validation": {
+      "type": "object",
+      "description": "跨图逻辑一致性校验结果",
+      "properties": {
+        "name_consistent": {
+          "type": "boolean",
+          "description": "所有图片中患者姓名是否一致"
+        },
+        "timeline_consistent": {
+          "type": "boolean",
+          "description": "时间线是否合逻辑（入院<出院≤发票<鉴定）"
+        },
+        "amount_consistent": {
+          "type": "boolean",
+          "description": "发票金额与费用清单总额是否匹配（允许≤5%偏差）"
+        },
+        "timeline_details": {
+          "type": "string",
+          "description": "时间线校验详情"
+        },
+        "financial_details": {
+          "type": "string",
+          "description": "费用匹配详情"
+        },
+        "consistency_score": {
+          "type": "number",
+          "description": "综合一致性评分（0.0-1.0）",
+          "minimum": 0,
+          "maximum": 1
+        }
+      }
+    },
+    "duplicate_materials": {
+      "type": "array",
+      "description": "重复材料检测结果",
+      "items": {
+        "type": "object",
+        "properties": {
+          "file_indices": {
+            "type": "array",
+            "description": "重复文件的索引列表",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "reason": {
+            "type": "string",
+            "description": "判定重复的依据"
+          },
+          "confidence": {
+            "type": "string",
+            "description": "重复判定置信度",
+            "enum": ["high", "medium", "low"]
+          },
+          "recommendation": {
+            "type": "string",
+            "description": "处理建议（保留哪份）"
+          }
+        }
+      }
+    },
+    "risk_warnings": {
+      "type": "array",
+      "description": "风险预警列表",
+      "items": {
+        "type": "object",
+        "required": ["type", "severity", "description"],
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "风险类型",
+            "enum": ["completeness", "consistency", "timeline", "financial", "medical_logic", "identity", "duplicate", "page_missing", "quality"]
+          },
+          "severity": {
+            "type": "string",
+            "description": "严重程度",
+            "enum": ["high", "medium", "low"]
+          },
+          "description": {
+            "type": "string",
+            "description": "风险描述"
+          },
+          "related_files": {
+            "type": "array",
+            "description": "关联的文件名/索引",
+            "items": {
+              "type": "string"
+            }
+          },
+          "recommended_action": {
+            "type": "string",
+            "description": "建议处置措施"
+          }
+        }
+      }
+    },
+    "_metadata": {
+      "type": "object",
+      "description": "分析元数据（审计追溯用）",
+      "properties": {
+        "skill_version": {
+          "type": "string",
+          "description": "Skill版本号"
+        },
+        "model": {
+          "type": "string",
+          "description": "使用的模型名称"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "分析完成时间"
+        },
+        "input_file_count": {
+          "type": "integer",
+          "description": "输入文件数量"
+        },
+        "input_dir_hash": {
+          "type": "string",
+          "description": "输入目录内容的SHA256摘要"
+        },
+        "token_usage": {
+          "type": "object",
+          "properties": {
+            "input_tokens": {
+              "type": "integer"
+            },
+            "output_tokens": {
+              "type": "integer"
+            },
+            "total_tokens": {
+              "type": "integer"
+            }
+          }
+        },
+        "duration_seconds": {
+          "type": "number",
+          "description": "处理耗时（秒）"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,5 @@
+# Requirements for insurance-agent-social-media
+# Install with: pip install -r requirements.txt
+agentscope>=0.1.0
+dashscope>=1.14.0
+pillow>=9.0.0

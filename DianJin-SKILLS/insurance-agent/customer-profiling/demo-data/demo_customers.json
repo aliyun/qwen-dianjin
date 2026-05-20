@@ -1,0 +1,666 @@
+[
+  {
+    "id": "C001",
+    "name": "张伟",
+    "gender": "男",
+    "age": 35,
+    "phone": "138****1234",
+    "occupation": "IT工程师",
+    "occupation_class": "1类",
+    "annual_income": 350000,
+    "monthly_expense": 15000,
+    "city": "上海",
+    "region": "华东",
+    "marital_status": "已婚",
+    "family_members": [
+      {"relation": "配偶", "name": "李娜", "age": 33, "occupation": "教师"},
+      {"relation": "子女", "name": "张小明", "age": 5, "occupation": "学龄前"}
+    ],
+    "life_stage": "育儿期",
+    "existing_policies": [
+      {"type": "重疾险", "product_name": "XX重疾保A款", "sum_assured": 300000, "annual_premium": 8500, "payment_years": 20, "start_date": "2022-03-15", "status": "缴费中"},
+      {"type": "医疗险", "product_name": "百万医疗2025", "sum_assured": 4000000, "annual_premium": 680, "payment_years": 1, "start_date": "2025-01-01", "status": "有效"}
+    ],
+    "claims_history": [],
+    "interaction_records": [
+      {"date": "2025-12-10", "channel": "微信", "type": "产品咨询", "summary": "咨询少儿教育金产品"},
+      {"date": "2026-02-20", "channel": "面访", "type": "保单检视", "summary": "年度保单回顾，关注养老规划"}
+    ],
+    "preferred_channel": "微信",
+    "activity_level": "高",
+    "response_rate": 0.85,
+    "risk_preference": "稳健型",
+    "notes": "对子女教育和自身养老规划关注度高"
+  },
+  {
+    "id": "C002",
+    "name": "王芳",
+    "gender": "女",
+    "age": 28,
+    "phone": "139****5678",
+    "occupation": "市场营销经理",
+    "occupation_class": "1类",
+    "annual_income": 250000,
+    "monthly_expense": 10000,
+    "city": "北京",
+    "region": "华北",
+    "marital_status": "未婚",
+    "family_members": [],
+    "life_stage": "单身期",
+    "existing_policies": [
+      {"type": "意外险", "product_name": "综合意外保障计划", "sum_assured": 500000, "annual_premium": 365, "payment_years": 1, "start_date": "2025-06-01", "status": "有效"}
+    ],
+    "claims_history": [],
+    "interaction_records": [
+      {"date": "2026-01-15", "channel": "电话", "type": "产品咨询", "summary": "了解重疾险产品"},
+      {"date": "2026-03-08", "channel": "微信", "type": "节日问候", "summary": "三八节祝福互动"}
+    ],
+    "preferred_channel": "微信",
+    "activity_level": "中",
+    "response_rate": 0.65,
+    "risk_preference": "进取型",
+    "notes": "收入增长较快，保障意识刚起步"
+  },
+  {
+    "id": "C003",
+    "name": "刘建国",
+    "gender": "男",
+    "age": 52,
+    "phone": "136****9012",
+    "occupation": "企业主",
+    "occupation_class": "2类",
+    "annual_income": 1200000,
+    "monthly_expense": 50000,
+    "city": "深圳",
+    "region": "华南",
+    "marital_status": "已婚",
+    "family_members": [
+      {"relation": "配偶", "name": "陈美玲", "age": 50, "occupation": "全职太太"},
+      {"relation": "子女", "name": "刘洋", "age": 25, "occupation": "金融分析师"},
+      {"relation": "子女", "name": "刘璐", "age": 22, "occupation": "在读研究生"}
+    ],
+    "life_stage": "成熟期",
+    "existing_policies": [
+      {"type": "寿险", "product_name": "终身寿险尊享版", "sum_assured": 5000000, "annual_premium": 98000, "payment_years": 10, "start_date": "2020-01-10", "status": "缴费中"},
+      {"type": "重疾险", "product_name": "多倍重疾保", "sum_assured": 500000, "annual_premium": 18500, "payment_years": 20, "start_date": "2018-05-20", "status": "缴费中"},
+      {"type": "医疗险", "product_name": "高端医疗保障计划", "sum_assured": 10000000, "annual_premium": 25000, "payment_years": 1, "start_date": "2025-05-20", "status": "有效"},
+      {"type": "年金险", "product_name": "养老年金计划", "sum_assured": 2000000, "annual_premium": 100000, "payment_years": 10, "start_date": "2021-07-01", "status": "缴费中"}
+    ],
+    "claims_history": [
+      {"date": "2024-08-15", "type": "医疗险", "amount": 85000, "reason": "腰椎手术住院", "status": "已结案"}
+    ],
+    "interaction_records": [
+      {"date": "2025-11-20", "channel": "面访", "type": "资产规划", "summary": "讨论企业资产与家庭资产隔离"},
+      {"date": "2026-01-08", "channel": "面访", "type": "传承规划", "summary": "咨询保险金信托方案"},
+      {"date": "2026-03-25", "channel": "电话", "type": "保单服务", "summary": "确认年金领取方式变更"}
+    ],
+    "preferred_channel": "面访",
+    "activity_level": "高",
+    "response_rate": 0.92,
+    "risk_preference": "稳健型",
+    "notes": "高净值客户，关注资产传承与税务筹划"
+  },
+  {
+    "id": "C004",
+    "name": "赵敏",
+    "gender": "女",
+    "age": 40,
+    "phone": "135****3456",
+    "occupation": "医生",
+    "occupation_class": "2类",
+    "annual_income": 450000,
+    "monthly_expense": 20000,
+    "city": "杭州",
+    "region": "华东",
+    "marital_status": "已婚",
+    "family_members": [
+      {"relation": "配偶", "name": "孙强", "age": 42, "occupation": "律师"},
+      {"relation": "子女", "name": "孙悦", "age": 12, "occupation": "初中生"},
+      {"relation": "子女", "name": "孙瑞", "age": 8, "occupation": "小学生"}
+    ],
+    "life_stage": "育儿期",
+    "existing_policies": [
+      {"type": "重疾险", "product_name": "康惠保多倍版", "sum_assured": 500000, "annual_premium": 12000, "payment_years": 30, "start_date": "2019-04-01", "status": "缴费中"},
+      {"type": "医疗险", "product_name": "百万医疗2025", "sum_assured": 4000000, "annual_premium": 1200, "payment_years": 1, "start_date": "2025-04-01", "status": "有效"}
+    ],
+    "claims_history": [],
+    "interaction_records": [
+      {"date": "2026-02-14", "channel": "微信", "type": "产品咨询", "summary": "咨询子女教育金和自己的养老年金"},
+      {"date": "2026-04-01", "channel": "面访", "type": "保单检视", "summary": "全面保障检视，发现寿险和意外险空白"}
+    ],
+    "preferred_channel": "微信",
+    "activity_level": "中",
+    "response_rate": 0.75,
+    "risk_preference": "保守型",
+    "notes": "双高收入家庭，子女教育规划需求强烈"
+  },
+  {
+    "id": "C005",
+    "name": "陈磊",
+    "gender": "男",
+    "age": 30,
+    "phone": "137****7890",
+    "occupation": "自由职业者/设计师",
+    "occupation_class": "1类",
+    "annual_income": 180000,
+    "monthly_expense": 8000,
+    "city": "成都",
+    "region": "西南",
+    "marital_status": "已婚",
+    "family_members": [
+      {"relation": "配偶", "name": "周婷", "age": 28, "occupation": "会计"}
+    ],
+    "life_stage": "新婚期",
+    "existing_policies": [],
+    "claims_history": [],
+    "interaction_records": [
+      {"date": "2026-03-20", "channel": "线上活动", "type": "首次接触", "summary": "通过线上健康讲座添加微信"},
+      {"date": "2026-04-05", "channel": "微信", "type": "需求了解", "summary": "初步了解保险，态度积极"}
+    ],
+    "preferred_channel": "微信",
+    "activity_level": "中",
+    "response_rate": 0.60,
+    "risk_preference": "稳健型",
+    "notes": "保险小白，首次接触保险，有基本配置需求"
+  },
+  {
+    "id": "C006",
+    "name": "林秀英",
+    "gender": "女",
+    "age": 60,
+    "phone": "133****2345",
+    "occupation": "退休教师",
+    "occupation_class": "1类",
+    "annual_income": 96000,
+    "monthly_expense": 5000,
+    "city": "福州",
+    "region": "华南",
+    "marital_status": "丧偶",
+    "family_members": [
+      {"relation": "子女", "name": "林浩", "age": 35, "occupation": "公务员"},
+      {"relation": "子女", "name": "林琳", "age": 32, "occupation": "银行职员"}
+    ],
+    "life_stage": "养老期",
+    "existing_policies": [
+      {"type": "寿险", "product_name": "定期寿险", "sum_assured": 200000, "annual_premium": 3200, "payment_years": 20, "start_date": "2010-03-01", "status": "已满期"},
+      {"type": "重疾险", "product_name": "老年防癌险", "sum_assured": 100000, "annual_premium": 2800, "payment_years": 10, "start_date": "2023-06-01", "status": "缴费中"}
+    ],
+    "claims_history": [
+      {"date": "2025-03-10", "type": "医疗", "amount": 12000, "reason": "骨折住院", "status": "已结案"}
+    ],
+    "interaction_records": [
+      {"date": "2025-09-09", "channel": "电话", "type": "节日关怀", "summary": "重阳节问候"},
+      {"date": "2026-01-20", "channel": "面访", "type": "保单服务", "summary": "协助理赔资料整理"}
+    ],
+    "preferred_channel": "电话",
+    "activity_level": "低",
+    "response_rate": 0.50,
+    "risk_preference": "保守型",
+    "notes": "养老阶段，更关注医疗保障和子女受益安排"
+  },
+  {
+    "id": "C007",
+    "name": "黄志远",
+    "gender": "男",
+    "age": 45,
+    "phone": "158****4567",
+    "occupation": "建筑工程师",
+    "occupation_class": "3类",
+    "annual_income": 280000,
+    "monthly_expense": 12000,
+    "city": "武汉",
+    "region": "华中",
+    "marital_status": "已婚",
+    "family_members": [
+      {"relation": "配偶", "name": "吴丽", "age": 43, "occupation": "全职太太"},
+      {"relation": "子女", "name": "黄子轩", "age": 18, "occupation": "高三学生"},
+      {"relation": "父母", "name": "黄国安", "age": 72, "occupation": "退休"}
+    ],
+    "life_stage": "成熟期",
+    "existing_policies": [
+      {"type": "意外险", "product_name": "高风险职业意外保障", "sum_assured": 1000000, "annual_premium": 2500, "payment_years": 1, "start_date": "2025-07-01", "status": "有效"},
+      {"type": "重疾险", "product_name": "健康人生A款", "sum_assured": 200000, "annual_premium": 6800, "payment_years": 20, "start_date": "2017-09-01", "status": "缴费中"}
+    ],
+    "claims_history": [
+      {"date": "2023-05-20", "type": "意外险", "amount": 15000, "reason": "工地扭伤", "status": "已结案"}
+    ],
+    "interaction_records": [
+      {"date": "2025-10-15", "channel": "电话", "type": "产品咨询", "summary": "咨询子女大学教育金"},
+      {"date": "2026-03-10", "channel": "微信", "type": "保障检视", "summary": "担心重疾保额不够，想了解加保方案"}
+    ],
+    "preferred_channel": "电话",
+    "activity_level": "中",
+    "response_rate": 0.70,
+    "risk_preference": "稳健型",
+    "notes": "职业风险较高，家庭支柱压力大，寿险缺口明显"
+  },
+  {
+    "id": "C008",
+    "name": "杨柳",
+    "gender": "女",
+    "age": 26,
+    "phone": "150****6789",
+    "occupation": "护士",
+    "occupation_class": "2类",
+    "annual_income": 120000,
+    "monthly_expense": 6000,
+    "city": "南京",
+    "region": "华东",
+    "marital_status": "未婚",
+    "family_members": [],
+    "life_stage": "单身期",
+    "existing_policies": [],
+    "claims_history": [],
+    "interaction_records": [
+      {"date": "2026-04-10", "channel": "微信", "type": "首次接触", "summary": "朋友转介绍，初步了解保险"}
+    ],
+    "preferred_channel": "微信",
+    "activity_level": "低",
+    "response_rate": 0.40,
+    "risk_preference": "保守型",
+    "notes": "刚工作不久，预算有限，需从基础保障配置"
+  },
+  {
+    "id": "C009",
+    "name": "马超",
+    "gender": "男",
+    "age": 38,
+    "phone": "186****0123",
+    "occupation": "销售总监",
+    "occupation_class": "1类",
+    "annual_income": 600000,
+    "monthly_expense": 25000,
+    "city": "广州",
+    "region": "华南",
+    "marital_status": "已婚",
+    "family_members": [
+      {"relation": "配偶", "name": "何雪", "age": 36, "occupation": "产品经理"},
+      {"relation": "子女", "name": "马小骏", "age": 3, "occupation": "幼儿"},
+      {"relation": "子女", "name": "马小萌", "age": 1, "occupation": "婴儿"}
+    ],
+    "life_stage": "育儿期",
+    "existing_policies": [
+      {"type": "寿险", "product_name": "定期寿险至60岁", "sum_assured": 2000000, "annual_premium": 3600, "payment_years": 30, "start_date": "2023-01-01", "status": "缴费中"},
+      {"type": "重疾险", "product_name": "超级重疾保", "sum_assured": 500000, "annual_premium": 11000, "payment_years": 30, "start_date": "2023-01-01", "status": "缴费中"},
+      {"type": "医疗险", "product_name": "百万医疗2025", "sum_assured": 4000000, "annual_premium": 850, "payment_years": 1, "start_date": "2025-01-01", "status": "有效"},
+      {"type": "意外险", "product_name": "综合意外保障", "sum_assured": 2000000, "annual_premium": 500, "payment_years": 1, "start_date": "2025-01-01", "status": "有效"}
+    ],
+    "claims_history": [],
+    "interaction_records": [
+      {"date": "2025-08-10", "channel": "面访", "type": "保单检视", "summary": "年度保障回顾，整体配置较完善"},
+      {"date": "2026-01-15", "channel": "微信", "type": "产品咨询", "summary": "考虑给两个孩子配置少儿险"},
+      {"date": "2026-04-02", "channel": "面访", "type": "家庭规划", "summary": "讨论教育金和养老年金"}
+    ],
+    "preferred_channel": "面访",
+    "activity_level": "高",
+    "response_rate": 0.90,
+    "risk_preference": "进取型",
+    "notes": "保障意识强，主险配置完善，可重点推教育金和养老年金"
+  },
+  {
+    "id": "C010",
+    "name": "孙丽华",
+    "gender": "女",
+    "age": 48,
+    "phone": "131****4321",
+    "occupation": "外贸经理",
+    "occupation_class": "1类",
+    "annual_income": 380000,
+    "monthly_expense": 18000,
+    "city": "宁波",
+    "region": "华东",
+    "marital_status": "离异",
+    "family_members": [
+      {"relation": "子女", "name": "孙浩宇", "age": 20, "occupation": "大学生"}
+    ],
+    "life_stage": "成熟期",
+    "existing_policies": [
+      {"type": "重疾险", "product_name": "女性关爱重疾", "sum_assured": 300000, "annual_premium": 9500, "payment_years": 20, "start_date": "2020-03-08", "status": "缴费中"}
+    ],
+    "claims_history": [],
+    "interaction_records": [
+      {"date": "2025-12-25", "channel": "微信", "type": "节日互动", "summary": "圣诞节问候"},
+      {"date": "2026-03-08", "channel": "面访", "type": "需求沟通", "summary": "关注自身养老和儿子未来婚房储备"}
+    ],
+    "preferred_channel": "微信",
+    "activity_level": "中",
+    "response_rate": 0.72,
+    "risk_preference": "保守型",
+    "notes": "单亲家庭，独立抚养子女，养老规划紧迫"
+  },
+  {
+    "id": "C011",
+    "name": "周鹏",
+    "gender": "男",
+    "age": 33,
+    "phone": "188****5555",
+    "occupation": "公务员",
+    "occupation_class": "1类",
+    "annual_income": 200000,
+    "monthly_expense": 8000,
+    "city": "长沙",
+    "region": "华中",
+    "marital_status": "已婚",
+    "family_members": [
+      {"relation": "配偶", "name": "唐晓", "age": 31, "occupation": "银行柜员"},
+      {"relation": "子女", "name": "周小宝", "age": 2, "occupation": "幼儿"}
+    ],
+    "life_stage": "育儿期",
+    "existing_policies": [
+      {"type": "寿险", "product_name": "定期寿险", "sum_assured": 1000000, "annual_premium": 1800, "payment_years": 30, "start_date": "2024-06-01", "status": "缴费中"},
+      {"type": "医疗险", "product_name": "百万医疗2025", "sum_assured": 4000000, "annual_premium": 500, "payment_years": 1, "start_date": "2025-06-01", "status": "有效"}
+    ],
+    "claims_history": [],
+    "interaction_records": [
+      {"date": "2026-02-10", "channel": "电话", "type": "产品咨询", "summary": "了解少儿重疾险"},
+      {"date": "2026-04-15", "channel": "微信", "type": "产品咨询", "summary": "询问自己的重疾险方案"}
+    ],
+    "preferred_channel": "微信",
+    "activity_level": "中",
+    "response_rate": 0.68,
+    "risk_preference": "保守型",
+    "notes": "收入稳定但增长空间有限，注重性价比"
+  },
+  {
+    "id": "C012",
+    "name": "吴婉清",
+    "gender": "女",
+    "age": 55,
+    "phone": "139****8888",
+    "occupation": "企业主/餐饮",
+    "occupation_class": "2类",
+    "annual_income": 800000,
+    "monthly_expense": 35000,
+    "city": "厦门",
+    "region": "华南",
+    "marital_status": "已婚",
+    "family_members": [
+      {"relation": "配偶", "name": "郑明", "age": 58, "occupation": "企业主/餐饮"},
+      {"relation": "子女", "name": "郑子涵", "age": 28, "occupation": "海外留学"}
+    ],
+    "life_stage": "传承期",
+    "existing_policies": [
+      {"type": "寿险", "product_name": "增额终身寿", "sum_assured": 3000000, "annual_premium": 200000, "payment_years": 5, "start_date": "2022-01-01", "status": "缴费中"},
+      {"type": "重疾险", "product_name": "至尊重疾保", "sum_assured": 500000, "annual_premium": 22000, "payment_years": 15, "start_date": "2018-03-01", "status": "缴费中"},
+      {"type": "医疗险", "product_name": "高端医疗全球版", "sum_assured": 20000000, "annual_premium": 45000, "payment_years": 1, "start_date": "2025-03-01", "status": "有效"},
+      {"type": "年金险", "product_name": "尊享养老年金", "sum_assured": 5000000, "annual_premium": 300000, "payment_years": 5, "start_date": "2023-07-01", "status": "缴费中"}
+    ],
+    "claims_history": [],
+    "interaction_records": [
+      {"date": "2025-10-01", "channel": "面访", "type": "资产规划", "summary": "讨论海外资产配置与保险金信托"},
+      {"date": "2026-02-08", "channel": "面访", "type": "传承规划", "summary": "规划子女回国后的财富传承方案"},
+      {"date": "2026-04-12", "channel": "电话", "type": "保单服务", "summary": "增额终身寿受益人变更"}
+    ],
+    "preferred_channel": "面访",
+    "activity_level": "高",
+    "response_rate": 0.95,
+    "risk_preference": "稳健型",
+    "notes": "高净值客户，传承规划是核心需求，可推保险金信托"
+  },
+  {
+    "id": "C013",
+    "name": "徐刚",
+    "gender": "男",
+    "age": 29,
+    "phone": "159****1111",
+    "occupation": "快递员",
+    "occupation_class": "4类",
+    "annual_income": 100000,
+    "monthly_expense": 5000,
+    "city": "郑州",
+    "region": "华中",
+    "marital_status": "已婚",
+    "family_members": [
+      {"relation": "配偶", "name": "朱小红", "age": 27, "occupation": "超市收银"},
+      {"relation": "子女", "name": "徐小宝", "age": 3, "occupation": "幼儿"}
+    ],
+    "life_stage": "育儿期",
+    "existing_policies": [],
+    "claims_history": [],
+    "interaction_records": [
+      {"date": "2026-04-08", "channel": "微信", "type": "首次接触", "summary": "社区活动认识，聊到保险"}
+    ],
+    "preferred_channel": "微信",
+    "activity_level": "低",
+    "response_rate": 0.35,
+    "risk_preference": "保守型",
+    "notes": "高风险职业，收入有限，需要高性价比的意外+医疗方案"
+  },
+  {
+    "id": "C014",
+    "name": "郑雅琴",
+    "gender": "女",
+    "age": 42,
+    "phone": "182****2222",
+    "occupation": "大学教授",
+    "occupation_class": "1类",
+    "annual_income": 400000,
+    "monthly_expense": 15000,
+    "city": "南京",
+    "region": "华东",
+    "marital_status": "已婚",
+    "family_members": [
+      {"relation": "配偶", "name": "陈伟明", "age": 45, "occupation": "科研人员"},
+      {"relation": "子女", "name": "陈思语", "age": 15, "occupation": "高中生"}
+    ],
+    "life_stage": "育儿期",
+    "existing_policies": [
+      {"type": "重疾险", "product_name": "守护百分百", "sum_assured": 500000, "annual_premium": 13500, "payment_years": 20, "start_date": "2019-09-01", "status": "缴费中"},
+      {"type": "寿险", "product_name": "定期寿险至65岁", "sum_assured": 2000000, "annual_premium": 4200, "payment_years": 20, "start_date": "2019-09-01", "status": "缴费中"},
+      {"type": "医疗险", "product_name": "百万医疗2025", "sum_assured": 4000000, "annual_premium": 1350, "payment_years": 1, "start_date": "2025-09-01", "status": "有效"}
+    ],
+    "claims_history": [],
+    "interaction_records": [
+      {"date": "2025-11-10", "channel": "面访", "type": "保单检视", "summary": "年度保障回顾，配置较合理"},
+      {"date": "2026-03-15", "channel": "微信", "type": "产品咨询", "summary": "考虑孩子出国留学，了解教育储备方案"}
+    ],
+    "preferred_channel": "面访",
+    "activity_level": "中",
+    "response_rate": 0.78,
+    "risk_preference": "稳健型",
+    "notes": "知识型客户，决策理性，配置较完善，教育金和养老金有空间"
+  },
+  {
+    "id": "C015",
+    "name": "韩东",
+    "gender": "男",
+    "age": 50,
+    "phone": "176****3333",
+    "occupation": "出租车司机",
+    "occupation_class": "4类",
+    "annual_income": 90000,
+    "monthly_expense": 5500,
+    "city": "哈尔滨",
+    "region": "东北",
+    "marital_status": "已婚",
+    "family_members": [
+      {"relation": "配偶", "name": "刘桂花", "age": 48, "occupation": "超市理货"},
+      {"relation": "子女", "name": "韩雪", "age": 23, "occupation": "刚就业"}
+    ],
+    "life_stage": "成熟期",
+    "existing_policies": [
+      {"type": "意外险", "product_name": "驾乘人员意外险", "sum_assured": 500000, "annual_premium": 1200, "payment_years": 1, "start_date": "2025-04-01", "status": "有效"}
+    ],
+    "claims_history": [
+      {"date": "2024-12-01", "type": "意外险", "amount": 8000, "reason": "交通事故轻伤", "status": "已结案"}
+    ],
+    "interaction_records": [
+      {"date": "2025-08-15", "channel": "电话", "type": "续保提醒", "summary": "意外险到期续保"},
+      {"date": "2026-02-28", "channel": "电话", "type": "产品咨询", "summary": "了解重疾险，但觉得保费太贵"}
+    ],
+    "preferred_channel": "电话",
+    "activity_level": "低",
+    "response_rate": 0.45,
+    "risk_preference": "保守型",
+    "notes": "高风险职业，保费预算有限，关注性价比"
+  },
+  {
+    "id": "C016",
+    "name": "曾小燕",
+    "gender": "女",
+    "age": 34,
+    "phone": "130****4444",
+    "occupation": "全职妈妈",
+    "occupation_class": "1类",
+    "annual_income": 0,
+    "monthly_expense": 12000,
+    "city": "重庆",
+    "region": "西南",
+    "marital_status": "已婚",
+    "family_members": [
+      {"relation": "配偶", "name": "范伟", "age": 36, "occupation": "电商运营总监", "annual_income": 400000},
+      {"relation": "子女", "name": "范小花", "age": 6, "occupation": "小学生"},
+      {"relation": "子女", "name": "范小宇", "age": 3, "occupation": "幼儿园"}
+    ],
+    "life_stage": "育儿期",
+    "existing_policies": [
+      {"type": "重疾险", "product_name": "女性特定重疾", "sum_assured": 300000, "annual_premium": 5800, "payment_years": 30, "start_date": "2022-06-01", "status": "缴费中"}
+    ],
+    "claims_history": [],
+    "interaction_records": [
+      {"date": "2026-01-20", "channel": "微信", "type": "产品咨询", "summary": "了解给老公和孩子配置保险"},
+      {"date": "2026-04-05", "channel": "微信", "type": "需求沟通", "summary": "担心老公如果出事家庭怎么办"}
+    ],
+    "preferred_channel": "微信",
+    "activity_level": "高",
+    "response_rate": 0.88,
+    "risk_preference": "保守型",
+    "notes": "家庭经济依赖配偶，配偶保障缺口大，家庭整体规划需求"
+  },
+  {
+    "id": "C017",
+    "name": "冯国庆",
+    "gender": "男",
+    "age": 62,
+    "phone": "155****5555",
+    "occupation": "退休工人",
+    "occupation_class": "1类",
+    "annual_income": 72000,
+    "monthly_expense": 4000,
+    "city": "沈阳",
+    "region": "东北",
+    "marital_status": "已婚",
+    "family_members": [
+      {"relation": "配偶", "name": "张淑芬", "age": 60, "occupation": "退休"},
+      {"relation": "子女", "name": "冯亮", "age": 36, "occupation": "私企管理"}
+    ],
+    "life_stage": "养老期",
+    "existing_policies": [
+      {"type": "寿险", "product_name": "终身寿险", "sum_assured": 200000, "annual_premium": 5500, "payment_years": 20, "start_date": "2005-01-01", "status": "已缴清"}
+    ],
+    "claims_history": [],
+    "interaction_records": [
+      {"date": "2025-09-09", "channel": "电话", "type": "节日关怀", "summary": "重阳节电话问候"},
+      {"date": "2026-03-20", "channel": "面访", "type": "保单服务", "summary": "保单权益讲解，建议增加医疗保障"}
+    ],
+    "preferred_channel": "电话",
+    "activity_level": "低",
+    "response_rate": 0.50,
+    "risk_preference": "保守型",
+    "notes": "养老阶段，医疗保障缺口大，可推防癌医疗险"
+  },
+  {
+    "id": "C018",
+    "name": "许文婷",
+    "gender": "女",
+    "age": 31,
+    "phone": "178****6666",
+    "occupation": "互联网产品经理",
+    "occupation_class": "1类",
+    "annual_income": 320000,
+    "monthly_expense": 12000,
+    "city": "深圳",
+    "region": "华南",
+    "marital_status": "未婚",
+    "family_members": [],
+    "life_stage": "单身期",
+    "existing_policies": [
+      {"type": "重疾险", "product_name": "达尔文7号", "sum_assured": 500000, "annual_premium": 6200, "payment_years": 30, "start_date": "2024-11-01", "status": "缴费中"},
+      {"type": "医疗险", "product_name": "百万医疗2025", "sum_assured": 4000000, "annual_premium": 550, "payment_years": 1, "start_date": "2025-11-01", "status": "有效"},
+      {"type": "意外险", "product_name": "综合意外保障", "sum_assured": 1000000, "annual_premium": 300, "payment_years": 1, "start_date": "2025-11-01", "status": "有效"}
+    ],
+    "claims_history": [],
+    "interaction_records": [
+      {"date": "2026-02-14", "channel": "微信", "type": "互动", "summary": "节日互动，分享理财文章"},
+      {"date": "2026-04-10", "channel": "微信", "type": "产品咨询", "summary": "考虑配置定期寿险和开始储蓄"}
+    ],
+    "preferred_channel": "微信",
+    "activity_level": "高",
+    "response_rate": 0.82,
+    "risk_preference": "进取型",
+    "notes": "保障意识好，配置较完善，可推寿险+储蓄/投资型产品"
+  },
+  {
+    "id": "C019",
+    "name": "邓世杰",
+    "gender": "男",
+    "age": 43,
+    "phone": "187****7777",
+    "occupation": "律师/合伙人",
+    "occupation_class": "1类",
+    "annual_income": 900000,
+    "monthly_expense": 40000,
+    "city": "北京",
+    "region": "华北",
+    "marital_status": "已婚",
+    "family_members": [
+      {"relation": "配偶", "name": "苏雅", "age": 40, "occupation": "投资顾问"},
+      {"relation": "子女", "name": "邓逸飞", "age": 14, "occupation": "初中生"},
+      {"relation": "子女", "name": "邓逸菲", "age": 10, "occupation": "小学生"}
+    ],
+    "life_stage": "育儿期",
+    "existing_policies": [
+      {"type": "寿险", "product_name": "终身寿险尊享", "sum_assured": 10000000, "annual_premium": 180000, "payment_years": 10, "start_date": "2021-01-01", "status": "缴费中"},
+      {"type": "重疾险", "product_name": "多倍赔付重疾", "sum_assured": 1000000, "annual_premium": 28000, "payment_years": 20, "start_date": "2019-06-01", "status": "缴费中"},
+      {"type": "医疗险", "product_name": "特需医疗保障", "sum_assured": 10000000, "annual_premium": 30000, "payment_years": 1, "start_date": "2025-06-01", "status": "有效"},
+      {"type": "意外险", "product_name": "尊享意外保障", "sum_assured": 5000000, "annual_premium": 3000, "payment_years": 1, "start_date": "2025-06-01", "status": "有效"},
+      {"type": "年金险", "product_name": "教育年金计划", "sum_assured": 3000000, "annual_premium": 150000, "payment_years": 5, "start_date": "2023-09-01", "status": "缴费中"}
+    ],
+    "claims_history": [],
+    "interaction_records": [
+      {"date": "2025-09-01", "channel": "面访", "type": "年度检视", "summary": "全面保障检视，配置优秀"},
+      {"date": "2026-01-10", "channel": "面访", "type": "资产规划", "summary": "讨论保险金信托和海外教育储备"},
+      {"date": "2026-04-08", "channel": "微信", "type": "转介绍", "summary": "介绍同事了解保障方案"}
+    ],
+    "preferred_channel": "面访",
+    "activity_level": "高",
+    "response_rate": 0.95,
+    "risk_preference": "进取型",
+    "notes": "高净值客户，保障完善，重点维护关系+转介绍开发"
+  },
+  {
+    "id": "C020",
+    "name": "罗小兰",
+    "gender": "女",
+    "age": 36,
+    "phone": "152****8888",
+    "occupation": "幼儿园园长",
+    "occupation_class": "1类",
+    "annual_income": 200000,
+    "monthly_expense": 10000,
+    "city": "昆明",
+    "region": "西南",
+    "marital_status": "已婚",
+    "family_members": [
+      {"relation": "配偶", "name": "蒋大勇", "age": 38, "occupation": "物流公司经理"},
+      {"relation": "子女", "name": "蒋小星", "age": 8, "occupation": "小学生"},
+      {"relation": "父母", "name": "罗德明", "age": 65, "occupation": "退休"}
+    ],
+    "life_stage": "育儿期",
+    "existing_policies": [
+      {"type": "重疾险", "product_name": "健康保2号", "sum_assured": 300000, "annual_premium": 7200, "payment_years": 20, "start_date": "2021-05-01", "status": "缴费中"},
+      {"type": "意外险", "product_name": "综合意外", "sum_assured": 500000, "annual_premium": 200, "payment_years": 1, "start_date": "2025-05-01", "status": "有效"}
+    ],
+    "claims_history": [],
+    "interaction_records": [
+      {"date": "2025-09-10", "channel": "面访", "type": "教师节关怀", "summary": "教师节问候送小礼物"},
+      {"date": "2026-03-28", "channel": "微信", "type": "需求沟通", "summary": "父亲体检发现问题，想给父亲买保险"},
+      {"date": "2026-04-15", "channel": "微信", "type": "产品咨询", "summary": "了解自己和配偶的寿险方案"}
+    ],
+    "preferred_channel": "微信",
+    "activity_level": "高",
+    "response_rate": 0.80,
+    "risk_preference": "稳健型",
+    "notes": "三代家庭，父母健康触发保障意识，全家规划需求"
+  }
+]

@@ -1,0 +1,9 @@
+# insurance-claim-notification dependencies
+# 理赔通知与客户沟通技能依赖
+
+# 配置管理
+pyyaml>=6.0
+
+# 输入校验
+jsonschema>=4.17.0
+pydantic>=2.0.0

@@ -1,0 +1,18 @@
+{
+  "skill_name": "insurance-agent-renewal-assist",
+  "version": "1.0.0",
+  "risk_level": "low",
+  "parameters": {
+    "policy_statuses": ["正常", "欠费", "失效"],
+    "grace_period_days": 60,
+    "reminder_schedule": {
+      "before_45d": {"action": "温馨提醒", "channel": "微信/电话"},
+      "before_30d": {"action": "发送续期通知", "channel": "微信"},
+      "before_7d": {"action": "再次提醒", "channel": "电话"},
+      "overdue_1d": {"action": "第一次欠费提醒", "channel": "电话"},
+      "overdue_7d": {"action": "告知宽限期", "channel": "电话/面访"},
+      "overdue_20d": {"action": "最后催缴", "channel": "面访"}
+    },
+    "retention_options": ["保单贷款", "减额缴清", "延期缴费"]
+  }
+}

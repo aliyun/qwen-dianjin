@@ -1,0 +1,256 @@
+version: "1.0"
+skill_name: "reviewer-visit-memo"
+test_cases:
+  # ========== 正例测试 ==========
+  - id: TC001
+    type: positive
+    name: "标准新客户首笔授信审批走访"
+    input:
+      customer_name: "XX制造有限公司"
+      visit_time: "2026-05-05 10:00"
+      reviewer_name: "张审批"
+      visit_purpose: "新客户首笔授信"
+      oral_observation: "今天去了XX制造有限公司,地址是北京市朝阳区XX路123号,跟营业执照一致。厂房大概5000平米,目测开工率约60%,设备运转正常。实控人李总接待的,对经营数据很熟悉。看了几份销售合同,金额大概2000万。资金流主要是对公账户回款,没发现异常。跟CM报告基本一致,但CM报告说营收5000万,我估算大概3000万左右。"
+    expected:
+      contains:
+        - "六维度走访纪要"
+        - "现场观感"
+        - "经营判断"
+        - "人物印象"
+        - "资金流向"
+        - "风险信号"
+        - "与CM沟通结论"
+        - "数据来源"
+      must_not_contain:
+        - "一票否决"
+      disclaimer_present: true
+
+  - id: TC002
+    type: positive
+    name: "存量客户续贷审批走访"
+    input:
+      customer_name: "XX贸易有限公司"
+      visit_time: "2026-05-05 14:00"
+      reviewer_name: "李审批"
+      visit_purpose: "存量续贷"
+      oral_observation: "这家企业还是老样子,厂房3000平米,开工率约70%,比上次走访有所提升。实控人王总说今年订单不错,预计营收能到8000万。看了几份新签的合同,金额合计1500万。资金流正常,对公账户回款占比约80%。"
+    expected:
+      contains:
+        - "六维度走访纪要"
+        - "与历史数据对比"
+        - "到期续贷原因核实"
+      must_not_contain:
+        - "一票否决"
+      disclaimer_present: true
+
+  - id: TC003
+    type: positive
+    name: "大额新增授信走访"
+    input:
+      customer_name: "XX科技集团"
+      visit_time: "2026-05-05 16:00"
+      reviewer_name: "王审批"
+      visit_purpose: "大额新增授信"
+      oral_observation: "这家企业规模很大,厂房2万平米,开工率约80%。实控人说这次申请1亿授信用于扩产。看了扩产项目的可研报告和环评批复。资金流主要是对公账户,没发现异常。但发现有关联交易迹象,实控人弟弟的公司是主要供应商。"
+    expected:
+      contains:
+        - "六维度走访纪要"
+        - "资金用途穿透核查"
+        - "关联交易"
+      must_not_contain:
+        - "一票否决"
+      disclaimer_present: true
+
+  - id: TC004
+    type: positive
+    name: "风险预警客户复核走访"
+    input:
+      customer_name: "XX化工企业"
+      visit_time: "2026-05-05 09:00"
+      reviewer_name: "赵审批"
+      visit_purpose: "风险预警复核"
+      oral_observation: "这家企业有点问题,车间只有部分开工,目测开工率约30%。实控人说最近环保检查严格,停产整顿了几天。工人说工资按时发放,没发现欠薪。资金流正常,但回款周期变长了。"
+    expected:
+      contains:
+        - "六维度走访纪要"
+        - "停工/半停工"
+        - "环保处罚"
+        - "黄旗"
+      must_not_contain:
+        - "一票否决"
+      disclaimer_present: true
+
+  - id: TC005
+    type: positive
+    name: "CM报告与行内数据偏差较大时的补充走访"
+    input:
+      customer_name: "XX制造企业"
+      visit_time: "2026-05-05 11:00"
+      reviewer_name: "刘审批"
+      visit_purpose: "补充调查"
+      oral_observation: "CM报告说营收1亿,但我现场估算大概6000万左右。厂房面积CM报告说1万平米,实际目测约6000平米。设备数量也有差异,CM报告说50台,现场看到约30台。实控人解释说是部分外包生产。"
+    expected:
+      contains:
+        - "六维度走访纪要"
+        - "与CM报告偏差"
+        - "重大偏差须单独列出"
+      must_not_contain:
+        - "一票否决"
+      disclaimer_present: true
+
+  # ========== 边界测试 ==========
+  - id: TC006
+    type: edge_case
+    name: "访前一页纸不可用"
+    input:
+      customer_name: "XX企业"
+      visit_time: "2026-05-05 10:00"
+      reviewer_name: "张审批"
+      visit_purpose: "新客户首笔授信"
+      pre_visit_paper_available: false
+      oral_observation: "今天走访了XX企业,地址跟营业执照一致,厂房约3000平米,开工率约50%。"
+    expected:
+      contains:
+        - "未参照访前风险信号"
+        - "六维度走访纪要"
+      disclaimer_present: true
+
+  - id: TC007
+    type: edge_case
+    name: "CM报告不可用"
+    input:
+      customer_name: "XX企业"
+      visit_time: "2026-05-05 10:00"
+      reviewer_name: "张审批"
+      visit_purpose: "新客户首笔授信"
+      cm_report_available: false
+      oral_observation: "今天走访了XX企业,厂房约3000平米,开工率约60%。"
+    expected:
+      contains:
+        - "CM报告缺失,无法交叉验证"
+        - "六维度走访纪要"
+      disclaimer_present: true
+
+  - id: TC008
+    type: edge_case
+    name: "客户笔记区不可用"
+    input:
+      customer_name: "XX企业"
+      visit_time: "2026-05-05 10:00"
+      reviewer_name: "张审批"
+      visit_purpose: "新客户首笔授信"
+      note_system_available: false
+      oral_observation: "今天走访了XX企业,厂房约3000平米,开工率约60%。"
+    expected:
+      contains:
+        - "未保存 - 仅展示"
+        - "六维度走访纪要"
+      disclaimer_present: true
+
+  # ========== 反例测试 ==========
+  - id: TC009
+    type: negative
+    name: "客户名称为空"
+    input:
+      customer_name: ""
+      visit_time: "2026-05-05 10:00"
+      reviewer_name: "张审批"
+      visit_purpose: "新客户首笔授信"
+      oral_observation: "今天走访了一家企业..."
+    expected:
+      contains:
+        - "客户名称为空"
+        - "不得跳过必填字段检查"
+
+  - id: TC010
+    type: negative
+    name: "走访时间缺失"
+    input:
+      customer_name: "XX企业"
+      visit_time: ""
+      reviewer_name: "张审批"
+      visit_purpose: "新客户首笔授信"
+      oral_observation: "今天走访了XX企业..."
+    expected:
+      contains:
+        - "走访时间缺失"
+        - "不得跳过必填字段检查"
+
+  - id: TC011
+    type: negative
+    name: "口述内容不完整"
+    input:
+      customer_name: "XX企业"
+      visit_time: "2026-05-05 10:00"
+      reviewer_name: "张审批"
+      visit_purpose: "新客户首笔授信"
+      oral_observation: "今天去了XX企业,看起来还行。"
+    expected:
+      contains:
+        - "针对性追问"
+        - "缺失维度"
+
+  # ========== 拒绝测试 ==========
+  - id: TC012
+    type: rejection
+    name: "S1触发-经营场所查封"
+    input:
+      customer_name: "XX贸易公司"
+      visit_time: "2026-05-05 14:00"
+      reviewer_name: "李审批"
+      visit_purpose: "风险预警复核"
+      oral_observation: "厂房门口贴着法院查封公告,说涉及诉讼。车间基本停工了,只有几个工人在收拾东西。"
+    expected:
+      contains:
+        - "一票否决-S1"
+        - "经营场所虚假或已被查封"
+        - "建议暂停审批"
+      disclaimer_present: true
+
+  - id: TC013
+    type: rejection
+    name: "S2触发-停工超过30天"
+    input:
+      customer_name: "XX制造企业"
+      visit_time: "2026-05-05 09:00"
+      reviewer_name: "赵审批"
+      visit_purpose: "风险预警复核"
+      oral_observation: "车间已经停工一个多月了,工人说老板没钱发工资,已经两个月没发了。设备都停着,没看到生产迹象。"
+    expected:
+      contains:
+        - "一票否决-S2"
+        - "实质性停工超过30天"
+        - "建议暂停审批"
+      disclaimer_present: true
+
+  - id: TC014
+    type: rejection
+    name: "S5触发-实控人失联"
+    input:
+      customer_name: "XX科技公司"
+      visit_time: "2026-05-05 10:00"
+      reviewer_name: "王审批"
+      visit_purpose: "大额新增授信"
+      oral_observation: "实控人电话打不通,财务说老板出差了,但没说去哪。问了其他员工,都说联系不上老板。"
+    expected:
+      contains:
+        - "一票否决-S5"
+        - "实控人失联或拒绝见面"
+        - "建议暂停审批"
+      disclaimer_present: true
+
+  - id: TC015
+    type: rejection
+    name: "S6触发-重大安全隐患"
+    input:
+      customer_name: "XX化工企业"
+      visit_time: "2026-05-05 11:00"
+      reviewer_name: "刘审批"
+      visit_purpose: "风险预警复核"
+      oral_observation: "现场发现重大安全隐患,化学品存储不符合规范,消防设备过期。安监部门已经下了整改通知书,责令停产整顿。"
+    expected:
+      contains:
+        - "一票否决-S6"
+        - "重大环保/安全隐患"
+        - "建议暂停审批"
+      disclaimer_present: true

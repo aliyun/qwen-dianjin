@@ -1,0 +1,13 @@
+{
+  "skill_name": "insurance-agent-gap-advisor",
+  "version": "1.0.0",
+  "risk_level": "medium",
+  "parameters": {
+    "gap_dimensions": ["医疗", "重疾", "寿险", "意外", "养老"],
+    "gap_levels": ["高", "中", "低"],
+    "require_explainability": true,
+    "recommendation_scope": "险种方向与保额，不推荐具体产品",
+    "formulas_must_be_disclosed": true,
+    "disclaimer_required": true
+  }
+}

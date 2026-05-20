@@ -1,0 +1,268 @@
+version: "1.0"
+skill_name: "pre-visit-credit-analysis"
+test_cases:
+  # ========== 正例测试 ==========
+  - id: TC001
+    type: positive
+    name: "标准新客户首次走访前分析"
+    input:
+      customer_name: "XX制造有限公司"
+      credit_code: "91110000MA001XXXX"
+      visit_purpose: "新客户首笔授信"
+      credit_authorization: true
+    expected:
+      contains:
+        - "访前一页纸"
+        - "企业概况"
+        - "股权穿透至最终自然人"
+        - "风险信号评级"
+        - "走访重点建议"
+      must_not_contain:
+        - "数据缺失"
+        - "一票否决"
+      disclaimer_present: true
+
+  - id: TC002
+    type: positive
+    name: "存量客户续贷前走访分析"
+    input:
+      customer_name: "XX贸易有限公司"
+      credit_code: "91110000MA002XXXX"
+      visit_purpose: "存量续贷"
+      credit_authorization: false
+    expected:
+      contains:
+        - "访前一页纸"
+        - "行内存贷数据摘要"
+        - "风险信号评级"
+      must_not_contain:
+        - "一票否决"
+      disclaimer_present: true
+
+  - id: TC003
+    type: positive
+    name: "高新技术企业走访分析"
+    input:
+      customer_name: "XX科技有限公司"
+      credit_code: "91110000MA003XXXX"
+      visit_purpose: "大额新增授信"
+      credit_authorization: true
+    expected:
+      contains:
+        - "高新技术企业"
+        - "正面信号"
+        - "风险信号评级"
+      must_not_contain:
+        - "一票否决"
+      disclaimer_present: true
+
+  - id: TC004
+    type: positive
+    name: "多风险信号客户走访分析"
+    input:
+      customer_name: "XX建筑工程有限公司"
+      credit_code: "91110000MA004XXXX"
+      visit_purpose: "不良预警客户走访"
+      credit_authorization: true
+    expected:
+      contains:
+        - "红旗信号"
+        - "黄旗信号"
+        - "走访重点建议"
+      must_not_contain:
+        - "一票否决"
+      disclaimer_present: true
+
+  - id: TC005
+    type: positive
+    name: "全维度数据成功获取"
+    input:
+      customer_name: "XX零售有限公司"
+      credit_code: "91110000MA005XXXX"
+      visit_purpose: "新客户首笔授信"
+      credit_authorization: true
+      internal_data_available: true
+    expected:
+      contains:
+        - "工商信息"
+        - "司法风险"
+        - "舆情"
+        - "行内数据"
+        - "征信"
+      must_not_contain:
+        - "数据不可用"
+        - "未取得授权"
+      disclaimer_present: true
+
+  # ========== 边界测试 ==========
+  - id: TC006
+    type: edge_case
+    name: "股权穿透超过3层"
+    input:
+      customer_name: "XX控股集团"
+      credit_code: "91110000MA006XXXX"
+      visit_purpose: "新客户首笔授信"
+      credit_authorization: true
+      equity_layers: 5
+    expected:
+      contains:
+        - "穿透链条过长"
+        - "关注代持风险"
+        - "黄旗信号"
+      must_not_contain:
+        - "一票否决"
+      disclaimer_present: true
+
+  - id: TC007
+    type: edge_case
+    name: "注册资本实缴比例临界值(30%)"
+    input:
+      customer_name: "XX创业有限公司"
+      credit_code: "91110000MA007XXXX"
+      visit_purpose: "新客户首笔授信"
+      credit_authorization: true
+      paid_in_ratio: 0.30
+    expected:
+      contains:
+        - "实缴比例"
+      must_not_contain:
+        - "黄旗信号"
+      disclaimer_present: true
+
+  - id: TC008
+    type: edge_case
+    name: "征信查询次数临界值(6次)"
+    input:
+      customer_name: "XX融资担保公司"
+      credit_code: "91110000MA008XXXX"
+      visit_purpose: "存量续贷"
+      credit_authorization: true
+      credit_query_count: 6
+    expected:
+      contains:
+        - "征信查询"
+      must_not_contain:
+        - "黄旗信号"
+      disclaimer_present: true
+
+  # ========== 反例测试 ==========
+  - id: TC009
+    type: negative
+    name: "客户名称为空"
+    input:
+      customer_name: ""
+      visit_purpose: "新客户首笔授信"
+    expected:
+      contains:
+        - "数据缺失"
+        - "客户名称"
+      must_not_contain:
+        - "访前一页纸"
+      disclaimer_present: false
+
+  - id: TC010
+    type: negative
+    name: "行内CRM系统不可用"
+    input:
+      customer_name: "XX制造有限公司"
+      credit_code: "91110000MA010XXXX"
+      visit_purpose: "存量续贷"
+      credit_authorization: true
+      internal_data_available: false
+    expected:
+      contains:
+        - "行内数据不可用"
+        - "建议走访时向客户索取"
+      must_not_contain:
+        - "分析中断"
+      disclaimer_present: true
+
+  - id: TC011
+    type: negative
+    name: "舆情搜索工具不可用"
+    input:
+      customer_name: "XX贸易有限公司"
+      credit_code: "91110000MA011XXXX"
+      visit_purpose: "新客户首笔授信"
+      credit_authorization: false
+      public_opinion_available: false
+    expected:
+      contains:
+        - "舆情数据来源:通用搜索"
+        - "覆盖度可能受限"
+      must_not_contain:
+        - "分析中断"
+      disclaimer_present: true
+
+  # ========== 拒绝测试(一票否决触发) ==========
+  - id: TC012
+    type: rejection
+    name: "V1触发-失信被执行人"
+    input:
+      customer_name: "XX失信有限公司"
+      credit_code: "91110000MA012XXXX"
+      visit_purpose: "新客户首笔授信"
+      credit_authorization: true
+      is_dishonest_executed: true
+    expected:
+      contains:
+        - "一票否决-V1"
+        - "失信被执行人"
+        - "红色标注"
+      must_not_contain:
+        - "正面信号"
+      disclaimer_present: true
+
+  - id: TC013
+    type: rejection
+    name: "V2触发-征信逾期贷款"
+    input:
+      customer_name: "XX逾期有限公司"
+      credit_code: "91110000MA013XXXX"
+      visit_purpose: "存量续贷"
+      credit_authorization: true
+      has_overdue_loan: true
+    expected:
+      contains:
+        - "一票否决-V2"
+        - "未结清逾期贷款"
+        - "红色标注"
+      must_not_contain:
+        - "正面信号"
+      disclaimer_present: true
+
+  - id: TC014
+    type: rejection
+    name: "V5触发-淘汰类行业"
+    input:
+      customer_name: "XX淘汰类企业"
+      credit_code: "91110000MA014XXXX"
+      visit_purpose: "新客户首笔授信"
+      credit_authorization: true
+      industry_type: "淘汰类"
+    expected:
+      contains:
+        - "一票否决-V5"
+        - "淘汰类"
+        - "红色标注"
+      must_not_contain:
+        - "正面信号"
+      disclaimer_present: true
+
+  - id: TC015
+    type: rejection
+    name: "V6触发-实控人失联"
+    input:
+      customer_name: "XX失联企业"
+      credit_code: "91110000MA015XXXX"
+      visit_purpose: "不良预警客户走访"
+      credit_authorization: true
+      actual_controller_missing: true
+    expected:
+      contains:
+        - "一票否决-V6"
+        - "实控人失联"
+        - "红色标注"
+      must_not_contain:
+        - "正面信号"
+      disclaimer_present: true

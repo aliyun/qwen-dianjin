@@ -1,0 +1,230 @@
+test_cases:
+  # 正例 - 标准场景
+  - name: "标准制造业企业风险提取"
+    type: positive
+    input:
+      company_name: "XX汽车零部件制造有限公司"
+      industry: "C3670 汽车零部件及配件制造"
+      materials:
+        - "信贷报告_2026Q1.pdf"
+        - "企业基本情况描述.docx"
+      risk_points_count: 3
+    expected:
+      contains:
+        - "报告基本信息"
+        - "【企业标签画像】"
+        - "【风险结构化分析】"
+        - "完整性声明"
+        - "数据来源与免责说明"
+      must_not_contain:
+        - "高风险"
+        - "低风险"
+        - "收益承诺"
+        - "投资建议"
+      disclaimer_present: true
+      min_risk_points: 3
+      industry_levels: 4
+
+  - name: "贸易企业风险提取"
+    type: positive
+    input:
+      company_name: "XX进出口贸易有限公司"
+      industry: "F51 批发业"
+      materials:
+        - "尽调报告.pdf"
+        - "风险评价文本.docx"
+      risk_points_count: 2
+    expected:
+      contains:
+        - "报告基本信息"
+        - "【企业标签画像】"
+        - "【风险结构化分析】"
+        - "完整性声明"
+        - "数据来源与免责说明"
+      must_not_contain:
+        - "高风险"
+        - "中风险"
+        - "低风险"
+      disclaimer_present: true
+      min_risk_points: 2
+
+  # 边界案例
+  - name: "单风险点企业风险提取"
+    type: edge_case
+    input:
+      company_name: "XX科技有限公司"
+      industry: "I65 软件和信息技术服务业"
+      materials:
+        - "初审报告.pdf"
+      risk_points_count: 1
+    expected:
+      contains:
+        - "报告基本信息"
+        - "【企业标签画像】"
+        - "【风险结构化分析】"
+        - "完整性声明"
+        - "数据来源与免责说明"
+      must_not_contain:
+        - "高风险"
+        - "中风险"
+        - "低风险"
+      disclaimer_present: true
+      min_risk_points: 1
+
+  - name: "集团企业风险提取（多层级架构）"
+    type: edge_case
+    input:
+      company_name: "XX集团控股有限公司"
+      industry: "L72 商务服务业"
+      materials:
+        - "集团信贷报告.pdf"
+        - "组织架构说明.docx"
+      risk_points_count: 4
+    expected:
+      contains:
+        - "报告基本信息"
+        - "【企业标签画像】"
+        - "【风险结构化分析】"
+        - "完整性声明"
+        - "数据来源与免责说明"
+        - "集团企业"
+      must_not_contain:
+        - "高风险"
+        - "中风险"
+        - "低风险"
+      disclaimer_present: true
+      min_risk_points: 4
+
+  - name: "原文未提及资本属性的企业"
+    type: edge_case
+    input:
+      company_name: "XX未知资本结构公司"
+      industry: "C25 石油、煤炭及其他燃料加工业"
+      materials:
+        - "简版信贷报告.pdf"
+      risk_points_count: 2
+      missing_fields:
+        - "资本属性"
+        - "组织架构"
+    expected:
+      contains:
+        - "需补充核实"
+        - "报告基本信息"
+        - "【企业标签画像】"
+        - "【风险结构化分析】"
+        - "数据来源与免责说明"
+      must_not_contain:
+        - "高风险"
+        - "中风险"
+        - "低风险"
+      disclaimer_present: true
+
+  # 反例
+  - name: "缺少信贷报告输入"
+    type: negative
+    input:
+      company_name: "XX公司"
+      industry: "未知"
+      materials: []
+    expected:
+      errors:
+        - "输入材料缺失"
+        - "无法执行风险提取"
+
+  - name: "风险点数量不匹配"
+    type: negative
+    input:
+      company_name: "XX制造有限公司"
+      industry: "C36 汽车制造业"
+      materials:
+        - "信贷报告.pdf"
+      risk_points_count: 5
+      actual_risk_points: 3
+    expected:
+      errors:
+        - "风险点数量不匹配"
+      warnings:
+        - "完整性声明与实际风险点数不一致"
+
+  - name: "行业分类未穿透至小类"
+    type: negative
+    input:
+      company_name: "XX制造有限公司"
+      industry: "C36 汽车制造业"
+      materials:
+        - "信贷报告.pdf"
+      risk_points_count: 2
+    expected:
+      errors:
+        - "行业分类仅包含2级，必须包含4级"
+      warnings:
+        - "行业分类未穿透至小类"
+
+  # 拒绝案例
+  - name: "要求输出风险分级"
+    type: rejection
+    input:
+      company_name: "XX公司"
+      industry: "C制造业"
+      materials:
+        - "信贷报告.pdf"
+      request: "请给出每个风险的高低评级"
+    expected:
+      rejection_reason: "禁止风险分级"
+      must_not_contain:
+        - "高风险"
+        - "中风险"
+        - "低风险"
+      should_contain:
+        - "本技能不支持风险分级"
+
+  - name: "要求提供具体指标阈值"
+    type: rejection
+    input:
+      company_name: "XX公司"
+      industry: "C制造业"
+      materials:
+        - "信贷报告.pdf"
+      request: "请给出资产负债率的具体阈值"
+    expected:
+      rejection_reason: "禁止提供具体指标阈值"
+      must_not_contain:
+        - "资产负债率 >"
+        - "阈值"
+      should_contain:
+        - "由信审人员自行判断"
+
+  - name: "要求跳过风险点合并分析"
+    type: rejection
+    input:
+      company_name: "XX公司"
+      industry: "C制造业"
+      materials:
+        - "信贷报告.pdf"
+      risk_points_count: 5
+      request: "请将5个风险点合并为2个主要风险"
+    expected:
+      rejection_reason: "禁止合并或跳过风险点"
+      must_not_contain:
+        - "合并"
+        - "跳过"
+      should_contain:
+        - "必须覆盖全部风险点"
+
+  - name: "要求改写原文风险描述"
+    type: rejection
+    input:
+      company_name: "XX公司"
+      industry: "C制造业"
+      materials:
+        - "信贷报告.pdf"
+      risk_points_count: 3
+      request: "请将原文风险描述改写为更简洁的版本"
+    expected:
+      rejection_reason: "禁止改写原文描述"
+      must_not_contain:
+        - "改写"
+        - "缩减"
+        - "归纳"
+      should_contain:
+        - "与原文完全一致"
