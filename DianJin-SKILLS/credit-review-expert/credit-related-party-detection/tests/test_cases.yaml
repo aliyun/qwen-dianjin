@@ -1,0 +1,257 @@
+version: "1.0"
+skill_name: "credit-related-party-detection"
+test_cases:
+  # ========== 正例测试 ==========
+  - id: TC001
+    type: positive
+    name: "标准贷前关联排查-制造业企业"
+    input:
+      customer_name: "XX制造有限公司"
+      credit_code: "91110000MA001XXXX"
+      business_scenario: "贷前排查"
+      existing_credit_balance: 0
+      application_amount: 50000000
+    expected:
+      contains:
+        - "六维关联方识别"
+        - "股权穿透至最终自然人"
+        - "风险分级"
+        - "处置建议"
+      must_not_contain:
+        - "数据缺失"
+        - "一票否决"
+      disclaimer_present: true
+
+  - id: TC002
+    type: positive
+    name: "贷中关联交易监测-存量客户"
+    input:
+      customer_name: "XX贸易有限公司"
+      credit_code: "91110000MA002XXXX"
+      business_scenario: "贷中监控"
+      existing_credit_balance: 30000000
+      application_amount: 0
+    expected:
+      contains:
+        - "新增关联交易"
+        - "担保变动"
+        - "股权变更"
+      disclaimer_present: true
+
+  - id: TC003
+    type: positive
+    name: "贷后风险预警触发-发现资金往来异常"
+    input:
+      customer_name: "XX集团"
+      credit_code: "91110000MA003XXXX"
+      business_scenario: "贷后预警"
+      existing_credit_balance: 80000000
+      known_related_parties:
+        - "XX资产管理有限公司"
+        - "XX投资有限公司"
+    expected:
+      contains:
+        - "深度排查"
+        - "资金往来异常"
+        - "风险传导路径"
+      disclaimer_present: true
+
+  - id: TC004
+    type: positive
+    name: "集团客户授信-全维度关联排查"
+    input:
+      customer_name: "XX控股集团"
+      credit_code: "91110000MA004XXXX"
+      business_scenario: "贷前排查"
+      application_amount: 200000000
+    expected:
+      contains:
+        - "授信集中度"
+        - "担保链长度"
+        - "关联群体财务健康"
+      disclaimer_present: true
+
+  - id: TC005
+    type: positive
+    name: "股权变更后复核-实控人变更"
+    input:
+      customer_name: "XX科技有限公司"
+      credit_code: "91110000MA005XXXX"
+      business_scenario: "贷中监控"
+      existing_credit_balance: 20000000
+    expected:
+      contains:
+        - "股权关联变化"
+        - "实控人变更"
+        - "重新识别"
+      disclaimer_present: true
+
+  # ========== 边界测试 ==========
+  - id: TC006
+    type: edge_case
+    name: "股权穿透API不可用-降级处理"
+    input:
+      customer_name: "XX制造有限公司"
+      credit_code: "91110000MA006XXXX"
+      business_scenario: "贷前排查"
+      degradation: "股权穿透API不可用"
+    expected:
+      contains:
+        - "数据非实时"
+        - "建议人工核实"
+        - "使用缓存数据"
+      disclaimer_present: true
+
+  - id: TC007
+    type: edge_case
+    name: "征信系统不可用-降级处理"
+    input:
+      customer_name: "XX贸易有限公司"
+      credit_code: "91110000MA007XXXX"
+      business_scenario: "贷前排查"
+      degradation: "征信系统不可用"
+    expected:
+      contains:
+        - "征信数据缺失"
+        - "排查结果可能不完整"
+        - "使用客户提供的财报"
+      disclaimer_present: true
+
+  - id: TC008
+    type: edge_case
+    name: "客户拒绝配合调查"
+    input:
+      customer_name: "XX集团"
+      credit_code: "91110000MA008XXXX"
+      business_scenario: "贷前排查"
+      customer_cooperation: "拒绝配合"
+    expected:
+      contains:
+        - "客户拒绝配合"
+        - "建议审慎处理"
+        - "提高风险定价"
+      disclaimer_present: true
+
+  # ========== 反例测试 ==========
+  - id: TC009
+    type: negative
+    name: "客户名称为空"
+    input:
+      customer_name: ""
+      credit_code: ""
+      business_scenario: "贷前排查"
+    expected:
+      contains:
+        - "数据缺失"
+        - "客户名称/统一信用代码为空"
+        - "立即停止"
+      must_not_contain:
+        - "关联方识别"
+        - "风险分级"
+
+  - id: TC010
+    type: negative
+    name: "交易流水不可用-降级处理"
+    input:
+      customer_name: "XX制造有限公司"
+      credit_code: "91110000MA010XXXX"
+      business_scenario: "贷前排查"
+      degradation: "交易流水不可用"
+    expected:
+      contains:
+        - "交易流水缺失"
+        - "关联交易识别可能不完整"
+        - "使用纳税申报表和财报估算"
+      disclaimer_present: true
+
+  - id: TC011
+    type: negative
+    name: "工商数据不可用-降级处理"
+    input:
+      customer_name: "XX贸易有限公司"
+      credit_code: "91110000MA011XXXX"
+      business_scenario: "贷前排查"
+      degradation: "工商数据不可用"
+    expected:
+      contains:
+        - "工商数据缺失"
+        - "隐性关联可能遗漏"
+        - "使用营业执照和公司章程"
+      disclaimer_present: true
+
+  # ========== 拒绝测试(一票否决) ==========
+  - id: TC012
+    type: rejection
+    name: "R1触发-资金空转明确证据"
+    input:
+      customer_name: "XX集团"
+      credit_code: "91110000MA012XXXX"
+      business_scenario: "贷后预警"
+      abnormal_features:
+        - type: "资金空转"
+          description: "月均转账8笔,单笔最高800万,无真实贸易背景"
+    expected:
+      contains:
+        - "R1"
+        - "资金空转"
+        - "红色警示"
+        - "暂停授信"
+        - "上报合规部门"
+      rejection_triggered: "R1"
+      disclaimer_present: true
+
+  - id: TC013
+    type: rejection
+    name: "R3触发-核心资产/利润系统性转移"
+    input:
+      customer_name: "XX制造有限公司"
+      credit_code: "91110000MA013XXXX"
+      business_scenario: "贷前排查"
+      abnormal_features:
+        - type: "利润转移"
+          description: "借款企业毛利率显著低于非关联方交易,利润主要流向关联方"
+    expected:
+      contains:
+        - "R3"
+        - "利润转移"
+        - "红色警示"
+        - "暂停授信"
+      rejection_triggered: "R3"
+      disclaimer_present: true
+
+  - id: TC014
+    type: rejection
+    name: "R5触发-对外担保总额>净资产100%"
+    input:
+      customer_name: "XX贸易有限公司"
+      credit_code: "91110000MA014XXXX"
+      business_scenario: "贷前排查"
+      guarantee_total: 150000000
+      net_assets: 100000000
+    expected:
+      contains:
+        - "R5"
+        - "过度担保"
+        - "对外担保总额>净资产100%"
+        - "一票否决"
+      rejection_triggered: "R5"
+      disclaimer_present: true
+
+  - id: TC015
+    type: rejection
+    name: "R6触发-故意隐瞒重大关联方"
+    input:
+      customer_name: "XX控股集团"
+      credit_code: "91110000MA015XXXX"
+      business_scenario: "贷前排查"
+      hidden_related_parties:
+        - "XX资产管理有限公司(实控人配偶控制,未在关联方声明中披露)"
+    expected:
+      contains:
+        - "R6"
+        - "隐瞒重大关联方"
+        - "红色警示"
+        - "暂停授信"
+        - "上报合规部门"
+      rejection_triggered: "R6"
+      disclaimer_present: true

@@ -1,0 +1,144 @@
+test_cases:
+  - name: "标准场景 - 正常类客户常规检查"
+    type: positive
+    input:
+      customer_data: "tests/fixtures/normal_customer.json"
+      financial_data: "tests/fixtures/healthy_financials.json"
+      fund_flow_data: "tests/fixtures/clean_fund_flow.json"
+    expected:
+      contains:
+        - "贷后检查报告"
+        - "客户基本情况"
+        - "资金用途核查"
+        - "经营与财务评估"
+        - "担保有效性评价"
+        - "风险分类建议"
+        - "处置建议"
+        - "下期检查计划"
+      must_not_contain:
+        - "预计恢复"
+        - "有望好转"
+        - "回收率预计"
+        - "投资建议"
+        - "保证收益"
+      disclaimer_present: true
+      audit_log_generated: true
+      risk_classification: "正常"
+
+  - name: "预警场景 - 关注类客户触发橙色预警"
+    type: positive
+    input:
+      customer_data: "tests/fixtures/concern_customer.json"
+      financial_data: "tests/fixtures/deteriorating_financials.json"
+      fund_flow_data: "tests/fixtures/suspicious_fund_flow.json"
+    expected:
+      contains:
+        - "橙色预警"
+        - "营收大幅下滑"
+        - "压缩敞口"
+        - "追加担保"
+      must_not_contain:
+        - "预计恢复"
+        - "投资建议"
+      disclaimer_present: true
+      audit_log_generated: true
+      warning_signals_count: ">= 3"
+
+  - name: "数据不完整 - 仅一年财务报表"
+    type: edge_case
+    input:
+      customer_data: "tests/fixtures/normal_customer.json"
+      financial_data: "tests/fixtures/single_year_financials.json"
+      fund_flow_data: "tests/fixtures/clean_fund_flow.json"
+    expected:
+      contains:
+        - "数据不足"
+        - "趋势分析不可用"
+      must_not_contain:
+        - "投资建议"
+      disclaimer_present: true
+      degraded_mode: true
+
+  - name: "征信数据不可用 - 降级策略触发"
+    type: edge_case
+    input:
+      customer_data: "tests/fixtures/normal_customer.json"
+      financial_data: "tests/fixtures/healthy_financials.json"
+      fund_flow_data: "tests/fixtures/clean_fund_flow.json"
+      credit_data: null
+    expected:
+      contains:
+        - "未纳入征信维度"
+      must_not_contain:
+        - "投资建议"
+      disclaimer_present: true
+      degraded_mode: true
+
+  - name: "财务数据勾稽不平衡"
+    type: negative
+    input:
+      customer_data: "tests/fixtures/normal_customer.json"
+      financial_data: "tests/fixtures/unbalanced_financials.json"
+      fund_flow_data: "tests/fixtures/clean_fund_flow.json"
+    expected:
+      contains:
+        - "验证失败"
+        - "资产负债表不平衡"
+      must_not_contain:
+        - "财务健康"
+        - "投资建议"
+      disclaimer_present: true
+
+  - name: "金融企业 - 不适用制造业预警阈值"
+    type: negative
+    input:
+      customer_data: "tests/fixtures/bank_customer.json"
+      financial_data: "tests/fixtures/bank_financials.json"
+      fund_flow_data: "tests/fixtures/clean_fund_flow.json"
+    expected:
+      must_not_contain:
+        - "Altman Z-score"
+        - "流动比率"
+        - "速动比率"
+      contains:
+        - "金融企业"
+        - "需采用银行业专用分析框架"
+      disclaimer_present: true
+
+  - name: "超范围请求 - 个人信贷贷后"
+    type: rejection
+    input:
+      query: "帮我做一下个人住房贷款的贷后检查"
+    expected:
+      rejected: true
+      contains:
+        - "不在本 Skill 的服务范围"
+        - "个人信贷"
+
+  - name: "越权请求 - 要求自动执行分类调整"
+    type: rejection
+    input:
+      query: "直接帮我把这个客户的分类调为次级，不用我审批"
+    expected:
+      rejected: true
+      contains:
+        - "不得代替人工审批"
+        - "须人工确认"
+
+  - name: "触发一票否决 - P1 资金挪用"
+    type: positive
+    input:
+      customer_data: "tests/fixtures/normal_customer.json"
+      financial_data: "tests/fixtures/healthy_financials.json"
+      fund_flow_data: "tests/fixtures/misused_fund_flow.json"
+    expected:
+      contains:
+        - "红色预警"
+        - "P1"
+        - "资金挪用"
+        - "启动提前收贷"
+      must_not_contain:
+        - "投资建议"
+      disclaimer_present: true
+      audit_log_generated: true
+      veto_triggered: "P1"

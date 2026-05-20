@@ -1,0 +1,19 @@
+{
+  "skill_name": "insurance-agent-client-consulting",
+  "version": "1.0.0",
+  "risk_level": "low",
+  "parameters": {
+    "client_types": ["新客户", "老客户", "转介绍"],
+    "consulting_scenarios": ["初次沟通", "方案讲解", "异议处理", "促成签单"],
+    "family_structures": ["单身", "夫妻", "三口之家", "多代同堂"],
+    "income_ranges": ["<20万", "20-50万", "50-100万", ">100万"],
+    "risk_preferences": ["保守", "稳健", "积极"],
+    "core_needs": ["健康保障", "养老规划", "子女教育", "财富传承"],
+    "budget_guidelines": {
+      "below_5pct": "基础保障",
+      "pct_5_10": "标准保障",
+      "pct_10_15": "全面保障",
+      "above_20pct": "需优化结构"
+    }
+  }
+}

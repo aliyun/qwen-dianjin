@@ -1,0 +1,177 @@
+# equity-penetration-analysis Skill 测试用例集
+# 符合 METHODOLOGY.md 第7节测试与评估框架要求
+
+test_cases:
+  # ==================== 正例：正常场景 ====================
+  
+  - name: "标准分析 - 制造业上市公司贷前尽调"
+    type: positive
+    input:
+      company_name: "XX制造有限公司"
+      analysis_scenario: "贷前股权尽调"
+      credit_amount: 3000
+    expected:
+      contains:
+        - "股权架构总览"
+        - "实际控制人分析"
+        - "关联方全图谱"
+        - "关联交易分析"
+        - "同业竞争分析"
+        - "综合风险评估"
+        - "mermaid"
+        - "CR3"
+        - "CR5"
+        - "一致行动人"
+        - "隐性关联方"
+        - "利益输送"
+      must_not_contain:
+        - "投资建议"
+        - "保证收益"
+        - "年化收益率"
+      disclaimer_present: true
+      audit_log_generated: true
+
+  - name: "复杂集团 - 集团授信穿透分析"
+    type: positive
+    input:
+      company_name: "XX集团"
+      analysis_scenario: "集团授信穿透"
+      credit_amount: 20000
+    expected:
+      contains:
+        - "股权架构总览"
+        - "实际控制人分析"
+        - "关联方全图谱"
+        - "关联担保网络"
+        - "风险传染链"
+        - "环形担保"
+      must_not_contain:
+        - "投资建议"
+        - "保证收益"
+      disclaimer_present: true
+
+  - name: "VIE架构 - 境外上市企业穿透"
+    type: positive
+    input:
+      company_name: "XX科技有限公司"
+      analysis_scenario: "VIE架构穿透"
+    expected:
+      contains:
+        - "VIE协议控制"
+        - "境外SPV"
+        - "协议控制有效性"
+        - "实际控制人认定"
+      must_not_contain:
+        - "投资建议"
+      disclaimer_present: true
+
+  - name: "关联方风险排查 - 资金占用分析"
+    type: positive
+    input:
+      company_name: "XX企业"
+      analysis_scenario: "贷后风险排查"
+      focus_area: "关联方资金占用"
+    expected:
+      contains:
+        - "关联方全图谱"
+        - "资金占用"
+        - "应收关联方款项"
+        - "利益输送风险"
+      must_not_contain:
+        - "投资建议"
+      disclaimer_present: true
+
+  - name: "股权质押贷款 - 控制权稳定性评估"
+    type: positive
+    input:
+      company_name: "XX股份"
+      analysis_scenario: "股权质押贷款"
+      pledge_ratio: 60
+    expected:
+      contains:
+        - "股权质押率"
+        - "控制权稳定性"
+        - "还款意愿"
+        - "风险矩阵"
+      must_not_contain:
+        - "投资建议"
+      disclaimer_present: true
+
+  # ==================== 反例：超范围场景 ====================
+  
+  - name: "超范围 - 个人信贷"
+    type: rejection
+    input:
+      query: "帮我评估一下个人住房贷款的风险"
+    expected:
+      rejected: true
+      contains:
+        - "不在本 Skill 的服务范围"
+        - "个人信贷"
+
+  - name: "超范围 - 行业宏观分析"
+    type: rejection
+    input:
+      query: "分析一下光伏行业的发展趋势"
+    expected:
+      rejected: true
+      contains:
+        - "不在本 Skill 的服务范围"
+        - "行业分析"
+        - "credit-industry-analysis"
+
+  - name: "超范围 - 财务数据分析"
+    type: rejection
+    input:
+      query: "帮我分析一下这家公司的财务报表"
+    expected:
+      rejected: true
+      contains:
+        - "不在本 Skill 的服务范围"
+        - "财务分析"
+        - "financial-report-analysis"
+
+  # ==================== 边界案例 ====================
+  
+  - name: "边界案例 - 数据不完整（仅工商数据）"
+    type: edge_case
+    input:
+      company_name: "XX企业"
+      analysis_scenario: "贷前尽调"
+      data_available:
+        - "工商登记信息"
+      data_missing:
+        - "征信系统"
+        - "行内关联交易记录"
+    expected:
+      contains:
+        - "征信数据未核验"
+        - "行内关联交易数据未纳入"
+        - "股权架构总览"
+      degraded_mode: true
+
+  - name: "边界案例 - 触发红线R1（实控人逃废债）"
+    type: edge_case
+    input:
+      company_name: "XX企业"
+      analysis_scenario: "贷前尽调"
+      red_line_triggered: "R1"
+    expected:
+      contains:
+        - "R1：实际控制人逃废债"
+        - "暂停授信"
+        - "高风险"
+      red_line_present: true
+
+  - name: "边界案例 - 触发红线R2（融资平台无实质经营）"
+    type: edge_case
+    input:
+      company_name: "XX集团融资平台"
+      analysis_scenario: "集团授信"
+      red_line_triggered: "R2"
+    expected:
+      contains:
+        - "R2：融资平台无实质经营"
+        - "暂停授信"
+        - "无实质性经营资产"
+      red_line_present: true

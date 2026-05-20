@@ -1,0 +1,156 @@
+# 行业信贷风险审查规则生成测试用例
+# 覆盖4种类型: positive(正例) / edge_case(边界案例) / negative(反例) / rejection(拒绝案例)
+
+test_cases:
+  # ==================== Positive 正例 ====================
+  - id: TC001
+    type: positive
+    description: "标准食用菌种植行业规则生成"
+    input:
+      industry: "食用菌种植"
+      enterprise_size: "中型"
+      region: "江浙沪"
+    expected:
+      basic_rules_count: "≥5条"
+      deep_rules_count: "≥3条"
+      fraud_patterns_count: "2-4种"
+      lifecycle_stage: "成长期/成熟期"
+      disclaimer_present: true
+      contains_quantitative_threshold: true
+      contains_veto_condition: true
+
+  - id: TC002
+    type: positive
+    description: "水产养殖行业规则生成"
+    input:
+      industry: "水产养殖"
+      enterprise_size: "大型"
+      special_focus: "重点关注水质环保合规"
+    expected:
+      basic_rules_count: "≥5条"
+      deep_rules_count: "≥3条"
+      contains_environmental_check: true
+      contains_water_quality_verification: true
+      disclaimer_present: true
+
+  - id: TC003
+    type: positive
+    description: "建筑施工行业规则生成"
+    input:
+      industry: "建筑施工"
+      enterprise_size: "中型"
+    expected:
+      basic_rules_count: "≥5条"
+      deep_rules_count: "≥3条"
+      contains_safety_license_check: true
+      contains_progress_verification: true
+      disclaimer_present: true
+
+  # ==================== Edge Case 边界案例 ====================
+  - id: TC004
+    type: edge_case
+    description: "存量行业规则补充(增量模式)"
+    input:
+      industry: "食用菌种植"
+      existing_rules:
+        - name: "种植面积核实"
+          risk_target: "防止虚报种植规模"
+    expected:
+      basic_rules_count: "≥4条(补充)"
+      deep_rules_count: "≥2条(补充)"
+      no_duplicate_rules: true
+      naming_consistency: true
+
+  - id: TC005
+    type: edge_case
+    description: "宽泛行业名称(需细化)"
+    input:
+      industry: "制造业"
+    expected:
+      requires_refinement: true
+      warning_message: "行业名称过于宽泛"
+
+  - id: TC006
+    type: edge_case
+    description: "衰退期行业规则生成"
+    input:
+      industry: "传统煤炭开采"
+    expected:
+      lifecycle_stage: "衰退期"
+      contains_exit_strategy_rule: true
+      contains_asset_impairment_check: true
+      risk_level: "high"
+
+  # ==================== Negative 反例 ====================
+  - id: TC007
+    type: negative
+    description: "基础规则数量不足"
+    input:
+      industry: "测试行业"
+      basic_rules_count: 3  # 不足5条
+    expected:
+      validation_error: "basic_check_rules数量不足"
+
+  - id: TC008
+    type: negative
+    description: "深度规则数量不足"
+    input:
+      industry: "测试行业"
+      deep_rules_count: 2  # 不足3条
+    expected:
+      validation_error: "deep_analysis_rules数量不足"
+
+  - id: TC009
+    type: negative
+    description: "规则缺乏量化阈值"
+    input:
+      industry: "测试行业"
+      rule_without_threshold: true
+    expected:
+      validation_error: "check_rules缺少量化阈值"
+
+  # ==================== Rejection 拒绝案例 ====================
+  - id: TC010
+    type: rejection
+    description: "淘汰类产业(一票否决)"
+    input:
+      industry: "落后钢铁产能"
+      policy_status: "淘汰类"
+    expected:
+      rejection: true
+      red_line_identified: "I1"
+      recommendation: "暂停授信准入"
+
+  - id: TC011
+    type: rejection
+    description: "产能严重过剩行业"
+    input:
+      industry: "光伏组件制造"
+      capacity_utilization: 55  # <60%
+      trend: "连续2年下降"
+    expected:
+      rejection: true
+      red_line_identified: "I2"
+      recommendation: "谨慎介入或暂停新增授信"
+
+  - id: TC012
+    type: rejection
+    description: "行业头部企业集体违约"
+    input:
+      industry: "某新兴行业"
+      default_event: "头部企业大面积违约"
+    expected:
+      rejection: true
+      red_line_identified: "I3"
+      recommendation: "暂停授信准入"
+
+  - id: TC013
+    type: rejection
+    description: "系统性监管收紧"
+    input:
+      industry: "P2P网贷"
+      regulatory_action: "全行业专项整治"
+    expected:
+      rejection: true
+      red_line_identified: "I5"
+      recommendation: "全面退出"

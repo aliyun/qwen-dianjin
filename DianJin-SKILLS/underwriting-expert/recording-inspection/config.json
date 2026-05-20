@@ -1,0 +1,12 @@
+{
+  "skill_name": "insurance-underwriting-recording-inspection",
+  "version": "1.0.0",
+  "risk_level": "high",
+  "parameters": {
+    "compliance_standards": ["银保监会最新", "公司内规"],
+    "audit_depths": ["快速", "深度"],
+    "product_types": ["人寿", "健康", "意外", "年金"],
+    "compliance_check_items": ["身份确认", "产品说明", "风险提示", "费用说明", "免责条款", "客户确认", "夸大宣传"],
+    "emotion_types": ["疑惑", "犹豫", "不满", "紧张"]
+  }
+}

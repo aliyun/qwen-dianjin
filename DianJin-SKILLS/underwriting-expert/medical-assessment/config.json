@@ -1,0 +1,27 @@
+{
+  "skill_name": "insurance-underwriting-medical-assessment",
+  "version": "1.0.0",
+  "risk_level": "medium",
+  "parameters": {
+    "abnormality_levels": ["mild", "moderate", "severe"],
+    "underwriting_impacts": ["standard", "rated", "excluded", "postponed", "declined"],
+    "exam_system_categories": [
+      "cardiovascular",
+      "metabolic",
+      "liver",
+      "renal",
+      "tumor_markers",
+      "imaging",
+      "hematology"
+    ],
+    "common_abnormal_indicators": {
+      "blood_pressure_high_normal": {"range": "130-139/85-89 mmHg", "impact": "standard_or_mild_rated"},
+      "hypertension_controlled": {"range": "≥140/90, on medication", "impact": "rated_or_cardiovascular_excluded"},
+      "fasting_glucose_high_normal": {"range": "6.1-6.9 mmol/L", "impact": "mild_rated_or_retest"},
+      "alt_mild_elevated": {"range": "40-80 U/L", "impact": "retest_required"},
+      "thyroid_nodule_tirads_1_3": {"range": "likely benign", "impact": "standard_or_thyroid_excluded"},
+      "lung_nodule_small": {"range": "<5mm", "impact": "standard_or_follow_up"},
+      "tumor_marker_mild_elevated": {"range": "single item mild", "impact": "specialist_retest_postponed"}
+    }
+  }
+}

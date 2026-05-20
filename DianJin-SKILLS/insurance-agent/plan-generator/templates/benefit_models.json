@@ -1,0 +1,42 @@
+{
+  "cash_value_curve": {
+    "description": "行业平均退保价值系数(现金价值/累计保费)，用于估算各年度现金价值",
+    "year_1": 0.15,
+    "year_2": 0.25,
+    "year_3": 0.40,
+    "year_4": 0.50,
+    "year_5": 0.58,
+    "year_6": 0.62,
+    "year_7": 0.66,
+    "year_8": 0.70,
+    "year_9": 0.73,
+    "year_10": 0.75,
+    "year_11_20_start": 0.78,
+    "year_11_20_end": 1.05,
+    "year_20_plus_growth": 0.02
+  },
+  "universal_rates": {
+    "guaranteed": 0.02,
+    "mid": 0.035,
+    "high": 0.045,
+    "description": "万能账户三档演示利率: 最低保证/中档/高档"
+  },
+  "projection_defaults": {
+    "inflation_rate": 0.03,
+    "male_retire_age": 60,
+    "female_retire_age": 55,
+    "life_expectancy": 80,
+    "milestone_years": [1, 3, 5, 10, 15, 20, 30],
+    "description": "投影计算默认参数"
+  },
+  "premium_income_benchmarks": {
+    "ideal_max": 0.10,
+    "acceptable_max": 0.15,
+    "warning_above": 0.15,
+    "description": "保费收入占比基准: <10%理想, 10-15%适中, >15%偏高"
+  },
+  "ci_mild_default_ratio": 0.3,
+  "ci_mild_description": "默认轻症赔付比例为重疾保额的30%",
+  "education_milestone_ages": [18, 22, 25],
+  "education_milestone_labels": ["大学入学", "大学毕业", "研究生毕业"]
+}

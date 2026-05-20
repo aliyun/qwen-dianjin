@@ -1,0 +1,123 @@
+test_cases:
+  - name: "标准场景 - 制造业企业财务异常推理链"
+    type: positive
+    input:
+      financial_data:
+        periods: ["2021", "2022", "2023"]
+        营业收入: [123000, 115000, 108000]
+        在建工程: [21000, 52000, 87000]
+        净利润: [8500, 4200, 1800]
+        经营现金流: [6000, 1500, -2000]
+        target_risk_point: "该企业存在盲目扩产风险，长期偿债能力存疑"
+    expected:
+      contains: ["信号识别", "行业趋势验证", "政策驱动力分析", "技术替代可能性评估", "财务后果敏感性测算", "综合判断"]
+      must_not_contain: ["收益承诺", "投资建议", "预计恢复", "有望好转"]
+      disclaimer_present: true
+      audit_log_generated: true
+      data_source_annotated: true
+
+  - name: "预警场景 - 多重风险信号叠加"
+    type: positive
+    input:
+      financial_data:
+        periods: ["2021", "2022", "2023"]
+        营业收入: [50000, 45000, 38000]
+        毛利率: [0.25, 0.18, 0.10]
+        应收账款: [8000, 15000, 22000]
+        经营现金流: [5000, 2000, -3000]
+        target_risk_point: "该企业持续经营能力存在重大不确定性"
+    expected:
+      contains: ["毛利率持续下滑", "经营现金流与净利润背离", "应收账款增速超收入增速", "证据不足" , "（推断）"]
+      must_not_contain: ["确定性表述", "回收率预计"]
+      disclaimer_present: true
+      six_steps_covered: true
+
+  - name: "正向场景 - 技术迭代前沿企业风险转化机遇"
+    type: positive
+    input:
+      financial_data:
+        periods: ["2021", "2022", "2023"]
+        营业收入: [30000, 42000, 58000]
+        研发投入: [5000, 8000, 12000]
+        净利润: [2000, 3500, 6000]
+        target_risk_point: "该企业高研发投入存在资本化风险"
+    expected:
+      contains: ["研发投入", "资本化", "技术迭代", "风险可能转化为机遇"]
+      must_not_contain: ["盲目扩产", "跟风式"]
+      disclaimer_present: true
+
+  - name: "边界案例 - 仅一年财务报表"
+    type: edge_case
+    input:
+      financial_data:
+        periods: ["2023"]
+        营业收入: [108000]
+        在建工程: [87000]
+        净利润: [1800]
+        target_risk_point: "在建工程异常增长"
+    expected:
+      contains: ["数据不足", "趋势分析不可用", "仅做静态分析"]
+      degraded_mode: true
+      disclaimer_present: true
+
+  - name: "边界案例 - 行业基准数据不可用"
+    type: edge_case
+    input:
+      financial_data:
+        periods: ["2022", "2023"]
+        营业收入: [25000, 28000]
+        净利润: [3000, 3500]
+        industry: "稀有金属开采"
+        target_risk_point: "行业周期性风险"
+    expected:
+      contains: ["未纳入行业对标维度", "行业信息不足"]
+      degraded_mode: true
+      disclaimer_present: true
+
+  - name: "反例 - 财务数据勾稽不平衡"
+    type: negative
+    input:
+      financial_data:
+        periods: ["2023"]
+        总资产: [100000]
+        总负债: [80000]
+        所有者权益: [10000]
+        target_risk_point: "任何风险点"
+    expected:
+      contains: ["资产负债不平衡", "数据验证不通过"]
+      must_not_contain: ["推理链", "思维链"]
+      validation_failed: true
+
+  - name: "反例 - 金融企业不适用制造业指标"
+    type: negative
+    input:
+      financial_data:
+        periods: ["2022", "2023"]
+        营业收入: [50000, 55000]
+        industry: "银行业"
+        target_risk_point: "资产质量恶化风险"
+    expected:
+      must_not_contain: ["Altman Z-score", "制造业基准"]
+      contains: ["CAMELS", "金融企业"]
+      framework_adapted: true
+
+  - name: "拒绝案例 - 无原始数据源"
+    type: rejection
+    input:
+      financial_data: "无原始数据源"
+      target_risk_point: "应收账款周转异常"
+    expected:
+      rejected: true
+      contains: ["立即终止", "不输出任何内容"]
+      data_termination_triggered: true
+
+  - name: "拒绝案例 - 个人信贷风险评估"
+    type: rejection
+    input:
+      financial_data:
+        个人年收入: [500000]
+        个人负债: [200000]
+        target_risk_point: "个人还款能力不足"
+    expected:
+      rejected: true
+      contains: ["不适用于个人信贷", "不在本 Skill 的服务范围"]

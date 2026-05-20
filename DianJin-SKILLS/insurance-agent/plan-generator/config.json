@@ -1,0 +1,17 @@
+{
+  "skill_name": "insurance-agent-plan-generator",
+  "version": "1.0.0",
+  "risk_level": "medium",
+  "parameters": {
+    "premium_income_ratio_guidance": {"min": 0.08, "max": 0.15},
+    "universal_demo_tiers": ["保证利率", "中档演示", "高档演示"],
+    "plan_counts": [1, 2],
+    "data_sources": ["技能联动", "手动录入", "文件导入"],
+    "compliance_rules": {
+      "non_guaranteed_label_required": true,
+      "minimum_guarantee_rate_required": true,
+      "prohibited_words_check": true,
+      "agent_review_required": true
+    }
+  }
+}

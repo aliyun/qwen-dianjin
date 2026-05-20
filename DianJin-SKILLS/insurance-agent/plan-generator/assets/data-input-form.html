@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>计划书数据录入</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:#f7f8fa;padding:16px}
+.container{max-width:620px;margin:0 auto;background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.06);overflow:hidden}
+.header{background:linear-gradient(135deg,#4a6cf7,#6b8cff);color:#fff;padding:20px 24px}
+.header h2{font-size:18px;margin-bottom:4px}
+.header .step-info{font-size:13px;opacity:.85}
+.progress{height:4px;background:#e0e6ff;margin:0}
+.progress-bar{height:100%;background:#4a6cf7;transition:width .3s}
+.step{display:none;padding:24px}
+.step.active{display:block}
+.step h3{font-size:16px;color:#1a1a2e;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid #f0f0f0}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:13px;color:#555;margin-bottom:4px;font-weight:500}
+.field label .req{color:#e74c3c;margin-left:2px}
+.field input,.field select,.field textarea{width:100%;padding:9px 12px;border:1px solid #ddd;border-radius:6px;font-size:14px;transition:border-color .2s}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:#4a6cf7}
+.field textarea{resize:vertical;min-height:60px}
+.field .hint{font-size:12px;color:#999;margin-top:2px}
+.row{display:flex;gap:12px}
+.row .field{flex:1}
+.item-card{background:#f9fafb;border:1px solid #eee;border-radius:8px;padding:12px;margin-bottom:10px;position:relative}
+.item-card .remove-btn{position:absolute;top:8px;right:8px;background:none;border:none;color:#e74c3c;cursor:pointer;font-size:16px}
+.add-btn{display:inline-block;padding:6px 14px;background:#f0f4ff;color:#4a6cf7;border:1px dashed #4a6cf7;border-radius:6px;font-size:13px;cursor:pointer}
+.add-btn:hover{background:#e0e8ff}
+.btn-row{display:flex;gap:12px;justify-content:flex-end;padding:16px 24px;border-top:1px solid #f0f0f0}
+.btn{padding:10px 32px;border:none;border-radius:8px;font-size:14px;cursor:pointer;transition:all .2s}
+.btn-prev{background:#f0f0f0;color:#555}
+.btn-prev:hover{background:#e0e0e0}
+.btn-next{background:#4a6cf7;color:#fff}
+.btn-next:hover{background:#3b5de7}
+.btn-submit{background:#27ae60;color:#fff}
+.btn-submit:hover{background:#219a52}
+.btn-skip{background:#f5f5f5;color:#888;margin-right:auto}
+.btn-skip:hover{background:#eee}
+.radio-group{display:flex;flex-wrap:wrap;gap:8px}
+.radio-group label{display:flex;align-items:center;padding:6px 14px;border:1px solid #ddd;border-radius:20px;font-size:13px;cursor:pointer;transition:all .2s}
+.radio-group label:hover{border-color:#4a6cf7}
+.radio-group input{margin-right:6px}
+.radio-group label:has(input:checked){border-color:#4a6cf7;background:#f0f4ff}
+.checkbox-group{display:flex;flex-wrap:wrap;gap:8px}
+.checkbox-group label{display:flex;align-items:center;padding:6px 14px;border:1px solid #ddd;border-radius:20px;font-size:13px;cursor:pointer;transition:all .2s}
+.checkbox-group label:hover{border-color:#4a6cf7}
+.checkbox-group input{margin-right:6px}
+.checkbox-group label:has(input:checked){border-color:#4a6cf7;background:#f0f4ff}
+.product-type-fields{margin-top:10px;padding:10px;background:#f0f4ff;border-radius:6px;display:none}
+.product-type-fields.active{display:block}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h2>保险计划书 - 数据录入</h2>
+    <div class="step-info" id="stepInfo">第 1 步 / 共 6 步 - 客户基本信息</div>
+  </div>
+  <div class="progress"><div class="progress-bar" id="progressBar" style="width:16.7%"></div></div>
+
+  <!-- Step 1: 客户基本信息 -->
+  <div class="step active" id="step1">
+    <h3>客户基本信息</h3>
+    <div class="row">
+      <div class="field"><label>姓名<span class="req">*</span></label><input type="text" id="name" placeholder="客户姓名"></div>
+      <div class="field"><label>性别<span class="req">*</span></label><select id="gender"><option value="">请选择</option><option>男</option><option>女</option></select></div>
+    </div>
+    <div class="row">
+      <div class="field"><label>年龄<span class="req">*</span></label><input type="number" id="age" placeholder="如 35" min="0" max="120"></div>
+      <div class="field"><label>职业</label><input type="text" id="occupation" placeholder="如 IT工程师"></div>
+    </div>
+    <div class="row">
+      <div class="field"><label>家庭年收入(元)</label><input type="number" id="income" placeholder="如 350000"></div>
+      <div class="field"><label>月均支出(元)</label><input type="number" id="expense" placeholder="如 15000"></div>
+    </div>
+    <div class="row">
+      <div class="field"><label>所在城市</label><input type="text" id="city" placeholder="如 上海"></div>
+      <div class="field"><label>婚姻状况</label><select id="marital"><option value="">请选择</option><option>未婚</option><option>已婚</option><option>离异</option><option>丧偶</option></select></div>
+    </div>
+    <div class="row">
+      <div class="field"><label>生命周期阶段</label>
+        <select id="lifeStage"><option value="">请选择</option><option>单身期</option><option>新婚期</option><option>育儿期</option><option>成熟期</option><option>养老期</option><option>传承期</option></select>
+      </div>
+      <div class="field"><label>风险偏好</label>
+        <select id="riskPref"><option value="">请选择</option><option>保守型</option><option>稳健型</option><option>进取型</option></select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 2: 家庭成员 -->
+  <div class="step" id="step2">
+    <h3>家庭成员</h3>
+    <div id="familyList"></div>
+    <div style="margin-top:10px"><span class="add-btn" onclick="addFamily()">+ 添加家庭成员</span></div>
+    <div class="field" style="margin-top:14px"><label class="hint">如无家庭成员可直接点下一步</label></div>
+  </div>
+
+  <!-- Step 3: 现有保障 -->
+  <div class="step" id="step3">
+    <h3>现有保障</h3>
+    <div id="policyList"></div>
+    <div style="margin-top:10px"><span class="add-btn" onclick="addPolicy()">+ 添加保单</span></div>
+    <div class="field" style="margin-top:14px"><label class="hint">零保单客户可直接点下一步</label></div>
+  </div>
+
+  <!-- Step 4: 保障需求 -->
+  <div class="step" id="step4">
+    <h3>保障需求</h3>
+    <div class="field"><label>财务目标(多选)</label>
+      <div class="checkbox-group">
+        <label><input type="checkbox" name="goals" value="health"><span>健康保障</span></label>
+        <label><input type="checkbox" name="goals" value="education"><span>子女教育</span></label>
+        <label><input type="checkbox" name="goals" value="retirement"><span>养老规划</span></label>
+        <label><input type="checkbox" name="goals" value="wealth"><span>财富增值</span></label>
+        <label><input type="checkbox" name="goals" value="legacy"><span>财富传承</span></label>
+        <label><input type="checkbox" name="goals" value="debt"><span>债务保障</span></label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="field"><label>年度保费预算最低(元)</label><input type="number" id="budgetMin" placeholder="如 5000"></div>
+      <div class="field"><label>年度保费预算最高(元)</label><input type="number" id="budgetMax" placeholder="如 30000"></div>
+    </div>
+    <div class="field"><label>特殊关注</label><textarea id="concerns" placeholder="如:家族病史、特定需求等"></textarea></div>
+  </div>
+
+  <!-- Step 5: 产品方案A -->
+  <div class="step" id="step5">
+    <h3>产品方案A(基础版)</h3>
+    <div id="productListA"></div>
+    <div style="margin-top:10px"><span class="add-btn" onclick="addProduct('A')">+ 添加产品</span></div>
+  </div>
+
+  <!-- Step 6: 产品方案B -->
+  <div class="step" id="step6">
+    <h3>产品方案B(全面版，可选)</h3>
+    <div id="productListB"></div>
+    <div style="margin-top:10px"><span class="add-btn" onclick="addProduct('B')">+ 添加产品</span></div>
+    <div class="field" style="margin-top:14px"><label class="hint">如只需单方案，可直接点"跳过并提交"</label></div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-skip" id="skipBtn" onclick="submitData(true)" style="display:none">跳过并提交</button>
+    <button class="btn btn-prev" id="prevBtn" onclick="prev()" style="display:none">上一步</button>
+    <button class="btn btn-next" id="nextBtn" onclick="next()">下一步</button>
+    <button class="btn btn-submit" id="submitBtn" onclick="submitData(false)" style="display:none">生成计划书</button>
+  </div>
+</div>
+
+<script>
+const STEPS = 6;
+const STEP_NAMES = ['客户基本信息','家庭成员','现有保障','保障需求','产品方案A','产品方案B(可选)'];
+let cur = 1;
+
+function showStep(n) {
+  cur = n;
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  document.getElementById('step' + n).classList.add('active');
+  document.getElementById('stepInfo').textContent = `第 ${n} 步 / 共 ${STEPS} 步 - ${STEP_NAMES[n-1]}`;
+  document.getElementById('progressBar').style.width = (n / STEPS * 100) + '%';
+  document.getElementById('prevBtn').style.display = n > 1 ? '' : 'none';
+  document.getElementById('nextBtn').style.display = n < STEPS ? '' : 'none';
+  document.getElementById('submitBtn').style.display = n === STEPS ? '' : 'none';
+  document.getElementById('skipBtn').style.display = n === STEPS ? '' : 'none';
+}
+
+function next() {
+  if (cur === 1) {
+    if (!document.getElementById('name').value.trim() || !document.getElementById('gender').value || !document.getElementById('age').value) {
+      alert('请填写姓名、性别和年龄'); return;
+    }
+  }
+  if (cur < STEPS) showStep(cur + 1);
+}
+function prev() { if (cur > 1) showStep(cur - 1); }
+
+let familyIdx = 0;
+function addFamily() {
+  familyIdx++;
+  const div = document.createElement('div');
+  div.className = 'item-card';
+  div.innerHTML = `<button class="remove-btn" onclick="this.parentElement.remove()">&times;</button>
+    <div class="row"><div class="field"><label>关系</label><select class="fam-rel"><option>配偶</option><option>子女</option><option>父亲</option><option>母亲</option></select></div>
+    <div class="field"><label>姓名</label><input class="fam-name" placeholder="姓名"></div></div>
+    <div class="row"><div class="field"><label>年龄</label><input type="number" class="fam-age" placeholder="年龄"></div>
+    <div class="field"><label>职业</label><input class="fam-occ" placeholder="职业"></div></div>`;
+  document.getElementById('familyList').appendChild(div);
+}
+
+let policyIdx = 0;
+function addPolicy() {
+  policyIdx++;
+  const div = document.createElement('div');
+  div.className = 'item-card';
+  div.innerHTML = `<button class="remove-btn" onclick="this.parentElement.remove()">&times;</button>
+    <div class="row"><div class="field"><label>险种</label><select class="pol-type"><option>重疾险</option><option>医疗险</option><option>寿险</option><option>意外险</option><option>年金险</option><option>教育金</option><option>万能险</option></select></div>
+    <div class="field"><label>产品名称</label><input class="pol-name" placeholder="产品名称"></div></div>
+    <div class="row"><div class="field"><label>保额(元)</label><input type="number" class="pol-sa" placeholder="如 300000"></div>
+    <div class="field"><label>年缴保费(元)</label><input type="number" class="pol-prem" placeholder="如 8500"></div></div>
+    <div class="row"><div class="field"><label>缴费年限</label><input type="number" class="pol-years" placeholder="如 20"></div>
+    <div class="field"><label>状态</label><select class="pol-status"><option>缴费中</option><option>有效</option><option>已缴清</option></select></div></div>`;
+  document.getElementById('policyList').appendChild(div);
+}
+
+const PRODUCT_TYPES = [
+  {value:'term_life',label:'定期寿险'},
+  {value:'whole_life',label:'终身寿险'},
+  {value:'critical_illness',label:'重疾险'},
+  {value:'medical',label:'医疗险'},
+  {value:'accident',label:'意外险'},
+  {value:'annuity',label:'年金险'},
+  {value:'education_fund',label:'教育金'},
+  {value:'universal_life',label:'万能险'}
+];
+
+let productIdx = {A:0, B:0};
+function addProduct(plan) {
+  productIdx[plan]++;
+  const id = `prod${plan}${productIdx[plan]}`;
+  const div = document.createElement('div');
+  div.className = 'item-card';
+  div.id = id;
+  const typeOptions = PRODUCT_TYPES.map(t => `<option value="${t.value}">${t.label}</option>`).join('');
+  div.innerHTML = `<button class="remove-btn" onclick="this.parentElement.remove()">&times;</button>
+    <div class="row"><div class="field"><label>产品名称<span class="req">*</span></label><input class="prd-name" placeholder="产品名称"></div>
+    <div class="field"><label>险种类型<span class="req">*</span></label><select class="prd-type" onchange="onTypeChange(this)">${typeOptions}</select></div></div>
+    <div class="row"><div class="field"><label>被保人</label><input class="prd-insured" placeholder="姓名"></div>
+    <div class="field"><label>保额(元)</label><input type="number" class="prd-sa" placeholder="如 1000000"></div></div>
+    <div class="row"><div class="field"><label>年缴保费(元)<span class="req">*</span></label><input type="number" class="prd-prem" placeholder="如 5000"></div>
+    <div class="field"><label>缴费期</label><input class="prd-payperiod" placeholder="如 20年"></div></div>
+    <div class="field"><label>保障期</label><input class="prd-covperiod" placeholder="如 至60周岁 或 终身"></div>
+    <div class="product-type-fields" id="${id}_fields"></div>`;
+  document.getElementById('productList' + plan).appendChild(div);
+}
+
+function onTypeChange(sel) {
+  const card = sel.closest('.item-card');
+  const fieldsDiv = card.querySelector('.product-type-fields');
+  const type = sel.value;
+  let html = '';
+  if (type === 'critical_illness') {
+    html = `<div class="row"><div class="field"><label>重疾保额(元)</label><input class="bd-ci-benefit" type="number" placeholder="同保额"></div>
+    <div class="field"><label>轻症比例(%)</label><input class="bd-mild-ratio" type="number" placeholder="30" value="30"></div></div>`;
+  } else if (type === 'medical') {
+    html = `<div class="row"><div class="field"><label>年度限额(元)</label><input class="bd-annual-limit" type="number" placeholder="4000000" value="4000000"></div>
+    <div class="field"><label>免赔额(元)</label><input class="bd-deductible" type="number" placeholder="10000" value="10000"></div></div>
+    <div class="field"><label>报销比例(%)</label><input class="bd-reimburse" type="number" placeholder="100" value="100"></div>`;
+  } else if (type === 'accident') {
+    html = `<div class="row"><div class="field"><label>意外医疗(元/次)</label><input class="bd-med-event" type="number" placeholder="50000"></div>
+    <div class="field"><label>住院津贴(元/天)</label><input class="bd-daily" type="number" placeholder="200"></div></div>`;
+  } else if (type === 'annuity' || type === 'education_fund') {
+    html = `<div class="row"><div class="field"><label>起领年龄</label><input class="bd-start-age" type="number" placeholder="60"></div>
+    <div class="field"><label>年领金额(元)</label><input class="bd-annual-recv" type="number" placeholder="48000"></div></div>
+    <div class="field"><label>领取年限(0=终身)</label><input class="bd-recv-years" type="number" placeholder="0" value="0"></div>`;
+  } else if (type === 'universal_life') {
+    html = `<div class="row"><div class="field"><label>保底利率(%)</label><input class="bd-guar-rate" type="number" step="0.1" placeholder="2.0" value="2.0"></div>
+    <div class="field"><label>中档利率(%)</label><input class="bd-mid-rate" type="number" step="0.1" placeholder="3.5" value="3.5"></div></div>
+    <div class="field"><label>高档利率(%)</label><input class="bd-high-rate" type="number" step="0.1" placeholder="4.5" value="4.5"></div>`;
+  }
+  fieldsDiv.innerHTML = html;
+  fieldsDiv.className = 'product-type-fields' + (html ? ' active' : '');
+}
+
+function collectProducts(plan) {
+  const products = [];
+  document.querySelectorAll(`#productList${plan} .item-card`).forEach(card => {
+    const type = card.querySelector('.prd-type').value;
+    const bd = {};
+    if (type === 'critical_illness') {
+      const v = card.querySelector('.bd-ci-benefit'); if (v && v.value) bd.ci_benefit = parseInt(v.value);
+      const m = card.querySelector('.bd-mild-ratio'); if (m && m.value) bd.mild_ci_ratio = parseFloat(m.value) / 100;
+    } else if (type === 'medical') {
+      const a = card.querySelector('.bd-annual-limit'); if (a && a.value) bd.annual_limit = parseInt(a.value);
+      const d = card.querySelector('.bd-deductible'); if (d && d.value) bd.deductible = parseInt(d.value);
+      const r = card.querySelector('.bd-reimburse'); if (r && r.value) bd.reimbursement_ratio = parseFloat(r.value) / 100;
+    } else if (type === 'accident') {
+      const m = card.querySelector('.bd-med-event'); if (m && m.value) bd.medical_per_event = parseInt(m.value);
+      const d = card.querySelector('.bd-daily'); if (d && d.value) bd.daily_hospital = parseInt(d.value);
+    } else if (type === 'annuity' || type === 'education_fund') {
+      const s = card.querySelector('.bd-start-age'); if (s && s.value) bd.start_receive_age = parseInt(s.value);
+      const a = card.querySelector('.bd-annual-recv'); if (a && a.value) bd.annual_receive = parseInt(a.value);
+      const y = card.querySelector('.bd-recv-years'); if (y && y.value) bd.receive_years = parseInt(y.value);
+    } else if (type === 'universal_life') {
+      const g = card.querySelector('.bd-guar-rate'); if (g && g.value) bd.guaranteed_rate = parseFloat(g.value) / 100;
+      const m = card.querySelector('.bd-mid-rate'); if (m && m.value) bd.mid_rate = parseFloat(m.value) / 100;
+      const h = card.querySelector('.bd-high-rate'); if (h && h.value) bd.high_rate = parseFloat(h.value) / 100;
+    }
+    products.push({
+      product_name: card.querySelector('.prd-name').value,
+      product_type: type,
+      insured_person: card.querySelector('.prd-insured').value || '',
+      sum_assured: parseInt(card.querySelector('.prd-sa').value) || 0,
+      annual_premium: parseInt(card.querySelector('.prd-prem').value) || 0,
+      payment_period: card.querySelector('.prd-payperiod').value || '',
+      coverage_period: card.querySelector('.prd-covperiod').value || '',
+      benefit_details: bd
+    });
+  });
+  return products;
+}
+
+function submitData(skipPlanB) {
+  const families = [];
+  document.querySelectorAll('#familyList .item-card').forEach(el => {
+    families.push({
+      relation: el.querySelector('.fam-rel').value,
+      name: el.querySelector('.fam-name').value,
+      age: parseInt(el.querySelector('.fam-age').value) || 0,
+      occupation: el.querySelector('.fam-occ').value || ''
+    });
+  });
+  const policies = [];
+  document.querySelectorAll('#policyList .item-card').forEach(el => {
+    policies.push({
+      type: el.querySelector('.pol-type').value,
+      product_name: el.querySelector('.pol-name').value,
+      sum_assured: parseInt(el.querySelector('.pol-sa').value) || 0,
+      annual_premium: parseInt(el.querySelector('.pol-prem').value) || 0,
+      payment_years: parseInt(el.querySelector('.pol-years').value) || 0,
+      status: el.querySelector('.pol-status').value
+    });
+  });
+  const goals = [];
+  document.querySelectorAll('input[name="goals"]:checked').forEach(cb => goals.push(cb.value));
+
+  const productsA = collectProducts('A');
+  const productsB = skipPlanB ? [] : collectProducts('B');
+
+  const data = {
+    plan_config: { plans_count: productsB.length > 0 ? 2 : 1 },
+    customer: {
+      name: document.getElementById('name').value,
+      gender: document.getElementById('gender').value,
+      age: parseInt(document.getElementById('age').value),
+      occupation: document.getElementById('occupation').value || undefined,
+      annual_income: parseInt(document.getElementById('income').value) || undefined,
+      monthly_expense: parseInt(document.getElementById('expense').value) || undefined,
+      city: document.getElementById('city').value || undefined,
+      marital_status: document.getElementById('marital').value || undefined,
+      life_stage: document.getElementById('lifeStage').value || undefined,
+      risk_preference: document.getElementById('riskPref').value || undefined,
+      family_members: families.length ? families : undefined,
+      existing_policies: policies,
+      financial_goals: goals.length ? goals : undefined
+    },
+    product_plans: {
+      plan_a: { plan_label: '基础保障方案(方案A)', products: productsA }
+    }
+  };
+
+  if (productsB.length > 0) {
+    data.product_plans.plan_b = { plan_label: '全面保障方案(方案B)', products: productsB };
+  }
+
+  // 清理
+  const c = data.customer;
+  Object.keys(c).forEach(k => { if (c[k] === undefined) delete c[k]; });
+
+  window.parent.postMessage({ type: 'widget-result', data }, '*');
+}
+</script>
+</body>
+</html>

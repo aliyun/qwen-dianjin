@@ -1,0 +1,24 @@
+{
+  "skill_name": "insurance-underwriting-health-verification",
+  "version": "1.0.0",
+  "risk_level": "medium",
+  "parameters": {
+    "insurance_types": ["重疾", "医疗", "意外", "寿险", "年金"],
+    "max_age_by_type": {
+      "重疾": {"max": 60, "no_exam_sum": 500000},
+      "医疗": {"max": 65, "no_exam_sum": 0},
+      "寿险": {"max": 65, "no_exam_sum": 1000000},
+      "意外": {"max": 65, "no_exam_sum": 0},
+      "年金": {"max": 70, "no_exam_sum": 0}
+    },
+    "sum_assured_income_ratio": {
+      "normal": {"max": 10, "action": "常规审核"},
+      "attention": {"min": 10, "max": 20, "action": "需收入证明"},
+      "high_risk": {"min": 20, "action": "需详细财务调查+体检"}
+    },
+    "high_risk_signals": ["短期集中投保", "保额远超收入", "投保时机可疑", "受益人异常"],
+    "health_disclosure_results": ["正常", "关注", "高风险"],
+    "underwriting_conclusions": ["标体", "加费", "除外", "延期", "拒保"],
+    "pre_screen_note": "预审≠最终核保结论"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "skill_name": "insurance-claim-case-registration",
+  "version": "1.0.0",
+  "risk_level": "medium",
+  "parameters": {
+    "case_id_format": "CLM-YYYYMMDD-XXXXX",
+    "accident_types": ["疾病", "意外", "财产损失"],
+    "case_routing": {
+      "simple": "简单案件",
+      "complex": "复杂案件",
+      "large_amount": "大额案件"
+    },
+    "required_fields": ["保单号", "出险日期", "出险原因", "报案人联系方式"],
+    "optional_fields": ["事故现场照片", "第三方信息", "就诊医院"]
+  }
+}

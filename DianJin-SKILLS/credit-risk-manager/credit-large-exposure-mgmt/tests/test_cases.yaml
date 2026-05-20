@@ -1,0 +1,194 @@
+# 大额风险暴露集中度监控测试用例
+# 覆盖4种类型: positive(正例) / edge_case(边界案例) / negative(反例) / rejection(拒绝案例)
+
+test_cases:
+  # ==================== Positive 正例 ====================
+  - id: TC001
+    type: positive
+    description: "标准集团客户日常监测"
+    input:
+      customer_name: "XX集团"
+      customer_type: "集团客户"
+      business_scenario: "日常监测"
+      tier1_capital_net: 800000
+      total_capital_net: 1000000
+    expected:
+      exposure_breakdown_count: "≥2个业务类型"
+      warning_level: "关注/黄色/橙色/红色"
+      penetration_completed: true
+      disclaimer_present: true
+      contains_data_as_of: true
+
+  - id: TC002
+    type: positive
+    description: "单一客户新增授信预检"
+    input:
+      customer_name: "YY公司"
+      customer_type: "单一客户"
+      business_scenario: "新增预检"
+      new_exposure_amount: 20000
+      tier1_capital_net: 1000000
+      total_capital_net: 1200000
+    expected:
+      exposure_breakdown_count: "≥1个业务类型"
+      warning_level: "关注/黄色/橙色/红色/突破红线"
+      simulated_concentration_ratio: true
+      disclaimer_present: true
+
+  - id: TC003
+    type: positive
+    description: "关联方风险暴露监控"
+    input:
+      customer_name: "Z关联方组合"
+      customer_type: "关联方"
+      business_scenario: "日常监测"
+      tier1_capital_net: 900000
+      total_capital_net: 1100000
+    expected:
+      exposure_breakdown_count: "≥2个业务类型"
+      warning_level: "关注/黄色/橙色/红色"
+      board_approval_required: true
+      disclaimer_present: true
+
+  # ==================== Edge Case 边界案例 ====================
+  - id: TC004
+    type: edge_case
+    description: "匿名客户风险暴露边界"
+    input:
+      customer_name: "匿名客户组合"
+      customer_type: "匿名客户"
+      business_scenario: "日常监测"
+      tier1_capital_net: 800000
+      anonymous_customer_ratio: 12.0
+    expected:
+      warning_level: "黄色/橙色"
+      anonymous_customer_ratio: 12.0
+      disclaimer_present: true
+
+  - id: TC005
+    type: edge_case
+    description: "穿透计量部分完成"
+    input:
+      customer_name: "AA集团"
+      customer_type: "集团客户"
+      business_scenario: "日常监测"
+      tier1_capital_net: 850000
+      total_penetrated: 8
+      total_unpenetrated: 2
+    expected:
+      penetration_summary_present: true
+      anonymous_customer_exposure_present: true
+      disclaimer_present: true
+
+  - id: TC006
+    type: edge_case
+    description: "资本净额数据过期"
+    input:
+      customer_name: "BB公司"
+      customer_type: "单一客户"
+      business_scenario: "日常监测"
+      tier1_capital_net: 750000
+      data_as_of: "2025-12-01"
+    expected:
+      data_age_warning: true
+      disclaimer_present: true
+
+  # ==================== Negative 反例 ====================
+  - id: TC007
+    type: negative
+    description: "缺少风险暴露明细"
+    input:
+      customer_name: "CC公司"
+      customer_type: "单一客户"
+      business_scenario: "日常监测"
+      tier1_capital_net: 800000
+      exposure_breakdown: []
+    expected:
+      validation_failed: true
+      error_contains: "风险暴露明细不能为空"
+
+  - id: TC008
+    type: negative
+    description: "预警等级非法"
+    input:
+      customer_name: "DD公司"
+      customer_type: "单一客户"
+      business_scenario: "日常监测"
+      tier1_capital_net: 800000
+      warning_level: "严重"
+    expected:
+      validation_failed: true
+      error_contains: "预警等级非法"
+
+  - id: TC009
+    type: negative
+    description: "缺少免责声明"
+    input:
+      customer_name: "EE公司"
+      customer_type: "单一客户"
+      business_scenario: "日常监测"
+      tier1_capital_net: 800000
+      disclaimer: ""
+    expected:
+      validation_failed: true
+      error_contains: "免责声明缺失"
+
+  # ==================== Rejection 拒绝案例 ====================
+  - id: TC010
+    type: rejection
+    description: "突破单一客户监管红线"
+    input:
+      customer_name: "FF公司"
+      customer_type: "单一客户"
+      business_scenario: "新增预检"
+      tier1_capital_net: 800000
+      concentration_ratio: 16.0
+    expected:
+      veto_triggered: true
+      veto_reason: "E1:单一客户风险暴露超过一级资本净额15%的监管红线"
+      warning_level: "突破红线"
+
+  - id: TC011
+    type: rejection
+    description: "突破集团客户监管红线"
+    input:
+      customer_name: "GG集团"
+      customer_type: "集团客户"
+      business_scenario: "新增预检"
+      tier1_capital_net: 800000
+      concentration_ratio: 22.0
+    expected:
+      veto_triggered: true
+      veto_reason: "E2:单一集团客户风险暴露超过一级资本净额20%的监管红线"
+      warning_level: "突破红线"
+
+  - id: TC012
+    type: rejection
+    description: "关联方未获董事会批准"
+    input:
+      customer_name: "H关联方组合"
+      customer_type: "关联方"
+      business_scenario: "新增预检"
+      tier1_capital_net: 800000
+      concentration_ratio: 26.0
+      board_approval: false
+    expected:
+      veto_triggered: true
+      veto_reason: "E3:关联方风险暴露超过一级资本净额25%且未获董事会批准"
+      warning_level: "突破红线"
+
+  - id: TC013
+    type: rejection
+    description: "穿透计量未完成导致集中度失真"
+    input:
+      customer_name: "II集团"
+      customer_type: "集团客户"
+      business_scenario: "日常监测"
+      tier1_capital_net: 800000
+      total_penetrated: 2
+      total_unpenetrated: 8
+      penetration_completed: false
+    expected:
+      veto_triggered: true
+      veto_reason: "E5:未按穿透原则计量资管产品、资产证券化等底层风险暴露,导致集中度数据失真"
+      warning_level: "突破红线"

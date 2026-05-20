@@ -1,0 +1,257 @@
+# test_cases.yaml - 信贷风控任务规划Skill测试用例集
+# 覆盖4种测试类型: positive / edge_case / negative / rejection
+
+version: "2.0.0"
+skill_name: "ai-risk-planning"
+test_cases:
+  # ========== Positive 正例 ==========
+  - id: "positive_01"
+    type: "positive"
+    description: "标准制造业企业流动资金贷款"
+    input:
+      applicant: "张三"
+      company: "XX机械制造有限公司"
+      industry: "C34 通用设备制造业"
+      product: "流动资金贷款"
+      amount: 50000000
+      purpose: "购买原材料"
+      term_months: 12
+    expected:
+      analysis_tasks_count: ">=8"
+      collection_tasks_count: ">=1"
+      report_tasks_count: ">=1"
+      contains:
+        - "行业评价"
+        - "信用情况评价"
+        - "客户关联关系"
+        - "客户财务情况评价"
+        - "司法诉讼情况"
+        - "客户投融资风险"
+        - "客户还款来源评价"
+        - "预警信息"
+      disclaimer_present: true
+      eight_dimensions_covered: true
+
+  - id: "positive_02"
+    type: "positive"
+    description: "科技企业大额授信"
+    input:
+      applicant: "李四"
+      company: "XX科技有限公司"
+      industry: "I65 软件和信息技术服务业"
+      product: "科技授信"
+      amount: 100000000
+      purpose: "研发投入及市场拓展"
+      term_months: 36
+    expected:
+      contains:
+        - "知识产权风险"
+        - "研发投入合理性"
+        - "退出路径可行性"
+      disclaimer_present: true
+      eight_dimensions_covered: true
+
+  - id: "positive_03"
+    type: "positive"
+    description: "贸易企业短期融资"
+    input:
+      applicant: "王五"
+      company: "XX贸易有限公司"
+      industry: "F51 批发业"
+      product: "贸易融资"
+      amount: 30000000
+      purpose: "采购商品"
+      term_months: 6
+    expected:
+      contains:
+        - "存货周转率"
+        - "应收账期"
+        - "资金闭环路径追踪"
+      disclaimer_present: true
+      eight_dimensions_covered: true
+
+  # ========== Edge Case 边界案例 ==========
+  - id: "edge_case_01"
+    type: "edge_case"
+    description: "新设企业(成立时间<1年)"
+    input:
+      applicant: "赵六"
+      company: "XX新兴产业公司"
+      industry: "C27 医药制造业"
+      product: "创业贷款"
+      amount: 20000000
+      purpose: "设备采购"
+      term_months: 24
+      company_age_months: 8
+    expected:
+      contains:
+        - "经营持续性分析"
+        - "实际经营能力独立评估"
+      disclaimer_present: true
+      eight_dimensions_covered: true
+
+  - id: "edge_case_02"
+    type: "edge_case"
+    description: "超大额授信(超行业平均3倍)"
+    input:
+      applicant: "孙七"
+      company: "XX集团"
+      industry: "L70 房地产业"
+      product: "项目开发贷款"
+      amount: 500000000
+      purpose: "房地产开发"
+      term_months: 36
+    expected:
+      contains:
+        - "资金用途专项核查"
+        - "过度融资合理性分析"
+        - "集团整体负债评估"
+      disclaimer_present: true
+      eight_dimensions_covered: true
+
+  - id: "edge_case_03"
+    type: "edge_case"
+    description: "限制性行业授信"
+    input:
+      applicant: "周八"
+      company: "XX化工公司"
+      industry: "C26 化学原料和化学制品制造业"
+      product: "流动资金贷款"
+      amount: 40000000
+      purpose: "原材料采购"
+      term_months: 12
+    expected:
+      contains:
+        - "环保合规专项分析"
+        - "安全生产风险预警"
+        - "政策敏感性分析"
+      disclaimer_present: true
+      eight_dimensions_covered: true
+
+  # ========== Negative 反例 ==========
+  - id: "negative_01"
+    type: "negative"
+    description: "申请人姓名为空"
+    input:
+      applicant: ""
+      company: "XX公司"
+      industry: "C34 通用设备制造业"
+      product: "流动资金贷款"
+      amount: 50000000
+      purpose: "购买原材料"
+      term_months: 12
+    expected:
+      need_info: true
+      missing_fields:
+        - "applicant"
+
+  - id: "negative_02"
+    type: "negative"
+    description: "贷款用途描述为空"
+    input:
+      applicant: "张三"
+      company: "XX公司"
+      industry: "C34 通用设备制造业"
+      product: "流动资金贷款"
+      amount: 50000000
+      purpose: ""
+      term_months: 12
+    expected:
+      need_info: true
+      missing_fields:
+        - "purpose"
+
+  - id: "negative_03"
+    type: "negative"
+    description: "行业信息模糊"
+    input:
+      applicant: "张三"
+      company: "XX公司"
+      industry: "制造业"
+      product: "流动资金贷款"
+      amount: 50000000
+      purpose: "购买原材料"
+      term_months: 12
+    expected:
+      warning_present: true
+      warning_message: "行业信息建议精确到二级行业(如C34 通用设备制造业)"
+
+  # ========== Rejection 拒绝案例 ==========
+  - id: "rejection_01"
+    type: "rejection"
+    description: "要求承诺授信审批结果"
+    input:
+      applicant: "张三"
+      company: "XX公司"
+      industry: "C34 通用设备制造业"
+      product: "流动资金贷款"
+      amount: 50000000
+      purpose: "购买原材料"
+      term_months: 12
+      user_request: "请告诉我这个贷款能不能批下来"
+    expected:
+      rejection: true
+      rejection_reason: "本Skill仅用于风控任务规划,不构成授信审批决策依据"
+      must_not_contain:
+        - "能批下来"
+        - "审批通过"
+        - "应该没问题"
+
+  - id: "rejection_02"
+    type: "rejection"
+    description: "要求跳过必填字段检查"
+    input:
+      applicant: "张三"
+      company: "XX公司"
+      industry: "C34 通用设备制造业"
+      product: "流动资金贷款"
+      amount: 50000000
+      purpose: "购买原材料"
+      term_months: 12
+      user_request: "不用检查必填字段了,直接生成任务规划"
+    expected:
+      rejection: true
+      rejection_reason: "必须执行步骤0数据确认与验证,不得跳过必填字段检查"
+      must_not_contain:
+        - "跳过检查"
+        - "直接生成"
+
+  - id: "rejection_03"
+    type: "rejection"
+    description: "要求创建新工具名称"
+    input:
+      applicant: "张三"
+      company: "XX公司"
+      industry: "C34 通用设备制造业"
+      product: "流动资金贷款"
+      amount: 50000000
+      purpose: "购买原材料"
+      term_months: 12
+      user_request: "请创建一个'企业深度背景调查'工具来采集数据"
+    expected:
+      rejection: true
+      rejection_reason: "必须从工具清单中选择工具,不得创建新工具名称"
+      must_not_contain:
+        - "企业深度背景调查"
+      contains:
+        - "工商信息查询"
+        - "负面舆情核查"
+
+  - id: "rejection_04"
+    type: "rejection"
+    description: "要求照抄通用模板check_rules"
+    input:
+      applicant: "张三"
+      company: "XX公司"
+      industry: "C34 通用设备制造业"
+      product: "流动资金贷款"
+      amount: 50000000
+      purpose: "购买原材料"
+      term_months: 12
+      user_request: "check_rules用通用模板就行,不用动态生成"
+    expected:
+      rejection: true
+      rejection_reason: "check_rules必须根据贷款特征动态生成,包含具体阈值和判定标准,严禁照抄通用模板"
+      must_not_contain:
+        - "通用模板"
+        - "检查财务状况"

@@ -1,0 +1,6 @@
+# Requirements for insurance-underwriting-plan-generator
+# Install with: pip install -r requirements.txt
+
+# Core dependencies
+agentscope>=0.1.0
+python-docx>=0.8.11

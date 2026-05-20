@@ -1,0 +1,5 @@
+# Requirements for insurance-hwp-client-consulting
+# Install with: pip install -r requirements.txt
+
+# Core dependencies
+agentscope>=0.1.0

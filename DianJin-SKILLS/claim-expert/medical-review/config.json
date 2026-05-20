@@ -1,0 +1,16 @@
+{
+  "skill_name": "insurance-claim-medical-review",
+  "version": "1.0.0",
+  "risk_level": "high",
+  "parameters": {
+    "expense_categories": ["检查费", "手术费", "耗材费", "护理费", "药品费", "床位费", "其他"],
+    "review_dimensions": ["诊断匹配性", "收费标准合理性", "重复收费", "超标准收费", "药品适应症匹配", "用药合理性"],
+    "match_results": ["完全匹配", "部分匹配", "不匹配", "无法判定"],
+    "audit_depths": ["基础", "严格"],
+    "claim_types": ["门诊", "住院", "手术", "意外"],
+    "special_focus_areas": ["抗生素", "肿瘤药", "激素", "精神类"],
+    "highlight_threshold_ratio": 2.0,
+    "deduction_requires_basis": true,
+    "deep_audit_dimensions": ["剂量合理性", "疗程合理性", "年龄禁忌", "肝肾功能", "妊娠禁忌", "配伍禁忌", "重复用药"]
+  }
+}

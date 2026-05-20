@@ -1,0 +1,400 @@
+version: "1.0"
+skill_name: "credit-collateral-risk-mgmt"
+test_cases:
+  # ========== 正例测试 ==========
+  - id: TC001
+    type: positive
+    name: "标准贷前押品评估-房产+设备"
+    input:
+      customer_name: "XX制造有限公司"
+      credit_application_no: "CRED-2026-001234"
+      business_scenario: "贷前评估"
+      collateral_list:
+        - name: "商业用房"
+          type: "房产"
+          owner: "XX制造有限公司"
+          appraised_value: 15000000
+          appraisal_date: "2026-03-15"
+          location: "北京市朝阳区"
+        - name: "通用生产设备"
+          type: "设备"
+          owner: "XX制造有限公司"
+          appraised_value: 3000000
+          appraisal_date: "2026-04-01"
+      application_amount: 10000000
+    expected:
+      contains:
+        - "押品充足"
+        - "担保覆盖率"
+        - "房产抵押率上限70%"
+        - "设备抵押率上限50%"
+      must_not_contain:
+        - "一票否决"
+        - "红色预警"
+      disclaimer_present: true
+      collateral_count: 2
+      rejection_triggered: false
+
+  - id: TC002
+    type: positive
+    name: "标准贷后押品监控-押品状态正常"
+    input:
+      customer_name: "XX贸易有限公司"
+      business_scenario: "贷后监控"
+      collateral_list:
+        - name: "商业用房"
+          type: "房产"
+          owner: "XX贸易有限公司"
+          appraised_value: 20000000
+          appraisal_date: "2025-12-01"
+          current_value: 19500000
+      historical_alerts: []
+    expected:
+      contains:
+        - "押品状态正常"
+        - "价值波动在合理范围内"
+      must_not_contain:
+        - "黄色预警"
+        - "红色预警"
+        - "一票否决"
+      disclaimer_present: true
+      alert_level: "无"
+
+  - id: TC003
+    type: positive
+    name: "应收账款质押-核心企业AA级"
+    input:
+      customer_name: "XX供应商"
+      business_scenario: "贷前评估"
+      collateral_list:
+        - name: "应收账款"
+          type: "应收账款"
+          owner: "XX供应商"
+          appraised_value: 8000000
+          appraisal_date: "2026-04-15"
+          confirm_party: "核心企业AA"
+          confirm_party_rating: "AA"
+          account_period: 120
+    expected:
+      contains:
+        - "应收账款质押合规"
+        - "确认方AA级"
+        - "账期120天≤180天"
+      must_not_contain:
+        - "不合格"
+        - "一票否决"
+      disclaimer_present: true
+
+  - id: TC004
+    type: positive
+    name: "金融资产质押-本行存单"
+    input:
+      customer_name: "XX企业"
+      business_scenario: "贷前评估"
+      collateral_list:
+        - name: "定期存单"
+          type: "金融资产"
+          owner: "XX企业"
+          appraised_value: 5000000
+          appraisal_date: "2026-05-01"
+          issuer: "本行"
+    expected:
+      contains:
+        - "金融资产质押合规"
+        - "本行存单"
+        - "抵押率上限90%"
+      must_not_contain:
+        - "不合格"
+        - "一票否决"
+      disclaimer_present: true
+
+  - id: TC005
+    type: positive
+    name: "多押品组合-担保覆盖率充足"
+    input:
+      customer_name: "XX集团"
+      business_scenario: "贷前评估"
+      collateral_list:
+        - name: "工业厂房"
+          type: "房产"
+          owner: "XX集团"
+          appraised_value: 10000000
+          appraisal_date: "2026-03-01"
+        - name: "国有出让土地"
+          type: "土地"
+          owner: "XX集团"
+          appraised_value: 8000000
+          appraisal_date: "2026-03-01"
+        - name: "通用设备"
+          type: "设备"
+          owner: "XX集团"
+          appraised_value: 4000000
+          appraisal_date: "2026-04-01"
+      application_amount: 12000000
+    expected:
+      contains:
+        - "押品充足"
+        - "担保覆盖率"
+        - "房产抵押率上限70%"
+        - "土地抵押率上限60%"
+        - "设备抵押率上限50%"
+      must_not_contain:
+        - "一票否决"
+        - "担保不足"
+      disclaimer_present: true
+      collateral_count: 3
+
+  # ========== 边界案例测试 ==========
+  - id: TC006
+    type: edge_case
+    name: "房产评估价值偏离市场价18%-接近阈值"
+    input:
+      customer_name: "XX房地产公司"
+      business_scenario: "贷前评估"
+      collateral_list:
+        - name: "商业用房"
+          type: "房产"
+          owner: "XX房地产公司"
+          appraised_value: 18000000
+          appraisal_date: "2026-04-01"
+          market_value: 15000000
+          deviation: "20%"
+    expected:
+      contains:
+        - "评估价值偏离市场价"
+        - "接近阈值"
+        - "建议二次评估"
+      must_not_contain:
+        - "一票否决"
+        - "红色警示"
+      disclaimer_present: true
+      warning_level: "yellow"
+
+  - id: TC007
+    type: edge_case
+    name: "评估报告即将过期-距基准日5.5个月"
+    input:
+      customer_name: "XX制造企业"
+      business_scenario: "贷前评估"
+      collateral_list:
+        - name: "工业厂房"
+          type: "房产"
+          owner: "XX制造企业"
+          appraised_value: 12000000
+          appraisal_date: "2025-11-15"
+          application_date: "2026-05-01"
+    expected:
+      contains:
+        - "评估报告即将过期"
+        - "建议尽快重新评估"
+        - "距授信申请日5.5个月≤6个月"
+      must_not_contain:
+        - "评估报告无效"
+        - "一票否决"
+      disclaimer_present: true
+      warning_level: "yellow"
+
+  - id: TC008
+    type: edge_case
+    name: "多顺位抵押-综合抵押率接近上限"
+    input:
+      customer_name: "XX企业"
+      business_scenario: "贷前评估"
+      collateral_list:
+        - name: "商业用房"
+          type: "房产"
+          owner: "XX企业"
+          appraised_value: 10000000
+          appraisal_date: "2026-04-01"
+          prior_mortgage_amount: 4000000
+          current_mortgage_amount: 2500000
+    expected:
+      contains:
+        - "综合抵押率"
+        - "65%"
+        - "接近上限70%"
+      must_not_contain:
+        - "超过上限"
+        - "一票否决"
+      disclaimer_present: true
+      warning_level: "yellow"
+
+  # ========== 反例测试 ==========
+  - id: TC009
+    type: negative
+    name: "押品名称为空-数据不完整"
+    input:
+      customer_name: "XX企业"
+      business_scenario: "贷前评估"
+      collateral_list:
+        - name: ""
+          type: "房产"
+          owner: "XX企业"
+          appraised_value: 10000000
+    expected:
+      contains:
+        - "数据不完整"
+        - "押品名称为空"
+        - "返回数据缺失清单"
+      must_not_contain:
+        - "押品充足"
+        - "通过"
+      disclaimer_present: true
+      validation_failed: true
+
+  - id: TC010
+    type: negative
+    name: "评估机构非总行认可名单"
+    input:
+      customer_name: "XX企业"
+      business_scenario: "贷前评估"
+      collateral_list:
+        - name: "商业用房"
+          type: "房产"
+          owner: "XX企业"
+          appraised_value: 10000000
+          appraisal_date: "2026-04-01"
+          appraisal_agency: "非认可评估机构"
+    expected:
+      contains:
+        - "评估机构非总行认可名单"
+        - "退回重新评估"
+        - "不得采纳"
+      must_not_contain:
+        - "押品合格"
+        - "通过"
+      disclaimer_present: true
+      rejection_triggered: true
+
+  - id: TC011
+    type: negative
+    name: "抵押率超限-房产抵押率75%>70%"
+    input:
+      customer_name: "XX企业"
+      business_scenario: "贷前评估"
+      collateral_list:
+        - name: "商业用房"
+          type: "房产"
+          owner: "XX企业"
+          appraised_value: 10000000
+          appraisal_date: "2026-04-01"
+      application_amount: 7500000
+    expected:
+      contains:
+        - "抵押率超限"
+        - "实际抵押率75%"
+        - "上限70%"
+        - "不合格"
+      must_not_contain:
+        - "押品充足"
+        - "通过"
+      disclaimer_present: true
+      rejection_triggered: true
+
+  # ========== 拒绝案例测试(一票否决) ==========
+  - id: TC012
+    type: rejection
+    name: "C1触发-押品已被司法机关查封"
+    input:
+      customer_name: "XX企业"
+      business_scenario: "贷前评估"
+      collateral_list:
+        - name: "商业用房"
+          type: "房产"
+          owner: "XX企业"
+          appraised_value: 10000000
+          appraisal_date: "2026-04-01"
+          judicial_status: "已查封"
+    expected:
+      contains:
+        - "C1触发"
+        - "押品已被司法机关查封"
+        - "禁止准入"
+        - "立即停止"
+      must_not_contain:
+        - "押品合格"
+        - "进入后续流程"
+      disclaimer_present: true
+      rejection_triggered: true
+      rejection_code: "C1"
+
+  - id: TC013
+    type: rejection
+    name: "C3触发-押品为公益设施(学校)"
+    input:
+      customer_name: "XX教育机构"
+      business_scenario: "贷前评估"
+      collateral_list:
+        - name: "教学楼"
+          type: "房产"
+          owner: "XX教育机构"
+          appraised_value: 8000000
+          appraisal_date: "2026-04-01"
+          property_usage: "教育设施"
+    expected:
+      contains:
+        - "C3触发"
+        - "公益设施"
+        - "法律法规明确禁止抵押"
+        - "禁止准入"
+      must_not_contain:
+        - "押品合格"
+        - "进入后续流程"
+      disclaimer_present: true
+      rejection_triggered: true
+      rejection_code: "C3"
+
+  - id: TC014
+    type: rejection
+    name: "C4触发-评估价值虚高偏离市场价35%"
+    input:
+      customer_name: "XX企业"
+      business_scenario: "贷前评估"
+      collateral_list:
+        - name: "商业用房"
+          type: "房产"
+          owner: "XX企业"
+          appraised_value: 20000000
+          appraisal_date: "2026-04-01"
+          market_value: 15000000
+          deviation: "33%"
+    expected:
+      contains:
+        - "C4触发"
+        - "评估价值虚高"
+        - "偏离同类资产市场价超过30%"
+        - "红色警示"
+        - "重新评估"
+      must_not_contain:
+        - "押品合格"
+        - "作为授信依据"
+      disclaimer_present: true
+      rejection_triggered: true
+      rejection_code: "C4"
+
+  - id: TC015
+    type: rejection
+    name: "C6触发-保单已失效(房产须强制投保)"
+    input:
+      customer_name: "XX企业"
+      business_scenario: "贷前评估"
+      collateral_list:
+        - name: "工业厂房"
+          type: "房产"
+          owner: "XX企业"
+          appraised_value: 12000000
+          appraisal_date: "2026-04-01"
+          insurance_status: "已失效"
+          insurance_expiry_date: "2025-12-31"
+    expected:
+      contains:
+        - "C6触发"
+        - "保单已失效"
+        - "房产须强制投保"
+        - "不合格担保"
+      must_not_contain:
+        - "押品合格"
+        - "进入后续流程"
+      disclaimer_present: true
+      rejection_triggered: true
+      rejection_code: "C6"

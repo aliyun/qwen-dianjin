@@ -1,0 +1,36 @@
+{
+  "skill_name": "insurance-claim-notification",
+  "skill_version": "1.0.0",
+  "category": "理赔",
+  "mcp_servers": [
+    "notification-system",
+    "claims-system"
+  ],
+  "input_validation": {
+    "required_fields": [
+      "case_no",
+      "notification_type"
+    ],
+    "optional_fields": [
+      "payment_amount",
+      "rejection_reason",
+      "missing_materials",
+      "customer_emotion",
+      "communication_scenario"
+    ]
+  },
+  "notification_templates": {
+    "payment": "赔付通知书",
+    "rejection": "拒赔通知书",
+    "supplement": "补件通知书"
+  },
+  "communication_scenarios": [
+    "payment_notice",
+    "rejection_explanation",
+    "material_reminder",
+    "progress_update",
+    "emotional_comfort",
+    "negotiation"
+  ],
+  "audit_enabled": true
+}

@@ -1,0 +1,174 @@
+# 贷后风险监测测试用例
+# 覆盖4种类型: positive(正例) / edge_case(边界案例) / negative(反例) / rejection(拒绝案例)
+
+test_cases:
+  # ==================== Positive 正例 ====================
+  - id: TC001
+    type: positive
+    description: "标准贷后风险监测(5家企业)"
+    input:
+      enterprises:
+        - "XX制造有限公司"
+        - "YY科技有限公司"
+        - "ZZ贸易有限公司"
+        - "AA农业开发有限公司"
+        - "BB建设工程有限公司"
+      monitor_depth: "深度扫描"
+      time_range: "近3个月"
+    expected:
+      report_sections_count: "6个章节"
+      risk_levels: "红色/橙色/黄色/绿色"
+      disclaimer_present: true
+      contains_data_source: true
+      contains_query_time: true
+
+  - id: TC002
+    type: positive
+    description: "单家企业深度监测"
+    input:
+      enterprises:
+        - "CC新能源有限公司"
+      monitor_depth: "深度扫描"
+      time_range: "近6个月"
+      legal_representative: "张三"
+    expected:
+      report_sections_count: "6个章节"
+      legal_representative_checked: true
+      disclaimer_present: true
+      contains_data_source: true
+
+  - id: TC003
+    type: positive
+    description: "快速扫描(10家企业)"
+    input:
+      enterprises:
+        - "DD制造有限公司"
+        - "EE科技有限公司"
+        - "FF贸易有限公司"
+      monitor_depth: "快速扫描"
+      time_range: "近1个月"
+    expected:
+      report_sections_count: "6个章节"
+      risk_levels: "红色/橙色/黄色/绿色"
+      disclaimer_present: true
+
+  # ==================== Edge Case 边界案例 ====================
+  - id: TC004
+    type: edge_case
+    description: "批量监测(25家企业,触发分批处理)"
+    input:
+      enterprises_count: 25
+      monitor_depth: "快速扫描"
+      time_range: "近3个月"
+    expected:
+      batch_processing: true
+      batch_size: "每批15家"
+      final_merged_report: true
+      disclaimer_present: true
+
+  - id: TC005
+    type: edge_case
+    description: "历史已结案事项不计入评级"
+    input:
+      enterprises:
+        - "GG制造有限公司"
+      monitor_depth: "深度扫描"
+      time_range: "近1年"
+      historical_cases: true
+    expected:
+      historical_cases_separate: true
+      current_rating_only_active: true
+      disclaimer_present: true
+
+  - id: TC006
+    type: edge_case
+    description: "同名企业干扰过滤"
+    input:
+      enterprises:
+        - "HH科技有限公司"
+      monitor_depth: "深度扫描"
+      time_range: "近3个月"
+      same_name_interference: true
+    expected:
+      name_verification: "核对注册地/统一信用代码"
+      filtered_interference: true
+      disclaimer_present: true
+
+  # ==================== Negative 反例 ====================
+  - id: TC007
+    type: negative
+    description: "红色预警企业缺少处置建议"
+    input:
+      enterprises:
+        - "II制造有限公司"
+      monitor_depth: "深度扫描"
+      time_range: "近3个月"
+      red_alert: true
+      missing_mitigation: true
+    expected:
+      error: "红色预警企业必须包含处置建议"
+
+  - id: TC008
+    type: negative
+    description: "风险概览缺少风险等级统计"
+    input:
+      enterprises:
+        - "JJ科技有限公司"
+      monitor_depth: "快速扫描"
+      time_range: "近3个月"
+      missing_risk_summary: true
+    expected:
+      error: "风险概览必须包含红色/橙色/黄色/绿色企业数量"
+
+  - id: TC009
+    type: negative
+    description: "免责声明缺失"
+    input:
+      enterprises:
+        - "KK贸易有限公司"
+      monitor_depth: "快速扫描"
+      time_range: "近3个月"
+      missing_disclaimer: true
+    expected:
+      error: "免责声明章节缺失或不含'不构成'关键词"
+
+  # ==================== Rejection 拒绝案例 ====================
+  - id: TC010
+    type: rejection
+    description: "企业个体信用评估(超出范围)"
+    input:
+      request_type: "credit_rating"
+      enterprise: "LL制造有限公司"
+    expected:
+      rejection: true
+      suggestion: "请使用 credit-risk-rating Skill"
+
+  - id: TC011
+    type: rejection
+    description: "具体授信审批决策(超出范围)"
+    input:
+      request_type: "credit_approval"
+      enterprise: "MM科技有限公司"
+    expected:
+      rejection: true
+      suggestion: "请使用 credit-approval-review Skill"
+
+  - id: TC012
+    type: rejection
+    description: "财务数据分析(超出范围)"
+    input:
+      request_type: "financial_analysis"
+      enterprise: "NN贸易有限公司"
+    expected:
+      rejection: true
+      suggestion: "请使用 financial-report-analysis Skill"
+
+  - id: TC013
+    type: rejection
+    description: "直接执行贷款保全(超出范围)"
+    input:
+      request_type: "execute_loan_protection"
+      enterprise: "OO制造有限公司"
+    expected:
+      rejection: true
+      suggestion: "本Skill仅提供处置建议,不直接执行操作"

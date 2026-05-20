@@ -1,0 +1,2 @@
+# Python dependencies for vlm-verifier validation scripts
+# No external dependencies required - using standard library only

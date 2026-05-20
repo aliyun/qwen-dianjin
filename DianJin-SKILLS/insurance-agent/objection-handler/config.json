@@ -1,0 +1,10 @@
+{
+  "skill_name": "insurance-agent-objection-handler",
+  "version": "1.0.0",
+  "risk_level": "medium",
+  "parameters": {
+    "common_objections": ["保费太贵", "不需要", "再考虑考虑", "没时间", "已有其他保障"],
+    "handling_stages": ["初期抵触", "价格异议", "最后疑虑"],
+    "strategy_types": ["共情回应", "数据说服", "案例引导", "反向提问"]
+  }
+}

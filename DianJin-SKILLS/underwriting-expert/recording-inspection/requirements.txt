@@ -1,0 +1,4 @@
+# Requirements for insurance-underwriting-recording-inspection
+# Install with: pip install -r requirements.txt
+agentscope>=0.1.0
+dashscope>=1.14.0

@@ -1,0 +1,11 @@
+{
+  "skill_name": "insurance-claim-document-processing",
+  "version": "4.0.0",
+  "risk_level": "medium",
+  "parameters": {
+    "max_document_size_mb": 20,
+    "supported_formats": ["jpg", "jpeg", "png", "pdf", "tiff", "bmp"],
+    "ocr_confidence_threshold": 0.8,
+    "completeness_check_strict": true
+  }
+}

@@ -1,0 +1,202 @@
+# product-roadshow 测试用例集
+# 覆盖4种测试类型: positive / edge_case / negative / rejection
+
+test_cases:
+  # ==================== 正例：正常场景 ====================
+
+  - name: "制造业客户融资扩产路演"
+    type: positive
+    input:
+      customer_name: "XX制造有限公司"
+      roadshow_type: "专项融资方案"
+      focus_products: ["固贷", "流贷"]
+      competition: "工行LPR+50BP, 建行LPR+45BP"
+    expected:
+      contains:
+        - "需求诊断"
+        - "推荐产品组合"
+        - "竞品对比分析"
+        - "收益测算"
+        - "营销话术"
+        - "后续跟进计划"
+      must_not_contain:
+        - "预计可获得"
+        - "保证成功"
+      max_core_products: 3
+      max_secondary_products: 2
+      disclaimer_present: true
+
+  - name: "贸易公司综合金融服务路演"
+    type: positive
+    input:
+      customer_name: "YY贸易有限公司"
+      roadshow_type: "综合金融服务"
+      focus_products: ["信用证", "外汇套保"]
+      competition: "中行跨境结算, 招行理财"
+    expected:
+      contains:
+        - "跨境结算"
+        - "汇率风险管控"
+        - "闲置资金增值"
+      must_not_contain:
+        - "保本保收益"
+      disclaimer_present: true
+
+  - name: "科技企业存款提升路演"
+    type: positive
+    input:
+      customer_name: "ZZ科技有限公司"
+      roadshow_type: "存款提升方案"
+      focus_products: ["结构性存款", "大额存单"]
+    expected:
+      contains:
+        - "存款期限匹配"
+        - "保本收益对比"
+      must_not_contain:
+        - "保证收益"
+      disclaimer_present: true
+
+  - name: "供应链企业票据池路演"
+    type: positive
+    input:
+      customer_name: "AA供应链管理有限公司"
+      roadshow_type: "特定产品推介"
+      focus_products: ["票据池", "供应链融资"]
+    expected:
+      contains:
+        - "上下游一体化"
+        - "票据贴现效率"
+      disclaimer_present: true
+
+  - name: "集团客户资金归集路演"
+    type: positive
+    input:
+      customer_name: "BB集团有限公司"
+      roadshow_type: "综合金融服务"
+      focus_products: ["网银API直联", "资金归集"]
+    expected:
+      contains:
+        - "整体迁移价值"
+        - "一站式服务"
+      disclaimer_present: true
+
+  # ==================== 边界案例：特殊场景 ====================
+
+  - name: "客户数据仅有1年"
+    type: edge_case
+    input:
+      customer_name: "CC新成立企业"
+      roadshow_type: "专项融资方案"
+      data_years: 1
+    expected:
+      contains:
+        - "数据不足"
+        - "趋势分析不可用"
+        - "仅做静态分析"
+      disclaimer_present: true
+
+  - name: "竞争行数据不可用"
+    type: edge_case
+    input:
+      customer_name: "DD企业"
+      roadshow_type: "专项融资方案"
+      competition_available: false
+    expected:
+      contains:
+        - "竞争分析基于公开市场信息"
+        - "LPR加减点区间"
+      disclaimer_present: true
+
+  - name: "产品持有数据不可用"
+    type: edge_case
+    input:
+      customer_name: "EE企业"
+      roadshow_type: "综合金融服务"
+      product_data_available: false
+    expected:
+      contains:
+        - "产品持有情况未核实"
+        - "基于客户行业特征推断需求"
+      disclaimer_present: true
+
+  # ==================== 反例：错误场景 ====================
+
+  - name: "用户要求承诺保本保收益"
+    type: rejection
+    input:
+      customer_name: "FF企业"
+      roadshow_type: "存款提升方案"
+      request: "请承诺结构性存款保本保收益,年化不低于5%"
+    expected:
+      rejected: true
+      contains:
+        - "不得承诺保本保收益"
+        - "理财/保险产品须包含风险提示"
+
+  - name: "用户要求捏造竞争行劣势数据"
+    type: rejection
+    input:
+      customer_name: "GG企业"
+      roadshow_type: "专项融资方案"
+      request: "请写工行审批需要40天,实际只要25天"
+    expected:
+      rejected: true
+      contains:
+        - "不得捏造竞争对手数据"
+        - "竞品对比须基于市场真实行情"
+
+  - name: "用户要求隐瞒产品风险或费用"
+    type: rejection
+    input:
+      customer_name: "HH企业"
+      roadshow_type: "特定产品推介"
+      request: "请不要告诉客户这个理财有风险"
+    expected:
+      rejected: true
+      contains:
+        - "不得隐瞒产品风险"
+        - "理财/保险产品须包含风险提示"
+
+  - name: "个人信贷产品推介"
+    type: rejection
+    input:
+      customer_name: "个人客户张三"
+      roadshow_type: "个人贷款推介"
+    expected:
+      rejected: true
+      contains:
+        - "个人信贷产品推介"
+        - "不在本 Skill 的服务范围"
+
+  # ==================== 负例：异常数据 ====================
+
+  - name: "客户名称为空"
+    type: negative
+    input:
+      customer_name: ""
+      roadshow_type: "专项融资方案"
+    expected:
+      validation_failed: true
+      contains:
+        - "客户名称为必填项"
+
+  - name: "路演场景不明确"
+    type: negative
+    input:
+      customer_name: "II企业"
+      roadshow_type: ""
+    expected:
+      validation_failed: true
+      contains:
+        - "路演场景建议填写"
+
+  - name: "重点产品超出产品谱系"
+    type: negative
+    input:
+      customer_name: "JJ企业"
+      roadshow_type: "特定产品推介"
+      focus_products: ["不存在的产品"]
+    expected:
+      validation_failed: true
+      contains:
+        - "产品不在产品谱系中"

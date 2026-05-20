@@ -1,0 +1,43 @@
+{
+  "skill_name": "insurance-claim-adjustment",
+  "skill_version": "1.0.0",
+  "category": "理赔",
+  "mcp_servers": [
+    "calculation-engine",
+    "claims-system",
+    "policy-system"
+  ],
+  "input_validation": {
+    "required_fields": [
+      "case_no",
+      "policy_no",
+      "expense_items",
+      "policy_params"
+    ],
+    "optional_fields": [
+      "deduction_items",
+      "medical_review_result",
+      "liability_conclusion"
+    ]
+  },
+  "business_rules": {
+    "admission_check": {
+      "case_status": ["registered", "adjudicating"],
+      "liability_required": true,
+      "medical_review_required": true,
+      "expense_review_required": true
+    },
+    "data_validation": {
+      "amount_formula_check": true,
+      "policy_params_consistency": true,
+      "date_range_check": true
+    },
+    "calculation": {
+      "engine": "calculation-engine",
+      "timeout_seconds": 30,
+      "retry_count": 2
+    }
+  },
+  "output_template": "adjustment_memo",
+  "audit_enabled": true
+}

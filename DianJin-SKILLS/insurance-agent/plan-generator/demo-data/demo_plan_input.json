@@ -1,0 +1,220 @@
+{
+  "plan_config": {
+    "plan_title": "张伟先生 家庭保障规划方案",
+    "plan_date": "2026-04-18",
+    "plans_count": 2,
+    "include_sections": ["cover","needs","gap","products","benefits","budget","compliance","agent"]
+  },
+  "customer": {
+    "name": "张伟",
+    "gender": "男",
+    "age": 35,
+    "occupation": "IT工程师",
+    "occupation_class": "1类",
+    "annual_income": 350000,
+    "monthly_expense": 15000,
+    "city": "上海",
+    "marital_status": "已婚",
+    "life_stage": "育儿期",
+    "risk_preference": "稳健型",
+    "health_status": "健康标体",
+    "family_members": [
+      {"relation": "配偶", "name": "李娜", "age": 33, "occupation": "教师"},
+      {"relation": "子女", "name": "张小明", "age": 5, "occupation": "学龄前"}
+    ],
+    "existing_policies": [
+      {
+        "type": "重疾险",
+        "product_name": "XX重疾保A款",
+        "sum_assured": 300000,
+        "annual_premium": 8500,
+        "payment_years": 20,
+        "start_date": "2022-03-15",
+        "status": "缴费中"
+      },
+      {
+        "type": "医疗险",
+        "product_name": "百万医疗2025",
+        "sum_assured": 4000000,
+        "annual_premium": 680,
+        "payment_years": 1,
+        "start_date": "2025-01-01",
+        "status": "有效"
+      }
+    ],
+    "assets": {
+      "mortgage_remaining": 1500000,
+      "mortgage_years": 22,
+      "liquid_assets": 300000
+    }
+  },
+  "gap_analysis": {
+    "寿险": {"建议保额": 350.0, "已有保额": 0, "缺口": 350.0, "缺口率": 100.0, "紧迫度": "紧急"},
+    "重疾险": {"建议保额": 205.0, "已有保额": 30.0, "缺口": 175.0, "缺口率": 85.4, "紧迫度": "紧急"},
+    "医疗险": {"建议保额": 100.0, "已有保额": 400.0, "缺口": 0, "缺口率": 0, "紧迫度": "优化", "已覆盖": true},
+    "意外险": {"建议保额": 350.0, "已有保额": 0, "缺口": 350.0, "缺口率": 100.0, "紧迫度": "紧急"},
+    "养老储备": {"建议保额": 360.0, "已有保额": 0, "缺口": 360.0, "缺口率": 100.0, "紧迫度": "紧急"},
+    "综合缺口率": 90.7
+  },
+  "product_plans": {
+    "plan_a": {
+      "plan_label": "基础保障方案(方案A)",
+      "products": [
+        {
+          "product_id": "LIFE_TERM_001",
+          "product_name": "安心定期寿险",
+          "product_type": "term_life",
+          "role": "core",
+          "insured_person": "张伟",
+          "sum_assured": 2000000,
+          "annual_premium": 2400,
+          "payment_period": "20年",
+          "coverage_period": "至60周岁",
+          "benefit_details": {
+            "death_benefit": 2000000
+          }
+        },
+        {
+          "product_id": "ACC_BASIC_001",
+          "product_name": "全能意外险",
+          "product_type": "accident",
+          "role": "core",
+          "insured_person": "张伟",
+          "sum_assured": 1000000,
+          "annual_premium": 365,
+          "payment_period": "1年",
+          "coverage_period": "1年",
+          "benefit_details": {
+            "death_benefit": 1000000,
+            "disability_benefit_max": 1000000,
+            "medical_per_event": 50000,
+            "daily_hospital": 200
+          }
+        },
+        {
+          "product_id": "MED_MILLION_001",
+          "product_name": "百万医疗险(配偶)",
+          "product_type": "medical",
+          "role": "supplementary",
+          "insured_person": "李娜",
+          "sum_assured": 4000000,
+          "annual_premium": 580,
+          "payment_period": "1年",
+          "coverage_period": "1年",
+          "benefit_details": {
+            "annual_limit": 4000000,
+            "deductible": 10000,
+            "reimbursement_ratio": 1.0,
+            "example_claim": {
+              "total_cost": 250000,
+              "social_insurance_paid": 80000
+            }
+          }
+        }
+      ]
+    },
+    "plan_b": {
+      "plan_label": "全面保障方案(方案B)",
+      "products": [
+        {
+          "product_id": "LIFE_TERM_001",
+          "product_name": "安心定期寿险",
+          "product_type": "term_life",
+          "role": "core",
+          "insured_person": "张伟",
+          "sum_assured": 3000000,
+          "annual_premium": 3600,
+          "payment_period": "20年",
+          "coverage_period": "至60周岁",
+          "benefit_details": {
+            "death_benefit": 3000000
+          }
+        },
+        {
+          "product_id": "CI_CRITICAL_001",
+          "product_name": "守护重疾险",
+          "product_type": "critical_illness",
+          "role": "core",
+          "insured_person": "张伟",
+          "sum_assured": 500000,
+          "annual_premium": 9800,
+          "payment_period": "20年",
+          "coverage_period": "终身",
+          "benefit_details": {
+            "ci_benefit": 500000,
+            "mild_ci_ratio": 0.3,
+            "waiting_period_days": 90
+          }
+        },
+        {
+          "product_id": "ACC_BASIC_001",
+          "product_name": "全能意外险",
+          "product_type": "accident",
+          "role": "core",
+          "insured_person": "张伟",
+          "sum_assured": 1000000,
+          "annual_premium": 365,
+          "payment_period": "1年",
+          "coverage_period": "1年",
+          "benefit_details": {
+            "death_benefit": 1000000,
+            "disability_benefit_max": 1000000,
+            "medical_per_event": 50000,
+            "daily_hospital": 200
+          }
+        },
+        {
+          "product_id": "MED_MILLION_001",
+          "product_name": "百万医疗险(配偶)",
+          "product_type": "medical",
+          "role": "supplementary",
+          "insured_person": "李娜",
+          "sum_assured": 4000000,
+          "annual_premium": 580,
+          "payment_period": "1年",
+          "coverage_period": "1年",
+          "benefit_details": {
+            "annual_limit": 4000000,
+            "deductible": 10000,
+            "reimbursement_ratio": 1.0,
+            "example_claim": {
+              "total_cost": 250000,
+              "social_insurance_paid": 80000
+            }
+          }
+        },
+        {
+          "product_id": "ANNUITY_RETIRE_001",
+          "product_name": "金色年华养老年金",
+          "product_type": "annuity",
+          "role": "supplementary",
+          "insured_person": "张伟",
+          "sum_assured": 0,
+          "annual_premium": 20000,
+          "payment_period": "20年",
+          "coverage_period": "终身",
+          "benefit_details": {
+            "start_receive_age": 60,
+            "annual_receive": 48000,
+            "receive_years": 0
+          }
+        }
+      ]
+    }
+  },
+  "narratives": {
+    "needs_narrative": "张伟先生今年35岁，是一位IT工程师，与妻子李娜和5岁的儿子张小明组成了温馨的三口之家。作为家庭主要经济支柱，张先生年收入35万元，月均支出约1.5万元，目前尚有150万元房贷未偿还。\n\n作为育儿期家庭，张先生面临的核心挑战是:一方面需要确保家庭经济支柱(自身)万一遭遇不测时，家人的生活水平和子女教育不受影响;另一方面需要开始为未来的养老生活做长期储备。目前家庭已有一份30万重疾险和一份百万医疗险，但整体保障仍有较大提升空间。",
+    "gap_narrative": "通过五维保障缺口分析，张先生家庭目前综合缺口率达到90.7%，保障体系存在明显短板。最紧迫的问题是:家庭完全没有寿险保障，如果张先生作为经济支柱发生意外，家庭将面临失去全部收入来源和150万房贷压力的双重困境。\n\n同时，意外险保障也处于空白状态，而已有的30万重疾险相对于建议的205万保额，覆盖率仅15%，远不足以应对重大疾病带来的收入损失和治疗费用。此外，养老储备尚未启动，距离退休还有25年，越早规划越有利于利用时间杠杆积累养老金。",
+    "recommendation_narrative": "基于以上分析，我们为张先生家庭设计了两套方案。方案A(基础版)优先解决最紧迫的寿险和意外险空白，同时为配偶补充医疗保障，年缴保费约3,345元。方案B(全面版)在此基础上增加了重疾险加保和养老年金规划，年缴保费约34,345元，覆盖更加全面。两套方案均控制在家庭年收入的合理比例内，张先生可根据预算灵活选择。"
+  },
+  "agent": {
+    "name": "王明",
+    "title": "资深理财规划师",
+    "company": "XX人寿保险股份有限公司",
+    "branch": "上海分公司",
+    "license_number": "02001234567",
+    "phone": "138-0000-1234",
+    "wechat": "wangming_insurance",
+    "email": "wangming@example.com"
+  }
+}

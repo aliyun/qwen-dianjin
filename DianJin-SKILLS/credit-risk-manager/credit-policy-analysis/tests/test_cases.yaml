@@ -1,0 +1,156 @@
+# 信贷政策环境分析测试用例
+# 覆盖4种类型: positive(正例) / edge_case(边界案例) / negative(反例) / rejection(拒绝案例)
+
+test_cases:
+  # ==================== Positive 正例 ====================
+  - id: TC001
+    type: positive
+    description: "标准货币政策分析(制造业)"
+    input:
+      dimension: "货币政策"
+      target: "制造业"
+      time_range: "2024年Q4及未来6个月展望"
+    expected:
+      focus_indicators_count: "4-8个"
+      key_findings_count: "4-6条"
+      transmission_path_nodes: "3-5个"
+      risk_alerts_count: "2-4条"
+      strategy_suggestions_count: "2-3条"
+      disclaimer_present: true
+      contains_data_source: true
+      contains_publish_date: true
+
+  - id: TC002
+    type: positive
+    description: "监管政策分析(房地产)"
+    input:
+      dimension: "监管政策"
+      target: "房地产"
+      existing_analysis: "宽货币环境"
+    expected:
+      differentiated_impact_count: "≥3类对象"
+      risk_alerts_count: "2-4条"
+      high_alert_has_suggestion: true
+      disclaimer_present: true
+
+  - id: TC003
+    type: positive
+    description: "宏观经济分析(全行业)"
+    input:
+      dimension: "宏观经济"
+      target: null
+      time_range: "最新季度"
+    expected:
+      focus_indicators_count: "4-8个(含GDP、PMI、CPI、PPI等)"
+      overall_signal: "positive/negative/neutral之一"
+      disclaimer_present: true
+
+  # ==================== Edge Case 边界案例 ====================
+  - id: TC004
+    type: edge_case
+    description: "数据时效性边界(使用6个月前数据)"
+    input:
+      dimension: "货币政策"
+      target: "制造业"
+    expected:
+      data_age_warning: true
+      disclaimer_present: true
+      notes: "输出需明确标注数据时效性并说明原因"
+
+  - id: TC005
+    type: edge_case
+    description: "多维度组合分析(用户提供已有分析)"
+    input:
+      dimension: "区域政策"
+      target: "长三角"
+      existing_analysis: "货币政策+监管政策分析结果"
+    expected:
+      policy_combination_analysis: true
+      cross_dimension_effects: true
+      disclaimer_present: true
+
+  - id: TC006
+    type: edge_case
+    description: "无特定分析目标(全行业通用分析)"
+    input:
+      dimension: "国际外部环境"
+      target: null
+    expected:
+      differentiated_impact_count: "≥3类对象"
+      general_impact_analysis: true
+      disclaimer_present: true
+
+  # ==================== Negative 反例 ====================
+  - id: TC007
+    type: negative
+    description: "focus_indicators数量不足(仅2个)"
+    input:
+      dimension: "货币政策"
+      target: "制造业"
+    expected:
+      focus_indicators_count: "2个(不足)"
+      validation_fail: true
+      error_message: "focus_indicators数量不足(至少4个)"
+
+  - id: TC008
+    type: negative
+    description: "传导路径跳跃(仅2个节点)"
+    input:
+      dimension: "货币政策"
+      target: "制造业"
+    expected:
+      transmission_path_nodes: "2个(不足)"
+      validation_fail: true
+      error_message: "transmission_path.chain节点数量不足(至少3个)"
+
+  - id: TC009
+    type: negative
+    description: "risk_alerts缺少high级别应对建议"
+    input:
+      dimension: "监管政策"
+      target: "房地产"
+    expected:
+      high_alert_without_suggestion: true
+      validation_fail: true
+      error_message: "risk_alerts为high级别,必须包含应对建议"
+
+  # ==================== Rejection 拒绝案例 ====================
+  - id: TC010
+    type: rejection
+    description: "请求企业财务分析(超出范围)"
+    input:
+      request: "分析某企业的财务报表和偿债能力"
+    expected:
+      rejected: true
+      rejection_reason: "本Skill不负责企业财务分析,建议使用financial-report-analysis技能"
+      disclaimer_present: true
+
+  - id: TC011
+    type: rejection
+    description: "请求具体授信审批决策(超出范围)"
+    input:
+      request: "是否应该批准某企业的1亿元贷款申请"
+    expected:
+      rejected: true
+      rejection_reason: "本Skill不直接执行具体授信审批决策,仅提供政策环境分析支撑"
+      disclaimer_present: true
+
+  - id: TC012
+    type: rejection
+    description: "请求确定性收益预测(违反约束)"
+    input:
+      request: "预测明年银行信贷业务的收益增长率"
+    expected:
+      rejected: true
+      rejection_reason: "本Skill不生成确定性收益预测,所有趋势预判须标注前提假设"
+      disclaimer_present: true
+
+  - id: TC013
+    type: rejection
+    description: "请求实时交易监控(超出范围)"
+    input:
+      request: "监控某企业的实时资金流水和交易行为"
+    expected:
+      rejected: true
+      rejection_reason: "本Skill不处理实时交易监控,请使用贷后监控相关技能"
+      disclaimer_present: true

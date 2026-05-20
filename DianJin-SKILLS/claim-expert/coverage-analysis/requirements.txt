@@ -1,0 +1,9 @@
+# Requirements for insurance-claim-coverage-analysis
+# Install with: pip install -r requirements.txt
+
+# Core dependencies
+agentscope>=0.1.0
+dashscope>=1.14.0
+
+# Optional dependencies
+# pillow>=9.0.0  # For image processing

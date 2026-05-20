@@ -1,0 +1,3 @@
+# Python dependencies for credit-risk-cot scripts
+# All scripts use stdlib only (json, sys, datetime)
+# No external dependencies required

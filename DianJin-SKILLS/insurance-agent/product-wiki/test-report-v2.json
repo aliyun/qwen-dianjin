@@ -1,0 +1,322 @@
+{
+  "timestamp": "2026-04-11T22:29:39.167245",
+  "tests": [
+    {
+      "name": "索引完整性",
+      "result": {
+        "index_exists": true,
+        "product_count": 10,
+        "format_valid": true,
+        "violations": []
+      }
+    },
+    {
+      "name": "Wiki 结构 - ping-an-che-xian",
+      "result": {
+        "wiki_exists": true,
+        "scripts_exists": true,
+        "raw_exists": true,
+        "wiki_sections": [
+          "产品概览",
+          "保障责任",
+          "投保规则",
+          "核心卖点",
+          "关联产品"
+        ],
+        "violations": []
+      }
+    },
+    {
+      "name": "Wiki 结构 - tai-kang-quan-neng-bao-2025",
+      "result": {
+        "wiki_exists": true,
+        "scripts_exists": true,
+        "raw_exists": true,
+        "wiki_sections": [
+          "产品概览",
+          "保障责任",
+          "投保规则",
+          "核心卖点",
+          "关联产品"
+        ],
+        "violations": []
+      }
+    },
+    {
+      "name": "Wiki 结构 - guo-shou-fu-sheng-dian",
+      "result": {
+        "wiki_exists": true,
+        "scripts_exists": true,
+        "raw_exists": true,
+        "wiki_sections": [
+          "产品概览",
+          "保障责任",
+          "投保规则",
+          "核心卖点",
+          "关联产品"
+        ],
+        "violations": []
+      }
+    },
+    {
+      "name": "Wiki 结构 - ren-bao-che-xian",
+      "result": {
+        "wiki_exists": true,
+        "scripts_exists": true,
+        "raw_exists": true,
+        "wiki_sections": [
+          "产品概览",
+          "保障责任",
+          "投保规则",
+          "核心卖点",
+          "关联产品"
+        ],
+        "violations": []
+      }
+    },
+    {
+      "name": "Wiki 结构 - zun-xiang-e-sheng-2025",
+      "result": {
+        "wiki_exists": true,
+        "scripts_exists": true,
+        "raw_exists": true,
+        "wiki_sections": [
+          "产品概览",
+          "保障责任",
+          "投保规则",
+          "核心卖点",
+          "关联产品"
+        ],
+        "violations": []
+      }
+    },
+    {
+      "name": "Wiki 结构 - ping-an-e-sheng-fu-2024",
+      "result": {
+        "wiki_exists": true,
+        "scripts_exists": true,
+        "raw_exists": true,
+        "wiki_sections": [
+          "产品概览",
+          "保障责任",
+          "投保规则",
+          "核心卖点",
+          "关联产品"
+        ],
+        "violations": []
+      }
+    },
+    {
+      "name": "Wiki 结构 - jia-cheng-yi-wai-xian",
+      "result": {
+        "wiki_exists": true,
+        "scripts_exists": true,
+        "raw_exists": true,
+        "wiki_sections": [
+          "产品概览",
+          "保障责任",
+          "投保规则",
+          "核心卖点",
+          "关联产品"
+        ],
+        "violations": []
+      }
+    },
+    {
+      "name": "Wiki 结构 - ping-an-e-sheng-bao-yue-xiang",
+      "result": {
+        "wiki_exists": true,
+        "scripts_exists": true,
+        "raw_exists": true,
+        "wiki_sections": [
+          "产品概览",
+          "保障责任",
+          "投保规则",
+          "核心卖点",
+          "关联产品"
+        ],
+        "violations": []
+      }
+    },
+    {
+      "name": "Wiki 结构 - hao-yi-bao-qi-xian-2025",
+      "result": {
+        "wiki_exists": true,
+        "scripts_exists": true,
+        "raw_exists": true,
+        "wiki_sections": [
+          "产品概览",
+          "保障责任",
+          "投保规则",
+          "核心卖点",
+          "关联产品"
+        ],
+        "violations": []
+      }
+    },
+    {
+      "name": "Wiki 结构 - tai-ping-hong-fen-xian",
+      "result": {
+        "wiki_exists": true,
+        "scripts_exists": true,
+        "raw_exists": true,
+        "wiki_sections": [
+          "产品概览",
+          "投保规则",
+          "核心卖点",
+          "关联产品"
+        ],
+        "violations": []
+      }
+    },
+    {
+      "name": "话术质量 - ping-an-che-xian",
+      "result": {
+        "exists": true,
+        "sections": [
+          "开场白",
+          "异议处理",
+          "促成"
+        ],
+        "violations": [],
+        "quality_score": 60
+      }
+    },
+    {
+      "name": "话术质量 - tai-kang-quan-neng-bao-2025",
+      "result": {
+        "exists": true,
+        "sections": [
+          "开场白",
+          "异议处理",
+          "促成"
+        ],
+        "violations": [],
+        "quality_score": 50
+      }
+    },
+    {
+      "name": "话术质量 - guo-shou-fu-sheng-dian",
+      "result": {
+        "exists": true,
+        "sections": [
+          "开场白",
+          "异议处理",
+          "促成"
+        ],
+        "violations": [],
+        "quality_score": 80
+      }
+    },
+    {
+      "name": "话术质量 - ren-bao-che-xian",
+      "result": {
+        "exists": true,
+        "sections": [
+          "开场白",
+          "异议处理",
+          "促成"
+        ],
+        "violations": [],
+        "quality_score": 60
+      }
+    },
+    {
+      "name": "话术质量 - zun-xiang-e-sheng-2025",
+      "result": {
+        "exists": true,
+        "sections": [
+          "开场白",
+          "异议处理",
+          "促成"
+        ],
+        "violations": [],
+        "quality_score": 70
+      }
+    },
+    {
+      "name": "话术质量 - ping-an-e-sheng-fu-2024",
+      "result": {
+        "exists": true,
+        "sections": [
+          "开场白",
+          "异议处理",
+          "促成"
+        ],
+        "violations": [],
+        "quality_score": 60
+      }
+    },
+    {
+      "name": "话术质量 - jia-cheng-yi-wai-xian",
+      "result": {
+        "exists": true,
+        "sections": [
+          "开场白",
+          "异议处理",
+          "促成"
+        ],
+        "violations": [],
+        "quality_score": 70
+      }
+    },
+    {
+      "name": "话术质量 - ping-an-e-sheng-bao-yue-xiang",
+      "result": {
+        "exists": true,
+        "sections": [
+          "开场白",
+          "异议处理",
+          "促成"
+        ],
+        "violations": [],
+        "quality_score": 80
+      }
+    },
+    {
+      "name": "话术质量 - hao-yi-bao-qi-xian-2025",
+      "result": {
+        "exists": true,
+        "sections": [
+          "开场白",
+          "异议处理",
+          "促成"
+        ],
+        "violations": [],
+        "quality_score": 70
+      }
+    },
+    {
+      "name": "话术质量 - tai-ping-hong-fen-xian",
+      "result": {
+        "exists": true,
+        "sections": [
+          "开场白",
+          "异议处理",
+          "促成"
+        ],
+        "violations": [],
+        "quality_score": 40
+      }
+    },
+    {
+      "name": "Tavily 搜索集成",
+      "result": {
+        "success": true
+      }
+    },
+    {
+      "name": "文档提取脚本",
+      "result": {
+        "exists": true,
+        "runnable": true
+      }
+    }
+  ],
+  "summary": {
+    "total_tests": 23,
+    "passed": 23,
+    "failed": 0,
+    "violations": []
+  }
+}

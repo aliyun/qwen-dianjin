@@ -1,0 +1,219 @@
+# 信贷尽职调查 Skill 测试用例集
+# 符合 METHODOLOGY.md 第7节测试与评估框架要求
+
+test_cases:
+  # ==================== 正例：正常场景 ====================
+  
+  - name: "标准分析 - 新客户首贷尽调（制造业上市公司）"
+    type: positive
+    input:
+      enterprise_name: "XX制造有限公司"
+      due_diligence_purpose: "首贷"
+      credit_amount: 3000
+      files: ["tests/fixtures/standard_manufacturing_financials.pdf"]
+    expected:
+      contains:
+        - "核心结论"
+        - "企业基本情况"
+        - "公司治理与管理团队"
+        - "关联关系与集团架构"
+        - "行业与市场环境"
+        - "生产经营与业务真实性验证"
+        - "财务状况分析"
+        - "主体资信与融资状况"
+        - "风险评估与授信建议"
+        - "毛利率"
+        - "净现比"
+        - "流动比率"
+        - "DSCR"
+        - "有息负债率"
+        - "利息保障倍数"
+        - "红线预警"
+        - "数据来源"
+        - "免责声明"
+      must_not_contain:
+        - "预计可获得"
+        - "保证成功"
+        - "保本"
+        - "投资建议"
+      disclaimer_present: true
+      audit_log_generated: true
+      red_lines_checked: ["D1", "D2", "D3", "D4", "D5", "D6", "D7"]
+
+  - name: "标准分析 - 存量客户续贷尽调"
+    type: positive
+    input:
+      enterprise_name: "YY科技有限公司"
+      due_diligence_purpose: "续贷"
+      credit_amount: 5000
+      files: ["tests/fixtures/renewal_financials.pdf"]
+    expected:
+      contains:
+        - "核心结论"
+        - "财务状况分析"
+        - "经营情况预测"
+        - "三情景预测"
+        - "乐观"
+        - "中性"
+        - "悲观"
+        - "第一还款来源分析"
+      must_not_contain:
+        - "投资建议"
+        - "保证收益"
+      disclaimer_present: true
+
+  - name: "标准分析 - 追加授信尽调"
+    type: positive
+    input:
+      enterprise_name: "ZZ贸易公司"
+      due_diligence_purpose: "追加授信"
+      credit_amount: 2000
+      files: ["tests/fixtures/additional_credit_financials.pdf"]
+    expected:
+      contains:
+        - "核心结论"
+        - "关联关系与集团架构"
+        - "互保关系"
+        - "资金占用核查"
+        - "综合授信建议"
+      must_not_contain:
+        - "投资建议"
+      disclaimer_present: true
+
+  - name: "经营真实性验证 - 完整交叉验证"
+    type: positive
+    input:
+      enterprise_name: "AA化工有限公司"
+      due_diligence_purpose: "首贷"
+      files:
+        - "tests/fixtures/contracts.pdf"
+        - "tests/fixtures/invoices.pdf"
+        - "tests/fixtures/bank_statements.pdf"
+    expected:
+      contains:
+        - "生产经营与业务真实性验证"
+        - "合同核查"
+        - "水电发票与完税凭证核查"
+        - "交叉验算"
+        - "真实性验证结论"
+      must_not_contain:
+        - "真实性验证不完整"
+      authenticity_verification_complete: true
+
+  - name: "关联风险识别 - 复杂集团架构"
+    type: positive
+    input:
+      enterprise_name: "BB集团下属公司"
+      due_diligence_purpose: "首贷"
+      files: ["tests/fixtures/group_structure_financials.pdf"]
+    expected:
+      contains:
+        - "关联关系与集团架构"
+        - "关联企业清单"
+        - "互保/联保关系"
+        - "资金占用核查"
+        - "关联担保链"
+        - "其他应收款"
+      must_not_contain:
+        - "投资建议"
+      red_lines_checked: ["D5"]
+
+  # ==================== 反例：错误场景 ====================
+
+  - name: "超范围请求 - 个人信贷尽调"
+    type: rejection
+    input:
+      query: "帮我评估一下个人住房贷款的风险"
+    expected:
+      rejected: true
+      contains:
+        - "不在本 Skill 的服务范围"
+        - "个人信贷"
+        - "对公业务"
+
+  - name: "超范围请求 - 贷后管理"
+    type: rejection
+    input:
+      query: "请帮我写一份贷后管理报告"
+    expected:
+      rejected: true
+      contains:
+        - "贷后管理"
+        - "请使用贷后管理 Skill"
+
+  - name: "超范围请求 - 不良资产处置"
+    type: rejection
+    input:
+      query: "帮我处置一笔不良贷款"
+    expected:
+      rejected: true
+      contains:
+        - "不良资产处置"
+        - "不在本 Skill 的服务范围"
+
+  # ==================== 边界案例：极端情况 ====================
+
+  - name: "数据不完整 - 仅一年财务报表"
+    type: edge_case
+    input:
+      enterprise_name: "CC新创公司"
+      due_diligence_purpose: "首贷"
+      files: ["tests/fixtures/single_year_financials.pdf"]
+    expected:
+      contains:
+        - "数据不足"
+        - "趋势分析不可用"
+        - "静态分析"
+      degraded_mode: true
+      warnings:
+        - "财务报表仅有1年数据"
+
+  - name: "高风险信号 - 触发多条红线"
+    type: edge_case
+    input:
+      enterprise_name: "DD风险企业"
+      due_diligence_purpose: "首贷"
+      files: ["tests/fixtures/high_risk_financials.pdf"]
+    expected:
+      contains:
+        - "红线预警"
+        - "红色警示"
+        - "建议暂停授信"
+        - "待核实后重新评估"
+      red_lines_triggered:
+        - "D1"  # 逃废债记录
+        - "D3"  # 经营现金流连续为负
+        - "D4"  # 经营真实性异常
+      must_not_contain:
+        - "积极推荐"
+        - "审慎推荐"
+      recommendation: "建议暂缓"
+
+  - name: "数据缺失 - 征信报告不可用"
+    type: edge_case
+    input:
+      enterprise_name: "EE公司"
+      due_diligence_purpose: "续贷"
+      files: ["tests/fixtures/no_credit_report_financials.pdf"]
+    expected:
+      contains:
+        - "未纳入征信维度"
+        - "风险提示"
+      degraded_mode: true
+      warnings:
+        - "征信数据不可用"
+
+  - name: "边界情况 - 成立年限刚好2年"
+    type: edge_case
+    input:
+      enterprise_name: "FF成立2年公司"
+      due_diligence_purpose: "首贷"
+      files: ["tests/fixtures/exactly_2years_financials.pdf"]
+    expected:
+      contains:
+        - "成立年限"
+        - "2年"
+      must_not_contain:
+        - "高风险信号"  # 刚好2年不应标注高风险
+      warnings:
+        - "成立年限较短"
