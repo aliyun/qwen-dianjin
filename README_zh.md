@@ -14,6 +14,7 @@
 
 - **2026.05.20** 🎉 [**DianJin-SKILLS（百技图）**](DianJin-SKILLS/README.md) 开源 —— 面向金融行业的 AI Agent 技能定义库，覆盖银行、保险、证券/资管三大业态，**10 个专业角色、130+ 个标准化技能**，可直接对接大模型 Agent 框架。
 - **2026.05.10** 🎉 **Fin-PRM** 已被 **IJCAI 2026** 国际会议录用！
+- **2026.04.07** 🎉 《[Benchmarking Large Vision-Language Models on CFMME: A Comprehensive Chinese Financial Multimodal Evaluation Dataset](https://arxiv.org/abs/2605.29462)》已被 **ACL 2026** 主会录用！
 - **2026.02.27** 🎉 **FinMCP-Bench** 和 **CARE** 两项工作已被 **ICASSP 2026** 国际会议接收！
 - **2025.11.15** 🔥 《[Evaluating, Synthesizing, and Enhancing for Customer Support Conversation](https://arxiv.org/abs/2508.04423)》已被 **AAAI 2026** 录用！
 - **2025.10.11** "[FinMCP-Bench: Benchmarking LLM Agents for Real-World Financial Tool Use under the Model Context Protocol](./DianJin-TIR/technical%20report_FinMCP_Bench.pdf)" 由盈米基金联合合作伙伴发布，是首个基于 MCP 的、面向真实金融工具使用的 LLM Agent 基准数据集与评测体系。
