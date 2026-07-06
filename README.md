@@ -14,6 +14,7 @@
 
 - **2026.05.20** 🎉 [**DianJin-SKILLS (百技图)**](DianJin-SKILLS/README.md) is open-sourced — an AI Agent skill library for finance covering banking, insurance, and securities/asset management: **10 professional roles, 130+ standardized skills**, ready to plug into Agent frameworks.
 - **2026.05.10** 🎉 "[Fin-PRM: A Domain-Specialized Process Reward Model for Financial Reasoning in Large Language Models](https://arxiv.org/abs/2508.15202)" has been accepted by **IJCAI 2026**!
+- **2026.04.07** 🎉 "[Benchmarking Large Vision-Language Models on CFMME: A Comprehensive Chinese Financial Multimodal Evaluation Dataset](https://arxiv.org/abs/2605.29462)" has been accepted by **ACL 2026** main conference!
 - **2026.02.27** 🎉 Our papers **FinMCP-Bench** and **CARE** have been accepted by **ICASSP 2026**!
 - **2025.11.15** "[Evaluating, Synthesizing, and Enhancing for Customer Support Conversation](https://arxiv.org/abs/2508.04423)" has been officially accepted by **AAAI 2026**!
 - **2025.10.11** "[FinMCP-Bench: Benchmarking LLM Agents for Real-World Financial Tool Use under the Model Context Protocol](./DianJin-TIR/technical%20report_FinMCP_Bench.pdf)" jointly released by Yingmi Fund and partners — the first benchmark dataset and evaluation framework for real-world financial tool use by LLM agents, built on MCP.
