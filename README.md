@@ -12,6 +12,7 @@
 
 ## 🚀 News 
 
+- **2026.10.17** 🎉 **FinGuard-Bench** is now open-sourced: [ModelScope](https://modelscope.cn/datasets/tongyi_dianjin/FinGuard-Bench) · [Hugging Face](https://huggingface.co/datasets/DianJin/FinGuard-Bench).
 - **2026.08.25** 🎉 "[FinGuard: Detecting Financial Regulatory Non-Compliance in LLM Interactions](https://arxiv.org/abs/2605.29427)" has been accepted to **Findings of EMNLP 2026**!
 - **2026.08.17** 🎉 [**DianJin-RED**](DianJin-RED/README.md) is released — an action-grounded red-teaming benchmark for complete agent systems, with **1,661 executable cases**, **15 intervention strategies** (user input, agent-platform state, and external tools/data), and isolated service worlds.
 - **2026.05.20** 🎉 [**DianJin-SKILLS (百技图)**](DianJin-SKILLS/README.md) is open-sourced — an AI Agent skill library for finance covering banking, insurance, and securities/asset management: **10 professional roles, 130+ standardized skills**, ready to plug into Agent frameworks.
@@ -46,6 +47,13 @@ This repository serves as the open-source hub for our financial AI research. The
         <th>ModelScope</th>
         <th>HuggingFace</th>
         <th>Paper</th>
+    </tr>
+    <tr>
+        <th>FinGuard</th>
+        <td>—</td>
+        <td><a href="https://modelscope.cn/datasets/tongyi_dianjin/FinGuard-Bench">FinGuard-Bench</a></td>
+        <td><a href="https://huggingface.co/datasets/DianJin/FinGuard-Bench">FinGuard-Bench</a></td>
+        <td><a href="https://arxiv.org/abs/2605.29427">Findings of EMNLP 2026</a></td>
     </tr>
     <tr>
         <th>DianJin-SKILLS<br/>(百技图)</th>
