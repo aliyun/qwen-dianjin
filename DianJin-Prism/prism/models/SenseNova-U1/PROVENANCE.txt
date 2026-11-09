@@ -1,0 +1,28 @@
+# prism/models/SenseNova-U1 — bundled model code (PROVENANCE)
+
+Source: OpenSenseNova/SenseNova-U1 (git 3b6de82), 2026-07-19.
+Trimmed to the parts Prism's method actually needs.
+
+src/            TRAINING RUNTIME (imported by adapters/sensenova_u1.py)
+  sensenova_u1/   Prism-modified HF inference and training package
+  flow_grpo/      NeoUnifyInferencer: grad-enabled generation-forward primitives
+
+official/src/   STRICT EVALUATION RUNTIME (imported by evaluation/common/models.py)
+  sensenova_u1/   Unmodified official HF inference package, verified by official/runtime_manifest.json
+
+official/LICENSE  Upstream license for the strict evaluation runtime
+
+reference/      READ-ONLY (NOT imported; InternEvo-bound, cannot run standalone).
+                The official training files we port ("照抄") the interleaved forward from:
+  modeling_sensenovavl_chat_mot.py  interleaved forward, prepare_image_gen_targets, FM loss(1/√seq_len),
+                                    pad_dummy, create_flex_mask_padding_image_gen (und/gen isolation mask)
+  modeling_qwen3_moe_mot.py         per-token und/gen MoT routing
+  mha.py                            SWA_MoT attention
+  ce_loss.py                        FlashGPTLMLoss (ce_loss_weight=0.1)
+  fm_modules.py                     TimestepEmbedder
+  trainer_builder.py                CE + image_gen_loss summation / execute_schedule wiring
+  train_u1_8B.sh                    official launcher (diffusion/FM hyperparam anchors)
+  sensenovau1_8b_mot_sft.py         official 8B SFT config
+
+Adding another model later follows the same pattern: create prism/models/<Model>/src (+ reference/) and write an adapter.
+DO NOT hand-edit src/. Re-sync from upstream if the model repo changes.
